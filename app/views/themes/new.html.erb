@@ -1,0 +1,7 @@
+<p>新規投稿ページ</p>
+
+<%= form_with model: @theme_new, url: themes_path, method: :post do |f| %>
+  タイトル
+  <%= f.text_field :title %>
+  <%= f.submit "投稿" %>
+<% end %>
