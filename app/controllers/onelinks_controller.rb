@@ -1,0 +1,2 @@
+class OnelinksController < ApplicationController
+end

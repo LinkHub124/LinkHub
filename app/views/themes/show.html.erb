@@ -1,3 +1,8 @@
 <p>テーマ詳細ページ</p>
 
 <p><%= @theme.title %></p>
+
+<% @theme.links.each do |link| %>
+<p>SUBTITLE: <%= link.subtitle %></p>
+<p>CAPTION: <%= link.caption %></p>
+<% end %>

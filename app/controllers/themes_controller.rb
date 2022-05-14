@@ -7,6 +7,7 @@ class ThemesController < ApplicationController
     theme = Theme.new(theme_params)
     theme.user_id = current_user.id
     theme.save
+    # binding.pry
     # redirect_to user_path(current_user.name)
     redirect_to theme_path(theme_hashid: theme.hashid)
   end
@@ -17,6 +18,6 @@ class ThemesController < ApplicationController
 
   private
     def theme_params
-      params.require(:theme).permit(:title)
+      params.require(:theme).permit(:title, links_attributes: [:id, :user_id, :theme_id, :subtitle, :caption])
     end
 end

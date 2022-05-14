@@ -14,3 +14,16 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+//= require jquery
+//= require nested_form_fields
+//= require jquery_ujs
+//= require popper
+//= require bootstrap-sprockets
+
+
+
+
+
+

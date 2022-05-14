@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_010930) do
+ActiveRecord::Schema.define(version: 2022_05_14_044723) do
+
+  create_table "links", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "theme_id"
+    t.string "subtitle"
+    t.text "caption"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "one_links", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "theme_id"
+    t.integer "link_id"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "themes", force: :cascade do |t|
     t.integer "user_id"

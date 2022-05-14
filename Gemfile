@@ -65,3 +65,8 @@ gem 'devise'
 gem 'pry-rails'
 
 gem "hashid-rails", "~> 1.0"
+
+gem 'nested_form_fields'
+
+gem 'bootstrap', '~> 4.5'
+gem 'jquery-rails'

@@ -5,3 +5,32 @@
   <%= f.text_field :title %>
   <%= f.submit "投稿" %>
 <% end %>
+
+
+
+
+
+
+
+
+      <%= form_with model:@theme_new, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :title %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+
+        <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <%= f.nested_fields_for :links, wrapper_tag: :tr do |q| %>
+              <td><%= q.text_field :subtitle, class: 'form-control' %></td>
+              <td><%= q.text_field :caption, class: 'form-control' %></td>
+              <td><%= q.remove_nested_fields_link 'Delete', class: 'btn btn-danger', role: 'button' %></td>
+            <% end %>
+          </tbody>
+        </table>
+        <%= f.add_nested_fields_link :links, 'Add new', class: 'btn btn-primary', role: 'button' %>
+        <div>
+          <%= f.submit "Create Themes", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
