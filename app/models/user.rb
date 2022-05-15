@@ -9,4 +9,10 @@ class User < ApplicationRecord
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy
+
+  def self.looks(word)
+    user = User.where("name LIKE?","%#{word}%")
+    user
+  end
+
 end

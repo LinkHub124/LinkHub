@@ -11,4 +11,10 @@ class Theme < ApplicationRecord
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
+
+  def self.looks(word)
+    theme = Theme.where("title LIKE?","%#{word}%")
+    theme
+  end
+
 end
