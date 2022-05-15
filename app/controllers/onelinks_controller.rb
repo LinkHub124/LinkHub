@@ -1,2 +1,0 @@
-class OnelinksController < ApplicationController
-end

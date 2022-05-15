@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   get    '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
   post   '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
   patch  '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
+  post   '/:user_name/themes/:theme_hashid/favorites' => 'favorites#create', as: 'theme_favorites'
+  delete '/:user_name/themes/:theme_hashid/favorites' => 'favorites#destroy'
+  get    '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
 end

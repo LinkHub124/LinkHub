@@ -1,4 +1,5 @@
-<p><h1>マイページ</h1></p>
+<p><h1><%= @user.name %>の投稿一覧ページ</h1></p>
+<p><%= link_to "Favorite一覧ページへ" , user_favorites_path(user_name: @user.name) %></p>
 
 <table>
   <thead>
@@ -8,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @theme_all.each do |theme| %>
+    <% @user.themes.each do |theme| %>
     <tr>
       <td><%= theme.title %></td>
       <td><%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>

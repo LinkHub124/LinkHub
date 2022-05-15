@@ -1,0 +1,27 @@
+<p><h1><%= @user.name %>のFavorite一覧ページ</h1></p>
+<p><%= link_to "投稿一覧ページへ" , user_path(user_name: @user.name) %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.favorites.each do |favorite| %>
+    <tr>
+      <td><%= favorite.theme.title %></td>
+      <td><%= link_to "Show", theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></td>
+      <td><%= link_to "Edit", edit_theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+<%= link_to 'New Theme', new_theme_path, remote: true, class: "btn btn-primary" %>
+<div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+

@@ -12,6 +12,9 @@
   <body>
     <% if user_signed_in? %>
       <li>
+        私の名前は<%= current_user.name %>です
+      </li>
+      <li>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       </li>
     <% else %>
