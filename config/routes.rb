@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  get 'relationships/followings'
+  get 'relationships/followers'
   devise_for :users
   root to: 'themes#index'
-  get    "search" => "searches#search", as: "search"
+  get    "/search" => "searches#search", as: "search"
   get    '/:user_name' => 'users#show', as: 'user'
   get    '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   post   '/:user_name' => 'themes#create', as: 'themes'
@@ -13,5 +15,8 @@ Rails.application.routes.draw do
   post   '/:user_name/themes/:theme_hashid/favorites' => 'favorites#create', as: 'theme_favorites'
   delete '/:user_name/themes/:theme_hashid/favorites' => 'favorites#destroy'
   get    '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
-
+  post   '/:user_name/relationships' => 'relationships#create', as: 'user_relationships'
+  delete '/:user_name/relationships' => 'relationships#destroy'
+  get    '/:user_name/followings' => 'relationships#followings', as: 'user_followings'
+  get    '/:user_name/followers' => 'relationships#followers', as: 'user_followers'
 end

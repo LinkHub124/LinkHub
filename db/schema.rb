@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_15_051518) do
+ActiveRecord::Schema.define(version: 2022_05_15_103601) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 2022_05_15_051518) do
   create_table "one_links", force: :cascade do |t|
     t.integer "link_id"
     t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
