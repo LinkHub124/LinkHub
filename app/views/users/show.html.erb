@@ -11,8 +11,8 @@
     <% @theme_all.each do |theme| %>
     <tr>
       <td><%= theme.title %></td>
-      <td><%= link_to "Show", theme_path(theme_hashid: theme.hashid) %></td>
-      <td><%= link_to "Edit", edit_theme_path(theme_hashid: theme.hashid) %></td>
+      <td><%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>
+      <td><%= link_to "Edit", edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>
     </tr>
     <% end %>
   </tbody>

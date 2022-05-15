@@ -4,7 +4,7 @@
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-8 offset-md-1'>
-      <% @link_all.each do |link| %>
+      <% @theme.links.each do |link| %>
         <div class='border border-secondary rounded'>
           <p><%= link.subtitle %></p>
           <p><%= link.caption %></p>
@@ -26,4 +26,10 @@
     </div>
   </div>
 </div>
-
+<%= form_with model: @theme, url: update_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), method: :patch do |f| %>
+  <%= f.text_field :title %>
+  <%= f.radio_button :status, 0, checked: true %> Draft
+  <%= f.radio_button :status, 1 %> Limited
+  <%= f.radio_button :status, 2 %> Released
+  <%= f.submit "更新" %>
+<% end %>

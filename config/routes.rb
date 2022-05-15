@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get    '/:user_name/themes/:theme_hashid/edit' => 'themes#edit', as: 'edit_theme'
   get    '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
   post   '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
+  patch  '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
 end

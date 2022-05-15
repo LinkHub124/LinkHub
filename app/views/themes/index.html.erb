@@ -1,0 +1,5 @@
+<p><h1>タイムライン</h1></p>
+<% @theme_released_all.each do |theme| %>
+  <p>ユーザー：<%= theme.user.name %></p>
+  <p>テーマ：<%= theme.title %></p>
+<% end %>

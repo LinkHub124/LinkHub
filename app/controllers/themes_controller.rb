@@ -4,29 +4,37 @@ class ThemesController < ApplicationController
   end
 
   def index
+    @theme_released_all = Theme.where(status: 2)
   end
 
   def create
     theme = Theme.new(theme_params)
-    theme.status = Theme.statuses[:draft]
+    theme.status = 0
     theme.user_id = current_user.id
     theme.save
-    # binding.pry
-    # redirect_to user_path(current_user.name)
-    redirect_to edit_theme_path(theme_hashid: theme.hashid)
+    redirect_to edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
   def show
     @theme = Theme.find(params[:theme_hashid])
+    @user = User.find_by(name: params[:user_name])
+    unless @theme.user == @user
+      redirect_to root_path
+    end
   end
 
   def edit
     @theme = Theme.find(params[:theme_hashid])
-    @link_all = @theme.links
+  end
+
+  def update
+    theme = Theme.find(params[:theme_hashid])
+    theme.update(theme_params)
+    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
   private
     def theme_params
-      params.require(:theme).permit(:title)
+      params.require(:theme).permit(:title, :status)
     end
 end
