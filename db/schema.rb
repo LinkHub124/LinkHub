@@ -22,8 +22,6 @@ ActiveRecord::Schema.define(version: 2022_05_14_044723) do
   end
 
   create_table "one_links", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "theme_id"
     t.integer "link_id"
     t.string "url"
     t.datetime "created_at", null: false
@@ -33,6 +31,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_044723) do
   create_table "themes", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

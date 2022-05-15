@@ -1,13 +1,13 @@
-<p><h1>テーマ詳細ページ</h1></p>
+<p><h1>テーマ編集ページ</h1></p>
 <p><h1><%= @theme.title %></h1></p>
 
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-8 offset-md-1'>
-      <% @theme.links.each do |link| %>
+      <% @link_all.each do |link| %>
         <div class='border border-secondary rounded'>
-          <p>SUBTITLE: <%= link.subtitle %></p>
-          <p>CAPTION: <%= link.caption %></p>
+          <p><%= link.subtitle %></p>
+          <p><%= link.caption %></p>
           <table class="table table-striped table-bordered table-hover">
             <tbody>
               <% link.one_links.each do |one_link| %>
@@ -19,6 +19,10 @@
           </table>
         </div>
       <% end %>
+      <%= link_to 'Add Links', new_theme_link_path, remote: true, class: "btn btn-primary" %>
+      <div id="links-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+
     </div>
   </div>
 </div>

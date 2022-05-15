@@ -1,5 +1,26 @@
-<p>マイページ</p>
+<p><h1>マイページ</h1></p>
 
-<% @theme_all.each do |theme| %>
-  <p><%= theme.title %></p>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @theme_all.each do |theme| %>
+    <tr>
+      <td><%= theme.title %></td>
+      <td><%= link_to "Show", theme_path(theme_hashid: theme.hashid) %></td>
+      <td><%= link_to "Edit", edit_theme_path(theme_hashid: theme.hashid) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+<%= link_to 'New Theme', new_theme_path, remote: true, class: "btn btn-primary" %>
+<div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+

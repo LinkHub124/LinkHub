@@ -1,0 +1,16 @@
+<div id="theme-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_with model:theme_new, remote: true do |f| %>
+        <%= link_to "Back", themes_path, class: "btn btn-danger" %>
+        <div class="form-group">
+          <%= f.label :title %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+        <div>
+          <%= f.submit "Create Theme", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
