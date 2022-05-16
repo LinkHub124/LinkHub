@@ -1,5 +1,28 @@
 <p><h1>タイムライン</h1></p>
-<% @theme_released_all.each do |theme| %>
-  <p>ユーザー：<%= theme.user.name %></p>
-  <p>テーマ：<%= theme.title %></p>
-<% end %>
+
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>User</th>
+      <th>Theme</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @theme_released_all.each do |theme| %>
+      <tr>
+        <td></td>
+        <td>
+          <%= link_to theme.user.name, user_path(user_name: theme.user.name) %>
+        </td>
+        <td>
+          <%= theme.title %>
+        </td>
+        <td>
+          <%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

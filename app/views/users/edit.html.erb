@@ -1,0 +1,9 @@
+Settings
+
+<h1>プロフィール編集</h1>
+
+<%= form_with model: current_user, url: update_user_path(user_name: current_user.name), method: :patch do |f| %>
+  <div>現在のユーザーネーム: <%= current_user.name%></div>
+  <div>変更後のユーザーネーム: <%= f.text_field :name %></div>
+  <div><%= f.submit "保存" %></div>
+<% end %>

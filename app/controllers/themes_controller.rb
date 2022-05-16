@@ -1,4 +1,6 @@
 class ThemesController < ApplicationController
+  before_action :correct_user, only: [:edit, :update, :destroy]
+
   def new
     @theme_new = Theme.new
   end
@@ -33,8 +35,19 @@ class ThemesController < ApplicationController
     redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
+  def destroy
+  end
+
   private
+
     def theme_params
       params.require(:theme).permit(:title, :status)
+    end
+
+    def correct_user
+      user = User.find_by(name: params[:user_name])
+      unless user.id == current_user.id
+        redirect_to root_path
+      end
     end
 end

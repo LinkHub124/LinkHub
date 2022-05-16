@@ -26,7 +26,9 @@
   </tbody>
 </table>
 
-<table>
+
+
+<table class='table table-hover table-inverse'>
   <thead>
     <tr>
       <th>Title</th>
@@ -38,7 +40,11 @@
     <tr>
       <td><%= theme.title %></td>
       <td><%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>
-      <td><%= link_to "Edit", edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>
+      <td>
+        <% if @user == current_user %>
+          <%= link_to "Edit", edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>
@@ -46,7 +52,7 @@
 
 
 
-<% if current_user == @user %>
+<% if @user == current_user %>
   <%= link_to 'New Theme', new_theme_path, remote: true, class: "btn btn-success" %>
   <div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <% end %>

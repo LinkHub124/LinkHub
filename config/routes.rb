@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  get 'relationships/followings'
-  get 'relationships/followers'
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "users/registrations"
+  }
   root to: 'themes#index'
-  get    "/search" => "searches#search", as: "search"
+  get    '/search' => 'searches#search', as: 'search'
+  get    '/settings' => 'users#edit', as: 'edit_user'
+  patch  '/settings' => 'users#update', as: 'update_user'
   get    '/:user_name' => 'users#show', as: 'user'
   get    '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   post   '/:user_name' => 'themes#create', as: 'themes'
