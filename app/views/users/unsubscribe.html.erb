@@ -1,8 +1,17 @@
 <h2>退会お手続き</h2>
+
 <p>
  退会手続きをされますと、全てのサービスがご利用いただけなくなります。<br>
  再度ご利用をいただく場合には、新規登録のお手続きが必要になります。<br>
  本当に退会してよろしいですか？
 </p>
-<%= link_to "退会する", withdrawal_path, method: :patch, data: { confilm: "本当に退会しますか？" } %>
-<%= link_to "退会しない", edit_user_registration_path %>
+
+<%= form_with model: current_user, url: withdrawal_path, method: :patch do |f| %>
+  <div class="form-group">
+    <%= f.password_field :current_password, autocomplete: "current-password",class: "form-control", placeholder: "パスワードを入力" %>
+  </div>
+  <%= f.submit "退会する" %>
+  <%= link_to "退会しない", edit_user_registration_path, class: "link-below-user-form" %>
+<% end %>
+
+<%# link_to "退会する", withdrawal_path, method: :patch, data: { confilm: "本当に退会しますか？" } %>
