@@ -69,7 +69,7 @@ Rails.application.configure do
     domain:               'smtp.gmail.com',
     user_name:            ENV['GOOGLE_MAIL_ADDRESS'],
     password:             ENV['GOOGLE_MAILER_PASSWORD'],
-    authentication:       'login',
+    authentication:       'plain',
     enable_starttls_auto: true
   }
 end

@@ -2,13 +2,15 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :themes, dependent: :destroy
   has_many :links, dependent: :destroy
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy
+
+  validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true
 
   def self.looks(word)
     user = User.where("name LIKE?","%#{word}%")
