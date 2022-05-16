@@ -6,4 +6,5 @@ Settings
   <div>現在のユーザーネーム: <%= current_user.name%></div>
   <div>変更後のユーザーネーム: <%= f.text_field :name %></div>
   <div><%= f.submit "保存" %></div>
+  <p><%= link_to "退会はこちら", unsubscribe_path %></p>
 <% end %>

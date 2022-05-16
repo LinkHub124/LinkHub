@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get    '/search' => 'searches#search', as: 'search'
   get    '/settings' => 'users#edit', as: 'edit_user'
   patch  '/settings' => 'users#update', as: 'update_user'
+  get    '/settings/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
+  patch  '/settings/withdrawal' => 'users#withdrawal', as: 'withdrawal'
   get    '/:user_name' => 'users#show', as: 'user'
   get    '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   post   '/:user_name' => 'themes#create', as: 'themes'

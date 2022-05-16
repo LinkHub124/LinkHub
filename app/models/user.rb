@@ -23,6 +23,10 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
+
   # フォローしたときの処理
   def follow(user_name)
     user = User.find_by(name: user_name)

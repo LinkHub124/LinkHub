@@ -10,6 +10,11 @@
   </head>
 
   <body>
+    <% flash.each do |key, value| %>
+      <p class="alert alert-<%= key %>">
+        <%= value %>
+      </p>
+    <% end %>
     <% if user_signed_in? %>
       <li>
         私の名前は<%= link_to current_user.name, edit_user_path %>です
