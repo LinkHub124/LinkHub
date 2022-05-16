@@ -17,7 +17,7 @@
     <% end %>
     <% if user_signed_in? %>
       <li>
-        私の名前は<%= link_to current_user.name, edit_user_path %>です
+        私の名前は<%= link_to current_user.name, edit_user_registration_path %>です
       </li>
       <li>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>

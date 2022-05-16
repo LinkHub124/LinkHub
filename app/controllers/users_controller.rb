@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:update]
 
   def show
     @user = User.find_by(name: params[:user_name])
   end
 
-  def edit
-  end
 
   def update
     if current_user.update(user_params)
