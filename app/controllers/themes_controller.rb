@@ -1,5 +1,6 @@
 class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :is_draft, only: [:show]
 
   def new
     @theme_new = Theme.new
@@ -7,6 +8,7 @@ class ThemesController < ApplicationController
 
   def index
     @theme_released_all = Theme.where(status: 2)
+    @users = User.all
   end
 
   def create
@@ -18,8 +20,6 @@ class ThemesController < ApplicationController
   end
 
   def show
-    @theme = Theme.find(params[:theme_hashid])
-    @user = User.find_by(name: params[:user_name])
     unless @theme.user == @user
       redirect_to root_path
     end
@@ -50,4 +50,23 @@ class ThemesController < ApplicationController
         redirect_to root_path
       end
     end
+
+    def is_draft
+      @theme = Theme.find(params[:theme_hashid])
+      @user = User.find_by(name: params[:user_name])
+      # @theme = Theme.find_by_hashid(params[:theme_hashid], user_id: @user.id)
+      # binding.pry
+      # 自分以外で下書き状態ならroot_pathに飛ばす
+      if @user.id != current_user.id and @theme.status == 0
+        redirect_to root_path
+      end
+    end
+
+    # def calculate_user_score
+    #   @user_all = User.all
+    #   @user_all.each{ |user|
+    #     user.score  = 0
+    #     user.score += user
+    #   }
+    # end
 end

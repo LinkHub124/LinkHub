@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
 
   def update
+    binding.pry
     if current_user.update(user_params)
       redirect_to user_path(user_name: current_user.name)
     else
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.fetch(:user, {}).permit(:name)
+      params.fetch(:user, {}).permit(:name, :profile_image)
     end
 
 end

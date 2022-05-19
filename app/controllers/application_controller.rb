@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
     # 新規登録時にemailの取得を許可
     devise_parameter_sanitizer.permit(:sign_up, keys:[:email])
     # 情報更新時にnicknameの取得を許可
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :profile_image])
   end
 end

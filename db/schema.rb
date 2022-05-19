@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2022_05_15_103601) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "name"
+    t.string "profile_image_id"
+    t.integer "score", default: 0
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

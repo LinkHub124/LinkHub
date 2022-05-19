@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+
+  attachment :profile_image # ここを追加（_idは含めません）
+
   has_many :themes, dependent: :destroy
   has_many :links, dependent: :destroy
   # has_many :one_links, dependent: :destroy

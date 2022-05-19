@@ -1,3 +1,22 @@
 <p><h1><%= @user.name %>のフォロワー一覧ページ</h1></p>
 
-<%= render "follow_list", users: @users %>
+
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>User</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.followers.each do |user| %>
+      <tr>
+        <td>
+          <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
+        </td>
+        <td><%= link_to user.name, user_path(user_name: user.name) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -24,16 +24,22 @@
   </div>
 </div>
 
-<% if @theme.favorited_by?(current_user) %>
+<% if @user == current_user %>
+  <%= link_to 'Edit Links', edit_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), class: "btn btn-success" %>
+<% end %>
+
+<% if @theme.status == 2 and @theme.user != current_user %>
+  <% if @theme.favorited_by?(current_user) %>
     <p>
       <%= link_to theme_favorites_path(@theme), method: :delete do %>
         ♥<%= @theme.favorites.count %> いいね
       <% end %>
     </p>
-    <% else %>
+  <% else %>
     <p>
       <%= link_to theme_favorites_path(@theme), method: :post do %>
         ♡<%= @theme.favorites.count %> いいね
       <% end %>
     </p>
   <% end %>
+<% end %>

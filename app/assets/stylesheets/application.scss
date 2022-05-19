@@ -14,3 +14,38 @@
  *= require_self
  */
 @import "bootstrap";
+
+body {
+  background-color: #f4f4f4;
+}
+
+.text-coloring {
+  color: #f48c1c;
+}
+
+.btn-energy {
+  background-color: #f48c1c;
+  color: #fff;
+}
+
+.card-content {
+  background-color: #fff;
+  border-left: solid 5px #f48c1c;
+  width: 50%;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.card-content-header {
+  padding: 10px 0px 0px 10px;
+}
+
+.card-content-main {
+  padding-left: 50px;
+  font-size: 24px;
+}
+
+.card-content-footer {
+  padding-left: 50px;
+  padding-bottom: 10px;
+}

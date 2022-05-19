@@ -1,5 +1,4 @@
 class SearchesController < ApplicationController
-  before_action :authenticate_user!
 
   def search
     @theme_searched  = Theme.looks(params[:word])
@@ -12,5 +11,7 @@ class SearchesController < ApplicationController
       @theme_searched += user.themes
     }
     @theme_searched = @theme_searched.uniq
+    @theme_searched = @theme_searched.select { |theme| theme.status == 2 }
+
   end
 end

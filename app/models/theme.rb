@@ -6,6 +6,8 @@ class Theme < ApplicationRecord
 
   has_many :favorites, dependent: :destroy
 
+  validates :title, presence: true, length: { maximum: 30 }
+
   include Hashid::Rails
 
   def favorited_by?(user)

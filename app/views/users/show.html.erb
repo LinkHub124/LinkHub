@@ -30,27 +30,20 @@
 
 
 
-<table class='table table-hover table-inverse'>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.themes.each do |theme| %>
-    <tr>
-      <td><%= theme.title %></td>
-      <td><%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></td>
-      <td>
-        <% if @user == current_user %>
-          <%= link_to "Edit", edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %>
+<% @user.themes.each do |theme| %>
+  <% if theme.status == 2 or @user == current_user %>
+    <div class="card-content">
+      <div class="card-content-header">
+        <%= link_to user_path(user_name: theme.user.name) do %>
+          <%= attachment_image_tag theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+          <%= theme.user.name %>
         <% end %>
-      </td>
-    </tr>
+      </div>
+      <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
+      <div class="card-content-footer">♡<%= theme.favorites.count %></div>
+    </div>
     <% end %>
-  </tbody>
-</table>
+<% end %>
 
 
 

@@ -1,26 +1,37 @@
 <p><h1>タイムライン</h1></p>
 
+  <% @theme_released_all.each do |theme| %>
+    <div class="card-content">
+      <div class="card-content-header">
+        <%= link_to user_path(user_name: theme.user.name) do %>
+          <%= attachment_image_tag theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+          <%= theme.user.name %>
+        <% end %>
+      </div>
+      <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
+      <div class="card-content-footer">♡<%= theme.favorites.count %></div>
+    </div>
+  <% end %>
+
 <table class='table table-hover table-inverse'>
   <thead>
     <tr>
       <th></th>
       <th>User</th>
-      <th>Theme</th>
-      <th></th>
+      <th>Score</th>
     </tr>
   </thead>
   <tbody>
-    <% @theme_released_all.each do |theme| %>
+    <% @users.each do |user| %>
       <tr>
-        <td></td>
         <td>
-          <%= link_to theme.user.name, user_path(user_name: theme.user.name) %>
+          <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
         </td>
         <td>
-          <%= theme.title %>
+          <%= link_to user.name, user_path(user_name: user.name) %>
         </td>
         <td>
-          <%= link_to "Show", theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %>
+          <%= user.score %>
         </td>
       </tr>
     <% end %>

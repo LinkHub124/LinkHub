@@ -8,15 +8,20 @@
           <%= f.label :name, "ユーザー名" %>
           <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 10 %>
         </div>
+        <div class="form-group">
+          <%= f.label :profile_image %>
+          <%= f.attachment_field :profile_image, class: "form-control-file" %>
+        </div>
         <div class = 'form-group'>
           <%= f.label :email, "メールアドレス" %>
-          <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "xxx@email.com" %>
+          <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "xxx@gmail.com" %>
         </div>
+
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
         <div class="form-group">
-          <%= f.label :password, "パスワード変更" %><i> (変更したい場合)</i>
+          <%= f.label :password, "パスワード変更(変更したい場合)" %>
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "半角英数6文字以上" %>
         </div>
         <div class="form-group">
@@ -24,7 +29,7 @@
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "再度ご入力ください" %>
         </div>
         <div class="form-group">
-          <%= f.label :current_password %> <i>(変更にはパスワードが必要です)</i><br />
+          <%= f.label :current_password %> (変更にはパスワードが必要です)<br />
           <%= f.password_field :current_password, autocomplete: "current-password",class: "form-control", placeholder: "必須項目です" %>
         </div>
         <%= f.submit "変更する", class: "btn btn-primary form-submit-btn" %>

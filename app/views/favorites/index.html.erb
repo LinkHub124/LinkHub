@@ -10,29 +10,24 @@
 <% end %>
 
 
-フォロー数: <%= @user.followings.count %></td>
+      <td>フォロー数: <%= @user.followings.count %></td>
       <td>フォロワー数: <%= @user.followers.count %></td>
-    </tr>
-  </tbody>
-</table>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.favorites.each do |favorite| %>
-    <tr>
-      <td><%= favorite.theme.title %></td>
-      <td><%= link_to "Show", theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></td>
-      <td><%= link_to "Edit", edit_theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+
+<% @user.favorites.each do |favorite| %>
+  <% if favorite.theme.status == 2 %>
+    <div class="card-content">
+      <div class="card-content-header">
+        <%= link_to user_path(user_name: favorite.theme.user.name) do %>
+          <%= attachment_image_tag favorite.theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+          <%= favorite.theme.user.name %>
+        <% end %>
+      </div>
+      <div class="card-content-main"><%= link_to favorite.theme.title, theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></div>
+      <div class="card-content-footer">♡<%= favorite.theme.favorites.count %></div>
+    </div>
+  <% end %>
+<% end %>
 
 
 
