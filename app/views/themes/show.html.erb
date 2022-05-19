@@ -29,17 +29,7 @@
 <% end %>
 
 <% if @theme.status == 2 and @theme.user != current_user %>
-  <% if @theme.favorited_by?(current_user) %>
-    <p>
-      <%= link_to theme_favorites_path(@theme), method: :delete do %>
-        ♥<%= @theme.favorites.count %> いいね
-      <% end %>
-    </p>
-  <% else %>
-    <p>
-      <%= link_to theme_favorites_path(@theme), method: :post do %>
-        ♡<%= @theme.favorites.count %> いいね
-      <% end %>
-    </p>
-  <% end %>
+  <p id="favorite_buttons_<%= @theme.id %>">
+　　<%= render "favorites/favorite", theme: @theme %>
+　</p>
 <% end %>

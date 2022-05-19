@@ -40,7 +40,7 @@
         <% end %>
       </div>
       <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
-      <div class="card-content-footer">♡<%= theme.favorites.count %></div>
+      <div class="card-content-footer">Like <%= theme.favorites.count %></div>
     </div>
     <% end %>
 <% end %>

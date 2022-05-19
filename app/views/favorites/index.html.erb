@@ -24,7 +24,7 @@
         <% end %>
       </div>
       <div class="card-content-main"><%= link_to favorite.theme.title, theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></div>
-      <div class="card-content-footer">♡<%= favorite.theme.favorites.count %></div>
+      <div class="card-content-footer">Like <%= favorite.theme.favorites.count %></div>
     </div>
   <% end %>
 <% end %>
