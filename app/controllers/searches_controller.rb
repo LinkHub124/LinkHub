@@ -1,6 +1,9 @@
 class SearchesController < ApplicationController
 
   def search
+    if params[:word].length < 2
+      redirect_back(fallback_location: root_path)
+    end
     @theme_searched  = Theme.looks(params[:word])
     link_searched = Link.looks(params[:word])
     link_searched.each{ |link|

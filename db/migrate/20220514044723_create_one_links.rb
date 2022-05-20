@@ -3,6 +3,7 @@ class CreateOneLinks < ActiveRecord::Migration[5.2]
     create_table :one_links do |t|
       t.integer :link_id
       t.string :url
+      t.string :url_title
 
       t.timestamps
     end

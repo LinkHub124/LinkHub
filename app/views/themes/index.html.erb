@@ -1,39 +1,15 @@
 <p><h1>タイムライン</h1></p>
 
-  <% @theme_released_all.each do |theme| %>
-    <div class="card-content">
-      <div class="card-content-header">
-        <%= link_to user_path(user_name: theme.user.name) do %>
-          <%= attachment_image_tag theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-          <%= theme.user.name %>
-        <% end %>
-      </div>
-      <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
-      <div class="card-content-footer">Like <%= theme.favorites.count %></div>
+<% @theme_released_all.each do |theme| %>
+  <div class="card-content">
+    <div class="card-content-header">
+      <%= link_to user_path(user_name: theme.user.name) do %>
+        <%= attachment_image_tag theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+        <%= theme.user.name %>
+      <% end %>
     </div>
-  <% end %>
+    <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
+    <div class="card-content-footer">Like <%= theme.favorites.count %></div>
+  </div>
+<% end %>
 
-<table class='table table-hover table-inverse'>
-  <thead>
-    <tr>
-      <th></th>
-      <th>User</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td>
-          <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
-        </td>
-        <td>
-          <%= link_to user.name, user_path(user_name: user.name) %>
-        </td>
-        <td>
-          <%= user.score %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

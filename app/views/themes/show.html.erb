@@ -13,6 +13,7 @@
             <tbody>
               <% link.one_links.each do |one_link| %>
                 <tr>
+                  <td><%= one_link.url_title %></td>
                   <td><a href="<% one_link.url %>"><%= one_link.url %></a></td>
                 </tr>
               <% end %>
@@ -26,6 +27,7 @@
 
 <% if @user == current_user %>
   <%= link_to 'Edit Links', edit_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), class: "btn btn-success" %>
+  <%= link_to 'Destroy Links', destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), method: :delete, "data-confirm": "本当に消しますか？", class: "btn btn-danger" %>
 <% end %>
 
 <% if @theme.status == 2 and @theme.user != current_user %>

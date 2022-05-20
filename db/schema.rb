@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2022_05_15_103601) do
   create_table "one_links", force: :cascade do |t|
     t.integer "link_id"
     t.string "url"
+    t.string "url_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

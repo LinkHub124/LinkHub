@@ -36,6 +36,9 @@ class ThemesController < ApplicationController
   end
 
   def destroy
+    theme = Theme.find(params[:theme_hashid])
+    theme.destroy
+    redirect_to user_path(user_name: theme.user.name)
   end
 
   private
