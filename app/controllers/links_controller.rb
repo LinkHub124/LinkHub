@@ -10,20 +10,38 @@ class LinksController < ApplicationController
     link_new = Link.new(link_params)
     link_new.user_id = current_user.id
     link_new.theme_id = theme.id
-    agent = Mechanize.new
+
+
     link_new.one_links.each{ |one_link|
-      begin
-        page = agent.get(one_link.url)
-      rescue
-        one_link.url_title = "不正なURLです"
-      else
-        element = page.search('title')
-        if element.inner_text == ""
-          one_link.url_title = "タイトルなし"
-        else
-          one_link.url_title = element.inner_text
-        end
+
+      url = one_link.url
+      charset = nil
+
+      # ここの部分をキャッシュの有無で場合分けしたい
+      html = OpenURI.open_uri(url) do |f|
+        charset = f.charset # 文字種別を取得
+        f.read # htmlを読み込んで変数htmlに渡す
       end
+
+
+      # ノコギリを使ってhtmlを解析
+      doc = Nokogiri::HTML.parse(html, charset)
+
+      # title
+      if doc.css('//meta[property="og:title"]/@content').empty?
+        one_link.url_title = doc.title.to_s
+      else
+        one_link.url_title = doc.css('//meta[property="og:title"]/@content').to_s
+      end
+
+      # description
+      if doc.css('//meta[property="og:description"]/@content').empty?
+        one_link.url_description = doc.css('//meta[name$="escription"]/@content').to_s
+      else
+        one_link.url_description = doc.css('//meta[property="og:description"]/@content').to_s
+      end
+
+      one_link.url_image = doc.css('//meta[property="og:image"]/@content').to_s
 
     }
     link_new.save
@@ -37,20 +55,39 @@ class LinksController < ApplicationController
 
   def update
     link = Link.find(params[:link_hashid]);
-    agent = Mechanize.new
     link.one_links.each{ |one_link|
-      begin
-        page = agent.get(one_link.url)
-      rescue
-        one_link.url_title = "不正なURLです"
-      else
-        element = page.search('title')
-        if element.inner_text == ""
-          one_link.url_title = "タイトルなし"
-        else
-          one_link.url_title = element.inner_text
-        end
+      url = one_link.url
+      charset = nil
+
+      # ここの部分をキャッシュの有無で場合分けしたい
+      html = OpenURI.open_uri(url) do |f|
+        charset = f.charset # 文字種別を取得
+        f.read # htmlを読み込んで変数htmlに渡す
       end
+
+
+      # ノコギリを使ってhtmlを解析
+      doc = Nokogiri::HTML.parse(html, charset)
+
+      # title
+      if doc.css('//meta[property="og:title"]/@content').empty?
+        one_link.url_title = doc.title.to_s
+      else
+        one_link.url_title = doc.css('//meta[property="og:title"]/@content').to_s
+      end
+
+      if one_link.url_title == ""
+        one_link.url_title = "タイトルなし"
+      end
+
+      # description
+      if doc.css('//meta[property="og:description"]/@content').empty?
+        one_link.url_description = doc.css('//meta[name$="escription"]/@content').to_s
+      else
+        one_link.url_description = doc.css('//meta[property="og:description"]/@content').to_s
+      end
+
+      one_link.url_image = doc.css('//meta[property="og:image"]/@content').to_s
     }
     link.update(link_params)
     redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])

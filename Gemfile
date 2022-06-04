@@ -80,3 +80,6 @@ gem 'mechanize'
 
 gem 'cloudinary'
 gem 'meta-tags'
+
+gem 'nokogiri'
+gem 'open-uri'

@@ -14,7 +14,15 @@
               <% link.one_links.each do |one_link| %>
                 <tr>
                   <td><%= one_link.url_title %></td>
-                  <td><%= link_to one_link.url, one_link.url, target: "_blank", rel: "noopenner noreferrer" %></td>
+                  <td>
+                    <%= link_to one_link.url, target: "_blank", rel: "noopenner noreferrer" do %>
+                      <% if one_link.url_image == nil %>
+                        <%= one_link.url %>
+                      <% else %>
+                        <%= image_tag one_link.url_image %>
+                      <% end %>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

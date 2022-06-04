@@ -96,6 +96,7 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
+    date (3.2.2)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -177,6 +178,10 @@ GEM
     nokogiri (1.13.6)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    open-uri (0.2.0)
+      stringio
+      time
+      uri
     orm_adapter (0.5.0)
     popper_js (1.16.0)
     pry (0.14.1)
@@ -277,9 +282,12 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stringio (3.0.2)
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    time (0.2.0)
+      date
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -290,6 +298,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.1)
+    uri (0.11.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (3.7.0)
@@ -325,6 +334,8 @@ DEPENDENCIES
   mechanize
   meta-tags
   nested_form_fields
+  nokogiri
+  open-uri
   pry-rails
   puma (~> 3.11)
   rails (~> 5.2.6)
