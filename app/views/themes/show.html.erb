@@ -19,7 +19,7 @@
                       <% if one_link.url_image == nil %>
                         <%= one_link.url %>
                       <% else %>
-                        <%= image_tag one_link.url_image %>
+                        <%= image_tag one_link.url_image, size: '360x189' %>
                       <% end %>
                     <% end %>
                   </td>
