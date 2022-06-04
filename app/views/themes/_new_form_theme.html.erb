@@ -3,7 +3,7 @@
     <div class="modal-content">
 
       <%= form_with model:theme_new, remote: true do |f| %>
-        <%= link_to "Back", themes_path(user_name: current_user.name), class: "btn btn-danger" %>
+        <%= link_to "Back", close_new_theme_path(user_name: current_user.name), remote:true, class: "btn btn-danger" %>
         <div class="form-group">
           <%= f.label :title %>
           <%= f.text_field :title, class: "form-control" %>

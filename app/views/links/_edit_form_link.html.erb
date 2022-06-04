@@ -16,7 +16,7 @@
         <table class="table table-striped table-bordered table-hover">
           <tbody>
             <%= f.nested_fields_for :one_links, wrapper_tag: :tr do |q| %>
-              <td><%= q.text_field :url,     class: 'form-control' %></td>
+              <td><%= q.text_field :url, class: 'form-control' %></td>
               <td><%= q.remove_nested_fields_link 'Delete', class: 'btn btn-danger', role: 'button' %></td>
             <% end %>
           </tbody>

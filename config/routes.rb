@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   patch  '/users/withdrawal' => 'users#withdrawal', as: 'withdrawal'
   get    '/:user_name' => 'users#show', as: 'user'
   get    '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
+  get    '/:user_name/themes/close_new' => 'themes#close_new', as: 'close_new_theme'
   post   '/:user_name' => 'themes#create', as: 'themes'
   get    '/:user_name/themes/:theme_hashid' => 'themes#show', as: 'theme'
   get    '/:user_name/themes/:theme_hashid/edit' => 'themes#edit', as: 'edit_theme'
@@ -30,4 +31,6 @@ Rails.application.routes.draw do
   delete '/:user_name/relationships' => 'relationships#destroy'
   get    '/:user_name/followings' => 'relationships#followings', as: 'user_followings'
   get    '/:user_name/followers' => 'relationships#followers', as: 'user_followers'
+  get    '*not_found' => 'application#routing_error'
+  post   '*not_found' => 'application#routing_error'
 end

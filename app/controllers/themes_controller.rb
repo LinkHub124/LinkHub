@@ -7,14 +7,19 @@ class ThemesController < ApplicationController
   end
 
   def index
-    @theme_released_all = Theme.includes(:favorited_users).sort {|a, b| b.favorited_users.size <=> a.favorited_users.size}
-    @theme_released_all = @theme_released_all.select { |theme| theme.status == 2 }
+    # @theme_released_all = Theme.includes(:favorited_users).sort {|a, b| b.favorited_users.size <=> a.favorited_users.size}
+    # @theme_released_all = @theme_released_all.select { |theme| theme.status == 2 }
+    @theme_released_all = Theme.where(status: 2)
+    @theme_released_all = @theme_released_all.reverse
     @users = User.all
   end
 
   def timeline
+    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], status: 2)
+    @theme_released_following = @theme_released_following.reverse
     @theme_released_all = Theme.where(status: 2)
     @theme_released_all = @theme_released_all.reverse
+
     @users = User.all
   end
 
@@ -28,7 +33,7 @@ class ThemesController < ApplicationController
 
   def show
     unless @theme.user == @user
-      redirect_to root_path
+      render "errors/404.html", status: :not_found#, layout: "error"
     end
   end
 
@@ -57,7 +62,7 @@ class ThemesController < ApplicationController
     def correct_user
       user = User.find_by(name: params[:user_name])
       unless user.id == current_user.id
-        redirect_to root_path
+        render "errors/404.html", status: :not_found#, layout: "error"
       end
     end
 
@@ -69,7 +74,7 @@ class ThemesController < ApplicationController
       # 自分以外で下書き状態ならroot_pathに飛ばす
       # 本当は404NotFoundにしたい
       if (current_user == nil or @user.id != current_user.id) and @theme.status == 0
-        redirect_to root_path
+        render "errors/404.html", status: :not_found#, layout: "error"
       end
     end
 

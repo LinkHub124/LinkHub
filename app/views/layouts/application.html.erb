@@ -19,6 +19,8 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
+                <li><%= link_to 'New Theme', new_theme_path(user_name: current_user.name), remote: true, class: "btn btn-success" %></li>
+                <li><%= link_to "マイページ", user_path(user_name: current_user.name), class: "btn btn-success" %></li>
                 <li><%= render "searches/form_search" %></li>
                 <li>
                   <%= link_to edit_user_registration_path, class: "nav-link" do %>
@@ -48,6 +50,7 @@
           </p>
         <% end %>
       </div>
+      <div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
       <%= yield %>
 
     </main>

@@ -40,6 +40,10 @@ class LinksController < ApplicationController
           one_link.url_title = doc.css('//meta[property="og:title"]/@content').to_s
         end
 
+        if one_link.url_title == ""
+          one_link.url_title = "タイトルがありません"
+        end
+
         # description
         if doc.css('//meta[property="og:description"]/@content').empty?
           one_link.url_description = doc.css('//meta[name$="escription"]/@content').to_s
@@ -82,6 +86,10 @@ class LinksController < ApplicationController
           one_link.url_title = doc.title.to_s
         else
           one_link.url_title = doc.css('//meta[property="og:title"]/@content').to_s
+        end
+
+        if one_link.url_title == ""
+          one_link.url_title = "タイトルがありません"
         end
 
         # description
