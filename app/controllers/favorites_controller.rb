@@ -2,6 +2,7 @@ class FavoritesController < ApplicationController
 
   def index
     @user = User.find_by(name: params[:user_name])
+    @favorite_all = @user.favorites.reverse
   end
 
   def create

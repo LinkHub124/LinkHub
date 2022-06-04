@@ -7,7 +7,14 @@ class ThemesController < ApplicationController
   end
 
   def index
+    @theme_released_all = Theme.includes(:favorited_users).sort {|a, b| b.favorited_users.size <=> a.favorited_users.size}
+    @theme_released_all = @theme_released_all.select { |theme| theme.status == 2 }
+    @users = User.all
+  end
+
+  def timeline
     @theme_released_all = Theme.where(status: 2)
+    @theme_released_all = @theme_released_all.reverse
     @users = User.all
   end
 
@@ -60,7 +67,8 @@ class ThemesController < ApplicationController
       # @theme = Theme.find_by_hashid(params[:theme_hashid], user_id: @user.id)
       # binding.pry
       # 自分以外で下書き状態ならroot_pathに飛ばす
-      if @user.id != current_user.id and @theme.status == 0
+      # 本当は404NotFoundにしたい
+      if (current_user == nil or @user.id != current_user.id) and @theme.status == 0
         redirect_to root_path
       end
     end

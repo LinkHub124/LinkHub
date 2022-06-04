@@ -2,27 +2,15 @@
 <p><%= link_to "Favorite一覧ページへ" , user_favorites_path(user_name: @user.name) %></p>
 
 
+<%= render "relationships/follow", user: @user %>
+<p><%= @user.name %></p>
+<p><%= link_to "フォロー数", user_followings_path(user_name: @user.name) %>：<%= @user.followings.count %></p>
+<p><%= link_to "フォロワー数", user_followers_path(user_name: @user.name) %>：<%= @user.followers.count %></p>
 
-<% unless current_user == @user %>
-  <div id="follow_buttons_<%= @user.id %>">
-　　<%= render "relationships/follow", user: @user %>
-　</div>
-<% end %>
-
-
-<% @user.themes.each do |theme| %>
+<% @theme_all.each do |theme| %>
   <% if theme.status == 2 or @user == current_user %>
-    <div class="card-content">
-      <div class="card-content-header">
-        <%= link_to user_path(user_name: theme.user.name) do %>
-          <%= attachment_image_tag theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-          <%= theme.user.name %>
-        <% end %>
-      </div>
-      <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
-      <div class="card-content-footer">Like <%= theme.favorites.count %></div>
-    </div>
-    <% end %>
+    <%= render "themes/indiv_theme", theme: theme %>
+  <% end %>
 <% end %>
 
 

@@ -1,8 +1,9 @@
 <div id="links-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <%= form_with model:[theme, link_new], remote: true do |f| %>
 
+      <%= form_with model:[theme, link_new], remote: true do |f| %>
+        <%= link_to "Back", edit_theme_path(user_name: current_user.name, theme_hashid: theme.hashid), class: "btn btn-danger" %>
         <div class="form-group">
           <%= f.label :subtitle %>
           <%= f.text_field :subtitle, class: "form-control" %>

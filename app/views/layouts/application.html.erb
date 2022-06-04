@@ -40,30 +40,18 @@
         </div>
       </nav>
     </header>
-    <div id="notice">
-      <% flash.each do |key, value| %>
-        <p class="alert alert-<%= key %>">
-          <%= value %>
-        </p>
-      <% end %>
-    </div>
-    <!--<%# if user_signed_in? %>-->
-    <!--  <li>-->
-    <!--    私の名前は<%#= link_to current_user.name, edit_user_registration_path %>です-->
-    <!--  </li>-->
-    <!--  <li>-->
-    <!--    <%#= link_to "ログアウト", destroy_user_session_path, method: :delete %>-->
-    <!--  </li>-->
-    <!--<%# else %>-->
-    <!--  <li>-->
-    <!--    <%#= link_to "新規登録", new_user_registration_path %>-->
-    <!--  </li>-->
-    <!--  <li>-->
-    <!--    <%#= link_to "ログイン", new_user_session_path %>-->
-    <!--  </li>-->
-    <!--<%# end %>-->
+    <main>
+      <div id="notice">
+        <% flash.each do |key, value| %>
+          <p class="alert alert-<%= key %>">
+            <%= value %>
+          </p>
+        <% end %>
+      </div>
+      <%= yield %>
 
-    <%= yield %>
+    </main>
+
   </body>
 </html>
 

@@ -37,6 +37,7 @@ class LinksController < ApplicationController
 
   def update
     link = Link.find(params[:link_hashid]);
+    agent = Mechanize.new
     link.one_links.each{ |one_link|
       begin
         page = agent.get(one_link.url)

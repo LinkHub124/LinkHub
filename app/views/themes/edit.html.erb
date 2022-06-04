@@ -15,7 +15,7 @@
               <% link.one_links.each do |one_link| %>
                 <tr>
                   <td><%= one_link.url_title %></td>
-                  <td><a href="<% one_link.url %>"><%= one_link.url %></a></td>
+                  <td><%= link_to one_link.url, one_link.url %></td>
                 </tr>
               <% end %>
             </tbody>

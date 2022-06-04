@@ -11,12 +11,7 @@
   </thead>
   <tbody>
     <% @user.followers.each do |user| %>
-      <tr>
-        <td>
-          <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
-        </td>
-        <td><%= link_to user.name, user_path(user_name: user.name) %></td>
-      </tr>
+      <%= render "users/indiv_user", user: user %>
     <% end %>
   </tbody>
 </table>

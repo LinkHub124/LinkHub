@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :themes, dependent: :destroy
   has_many :links, dependent: :destroy
+  has_many :favorited_themes, through: :favorites, source: :theme
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy

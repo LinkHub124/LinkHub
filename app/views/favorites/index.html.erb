@@ -1,26 +1,15 @@
 <p><h1><%= @user.name %>のFavorite一覧ページ</h1></p>
 <p><%= link_to "投稿一覧ページへ" , user_path(user_name: @user.name) %></p>
 
-<% unless current_user == @user %>
-  <div id="follow_buttons_<%= @user.id %>">
-　　<%= render "relationships/follow", user: @user %>
-　</div>
-<% end %>
+<%= render "relationships/follow", user: @user %>
+<p><%= link_to "フォロー数", user_followings_path(user_name: @user.name) %>：<%= @user.followings.count %></p>
+<p><%= link_to "フォロワー数", user_followers_path(user_name: @user.name) %>：<%= @user.followers.count %></p>
 
 
 
-<% @user.favorites.each do |favorite| %>
+<% @favorite_all.each do |favorite| %>
   <% if favorite.theme.status == 2 %>
-    <div class="card-content">
-      <div class="card-content-header">
-        <%= link_to user_path(user_name: favorite.theme.user.name) do %>
-          <%= attachment_image_tag favorite.theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-          <%= favorite.theme.user.name %>
-        <% end %>
-      </div>
-      <div class="card-content-main"><%= link_to favorite.theme.title, theme_path(user_name: favorite.theme.user.name, theme_hashid: favorite.theme.hashid) %></div>
-      <div class="card-content-footer">Like <%= favorite.theme.favorites.count %></div>
-    </div>
+  　<%= render "themes/indiv_theme", theme: favorite.theme %>
   <% end %>
 <% end %>
 

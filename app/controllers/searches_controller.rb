@@ -11,7 +11,7 @@ class SearchesController < ApplicationController
     }
     user_searched = User.looks(params[:word])
     user_searched.each{ |user|
-      @theme_searched += user.themes
+      @theme_searched += user.themes.reverse
     }
     @theme_searched = @theme_searched.uniq
     @theme_searched = @theme_searched.select { |theme| theme.status == 2 }

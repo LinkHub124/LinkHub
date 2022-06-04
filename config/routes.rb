@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
   root to: 'themes#index'
+  get    '/timeline' => 'themes#timeline'
   get    '/search' => 'searches#search', as: 'search'
   # get    '/settings' => 'users/registrations#edit', as: 'edit_user'
   # patch  '/settings' => 'users#update', as: 'update_user'
