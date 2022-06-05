@@ -1,6 +1,8 @@
 <p><h1>テーマ詳細ページ</h1></p>
 <p><h1><%= @theme.title %></h1></p>
 
+
+<%= link_to 'Twitter', "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank' %>
 <p><h1>ユーザー：<%= @user.name %></h1></p>
 <div class='container px-5 px-sm-0'>
   <div class='row'>

@@ -1,24 +1,24 @@
 <p><h1>タイムライン</h1></p>
 
 <div id="base_button">
-  <input type="radio" name="land" id="select_all_users" checked>
-  <input type="radio" name="land" id="select_following_users">
+  <input type="radio" name="select_list" id="select_all_users" checked>
+  <input type="radio" name="select_list" id="select_following_users">
 
   <label for="select_all_users">
-    <span lang="ja">全ユーザー</span>
-    <span lang="en">全ユーザー</span>
+    <span lang="following_users">全ユーザー</span>
+    <span lang="all_users">全ユーザー</span>
   </label>
   <label for="select_following_users">
-    <span lang="ja">フォロー中</span>
-    <span lang="en">フォロー中</span>
+    <span lang="following_users">フォロー中</span>
+    <span lang="all_users">フォロー中</span>
   </label>
 
-  <div lang="en">
+  <div lang="following_users">
     <% @theme_released_following.each do |theme| %>
       <%= render "themes/indiv_theme", theme: theme %>
     <% end %>
   </div>
-  <div lang="ja">
+  <div lang="all_users">
     <% @theme_released_all.each do |theme| %>
       <%= render "themes/indiv_theme", theme: theme %>
     <% end %>
@@ -29,7 +29,7 @@
 
 <style type="text/css">
   /* === ラジオボタンは非表示 ================== */
-  #base_button input[type="radio"]{
+  #base_button input[type="radio"] {
     display    : none;
   }
 
@@ -42,18 +42,18 @@
   }
 
   /* === 選択されていない言語は非表示にする ==== */
-  #select_all_users:not(:checked) ~ * *:lang(ja) {
+  #select_all_users:not(:checked) ~ * *:lang(all_users) {
     display    : none;
   }
-  #select_following_users:not(:checked) ~ * *:lang(en) {
+  #select_following_users:not(:checked) ~ * *:lang(following_users) {
     display    : none;
   }
 
   /* === 選択されている言語のラベル色を変更 ==== */
   #select_all_users:checked ~ label[for="select_all_users"] {
-    background : #92C8DD;
+    background : #f48c1c;
   }
   #select_following_users:checked ~ label[for="select_following_users"] {
-    background : #92C8DD;
+    background : #f48c1c;
   }
 </style>

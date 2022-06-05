@@ -2,8 +2,6 @@
 <p><%= link_to "投稿一覧ページへ" , user_path(user_name: @user.name) %></p>
 
 <%= render "relationships/follow", user: @user %>
-<p><%= link_to "フォロー数", user_followings_path(user_name: @user.name) %>：<%= @user.followings.count %></p>
-<p><%= link_to "フォロワー数", user_followers_path(user_name: @user.name) %>：<%= @user.followers.count %></p>
 
 
 

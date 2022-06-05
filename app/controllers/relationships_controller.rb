@@ -2,6 +2,9 @@ class RelationshipsController < ApplicationController
 
   def create
     @user = User.find_by(name: params[:user_name])
+    if current_user == @user
+      return
+    end
     current_user.follow(params[:user_name])
   end
 
