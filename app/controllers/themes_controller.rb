@@ -2,6 +2,7 @@ class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :is_draft, only: [:show]
 
+
   # get '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   # Themeを新規投稿する
   def new
@@ -66,29 +67,39 @@ class ThemesController < ApplicationController
 
 
   # get '/:user_name/themes/:theme_hashid/edit' => 'themes#edit', as: 'edit_theme'
-  # Themeに結びついたLinkを編集する
+  # Theme名、投稿状態、Themeに結びついたLinkを編集する
   def edit
     @theme = Theme.find(params[:theme_hashid])
   end
 
+
+  # patch '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
+  # Themeに結びついたLinkを更新する
   def update
     theme = Theme.find(params[:theme_hashid])
     theme.update(theme_params)
     redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
+
+  # delete '/:user_name/themes/:theme_hashid' => 'themes#destroy', as: 'destroy_theme'
+  # Themeを削除する
   def destroy
     theme = Theme.find(params[:theme_hashid])
     theme.destroy
     redirect_to user_path(user_name: theme.user.name)
   end
 
+
   private
 
+    # 投稿時、タイトルと投稿状態をコントローラに通す
     def theme_params
       params.require(:theme).permit(:title, :status)
     end
 
+
+    # 直打ちで編集画面に遷移させない
     def correct_user
       user = User.find_by(name: params[:user_name])
       unless user.id == current_user.id
@@ -96,12 +107,13 @@ class ThemesController < ApplicationController
       end
     end
 
+
+    # 直打ちで下書き状態の画面に遷移させない
     def is_draft
       @theme = Theme.find(params[:theme_hashid])
       @user = User.find_by(name: params[:user_name])
       # @theme = Theme.find_by_hashid(params[:theme_hashid], user_id: @user.id)
       # binding.pry
-      # 自分以外で下書き状態ならroot_pathに飛ばす
       # 本当は404NotFoundにしたい
       if (current_user == nil or @user.id != current_user.id) and @theme.status == 0
         render "errors/404.html", status: :not_found#, layout: "error"

@@ -1,11 +1,15 @@
 class LinksController < ApplicationController
 
+  # get '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
+  # 新規Linkを作成
   def new
     @link_new = Link.new
     @theme = Theme.find(params[:theme_hashid])
   end
 
 
+  # post '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
+  # スクレイピングをしてOGPを抜き出し、Linkを保存
   def create
     theme = Theme.find(params[:theme_hashid])
     link_new = Link.new(link_params)
@@ -59,11 +63,17 @@ class LinksController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+
+  # get '/:user_name/themes/:theme_hashid/edit/:link_hashid/edit' => 'links#edit', as: 'edit_theme_link'
+  # Linkを編集する
   def edit
     @link = Link.find(params[:link_hashid])
     @theme = Theme.find(params[:theme_hashid])
   end
 
+
+  # patch '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#update', as: 'update_theme_link'
+  # スクレイピングをしてOGPを抜き出し、Linkを更新
   def update
     link = Link.find(params[:link_hashid]);
     link.one_links.each{ |one_link|
@@ -108,6 +118,9 @@ class LinksController < ApplicationController
     redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
   end
 
+
+  # delete '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#destroy', as: 'destroy_theme_link'
+  # Linkを削除する
   def destroy
     link = Link.find(params[:link_hashid]);
     link.destroy;
@@ -116,8 +129,9 @@ class LinksController < ApplicationController
 
   private
 
-  def link_params
-    params.require(:link).permit(:subtitle, :caption, :theme_id, :theme_hashid, one_links_attributes: [:id, :link_id, :url, :_destroy])
-  end
+    # 投稿時、Linkとそれに結びついたデータをコントローラに通す
+    def link_params
+      params.require(:link).permit(:subtitle, :caption, :theme_id, :theme_hashid, one_links_attributes: [:id, :link_id, :url, :_destroy])
+    end
 
 end
