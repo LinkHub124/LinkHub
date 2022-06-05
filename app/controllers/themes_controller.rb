@@ -15,7 +15,7 @@ class ThemesController < ApplicationController
   def index
     # @theme_released_all = Theme.includes(:favorited_users).sort {|a, b| b.favorited_users.size <=> a.favorited_users.size}
     # @theme_released_all = @theme_released_all.select { |theme| theme.status == 2 }
-    @theme_released_all = Theme.where(status: 2)
+    @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
     @users = User.all
 
@@ -39,7 +39,7 @@ class ThemesController < ApplicationController
   def timeline
     @theme_released_following = Theme.where(user_id: [*current_user.following_ids], status: 2)
     @theme_released_following = @theme_released_following.reverse
-    @theme_released_all = Theme.where(status: 2)
+    @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
 
     @users = User.all
@@ -50,7 +50,7 @@ class ThemesController < ApplicationController
   # 新しいThemeを保存
   def create
     theme = Theme.new(theme_params)
-    theme.status = 0
+    theme.post_status = 0
     theme.user_id = current_user.id
     theme.save
     redirect_to edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
@@ -95,7 +95,7 @@ class ThemesController < ApplicationController
 
     # 投稿時、タイトルと投稿状態をコントローラに通す
     def theme_params
-      params.require(:theme).permit(:title, :status)
+      params.require(:theme).permit(:title, :post_status, :tag_list)
     end
 
 
@@ -115,7 +115,7 @@ class ThemesController < ApplicationController
       # @theme = Theme.find_by_hashid(params[:theme_hashid], user_id: @user.id)
       # binding.pry
       # 本当は404NotFoundにしたい
-      if (current_user == nil or @user.id != current_user.id) and @theme.status == 0
+      if (current_user == nil or @user.id != current_user.id) and @theme.post_status == 0
         render "errors/404.html", status: :not_found#, layout: "error"
       end
     end

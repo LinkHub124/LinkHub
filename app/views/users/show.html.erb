@@ -7,7 +7,7 @@
 
 
 <% @theme_all.each do |theme| %>
-  <% if theme.status == 2 or @user == current_user %>
+  <% if theme.post_status == 2 or @user == current_user %>
     <%= render "themes/indiv_theme", theme: theme %>
   <% end %>
 <% end %>

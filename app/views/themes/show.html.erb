@@ -40,7 +40,7 @@
   <%= link_to 'Destroy Links', destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), method: :delete, "data-confirm": "本当に消しますか？", class: "btn btn-danger" %>
 <% end %>
 
-<% if @theme.status == 2 and (current_user != nil and @theme.user != current_user) %>
+<% if @theme.post_status == 2 and (current_user != nil and @theme.user != current_user) %>
   <p id="favorite_buttons_<%= @theme.id %>">
 　　<%= render "favorites/favorite", theme: @theme %>
 　</p>

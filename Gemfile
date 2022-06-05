@@ -83,3 +83,5 @@ gem 'meta-tags'
 
 gem 'nokogiri'
 gem 'open-uri'
+
+gem 'acts-as-taggable-on'

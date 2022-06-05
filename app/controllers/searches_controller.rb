@@ -16,6 +16,6 @@ class SearchesController < ApplicationController
       @theme_searched += user.themes.reverse
     }
     @theme_searched = @theme_searched.uniq
-    @theme_searched = @theme_searched.select { |theme| theme.status == 2 }
+    @theme_searched = @theme_searched.select { |theme| theme.post_status == 2 }
   end
 end

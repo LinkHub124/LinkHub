@@ -1,0 +1,3 @@
+<% @tag_all.each do |tag| %>
+  <p><%= link_to tag.name, tag_path(tag_name: tag.name) %></p>
+<% end %>

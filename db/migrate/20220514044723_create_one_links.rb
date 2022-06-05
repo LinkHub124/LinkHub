@@ -4,6 +4,8 @@ class CreateOneLinks < ActiveRecord::Migration[5.2]
       t.integer :link_id
       t.string :url
       t.string :url_title
+      t.string :url_description
+      t.string :url_image
 
       t.timestamps
     end

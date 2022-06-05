@@ -6,7 +6,7 @@
 
 
 <% @favorite_all.each do |favorite| %>
-  <% if favorite.theme.status == 2 %>
+  <% if favorite.theme.post_status == 2 %>
   　<%= render "themes/indiv_theme", theme: favorite.theme %>
   <% end %>
 <% end %>

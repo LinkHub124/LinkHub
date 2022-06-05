@@ -37,8 +37,9 @@
 </div>
 <%= form_with model: @theme, url: update_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), method: :patch do |f| %>
   <%= f.text_field :title %>
-  <%= f.radio_button :status, 0, checked: true %> Draft
-  <%= f.radio_button :status, 1 %> Limited
-  <%= f.radio_button :status, 2 %> Released
+  <%= f.text_field :tag_list, value: @theme.tag_list.join(','), class: "form-control" %>
+  <%= f.radio_button :post_status, 0, checked: true %> Draft
+  <%= f.radio_button :post_status, 1 %> Limited
+  <%= f.radio_button :post_status, 2 %> Released
   <%= f.submit "更新" %>
 <% end %>

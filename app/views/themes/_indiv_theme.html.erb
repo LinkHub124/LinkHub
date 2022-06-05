@@ -7,5 +7,12 @@
     <%= theme.created_at.strftime('%Y/%m/%d') %>
   </div>
   <div class="card-content-main"><%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %></div>
-  <div class="card-content-footer">Like <%= theme.favorites.count %></div>
+  <div class="card-content-footer">
+    ♡*<%= theme.favorites.count %>
+
+    <% theme.tag_list.each do |tag| %>
+      <%= link_to tag, tag_path(tag_name: tag) %>
+    <% end %>
+
+  </div>
 </div>

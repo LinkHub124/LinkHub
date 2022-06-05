@@ -8,6 +8,10 @@
           <%= f.label :title %>
           <%= f.text_field :title, class: "form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :tag_list %>
+          <%= f.text_field :tag_list, value: theme_new.tag_list.join(','), class: "form-control" %>
+        </div>
         <div>
           <%= f.submit "Create Theme", class: "btn btn-success" %>
         </div>
