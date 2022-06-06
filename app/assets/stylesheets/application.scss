@@ -13,7 +13,9 @@
  *= require_tree .
  *= require_self
  */
-@import "bootstrap";
+@import 'bootstrap';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
 
 body {
   background-color: #f4f4f4;
@@ -58,4 +60,19 @@ footer {
 .link{
   text-decoration: none;
   color: #808080;
+}
+
+
+
+
+
+
+
+.fixed {
+  position: fixed;
+  top: 105px;
+}
+
+.absoluted {
+  position: absolute;
 }

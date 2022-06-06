@@ -115,6 +115,8 @@ GEM
     erubi (1.10.0)
     execjs (2.8.1)
     ffi (1.15.5)
+    font-awesome-sass (5.15.1)
+      sassc (>= 1.11)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashid-rails (1.4.1)
@@ -333,6 +335,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  font-awesome-sass (~> 5.13)
   hashid-rails (~> 1.0)
   jbuilder (~> 2.5)
   jquery-rails

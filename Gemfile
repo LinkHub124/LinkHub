@@ -87,3 +87,5 @@ gem 'open-uri'
 gem 'acts-as-taggable-on'
 
 gem 'whenever', :require => false
+
+gem 'font-awesome-sass', '~> 5.13'

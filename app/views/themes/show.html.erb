@@ -1,37 +1,57 @@
-<p><h1>テーマ詳細ページ</h1></p>
+<p><h1><%= @theme.title %></h1></p>
 <p><h1><%= @theme.title %></h1></p>
 
 
-<%= link_to 'Twitter', "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank' %>
-<p><h1>ユーザー：<%= @user.name %></h1></p>
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-8 offset-md-1'>
-      <% @theme.links.each do |link| %>
-        <div class='border border-secondary rounded'>
-          <p>SUBTITLE: <%= link.subtitle %></p>
-          <p>CAPTION: <%= link.caption %></p>
-          <table class="table table-striped table-bordered table-hover">
-            <tbody>
-              <% link.one_links.each do |one_link| %>
-                <tr>
-                  <td><%= one_link.url_title %></td>
-                  <td>
-                    <%= link_to one_link.url, target: "_blank", rel: "noopenner noreferrer" do %>
-                      <% if one_link.url_image == nil %>
-                        <%= one_link.url %>
-                      <% else %>
-                        <%= image_tag one_link.url_image, size: '360x189' %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+<div class='row'>
+  <div class="col-md-1">
+     <script type="text/javascript">
+      $(function () {
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $('#share').addClass('fixed');
+            $('#share').removeClass('absoluted');
+          } else {
+            $('#share').removeClass('fixed');
+            $('#share').addClass('absoluted');
+          }
+        });
+      });
+    </script>
+    <div class="absoluted" id="share">
+      <div style="background-color: #fff; display:inline-block; border-radius: 25%">
+      <%= link_to "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank', class:'fab fa-twitter'  do %>
+        <i class="far fa-twitter"></i>
       <% end %>
     </div>
+    </div>
+
+  </div>
+
+
+  <div class="col-md-7">
+    <% @theme.links.each do |link| %>
+      <%= render 'links/indiv_link', link: link %>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <script type="text/javascript">
+      $(function () {
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $('#menu').addClass('fixed');
+            $('#menu').removeClass('absoluted');
+          } else {
+            $('#menu').removeClass('fixed');
+            $('#menu').addClass('absoluted');
+          }
+        });
+      });
+    </script>
+    <div class="absoluted" id="menu">
+      <%= render "users/indiv_user", user: @theme.user %>
+    </div>
+
   </div>
 </div>
 
