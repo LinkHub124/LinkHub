@@ -1,22 +1,14 @@
 <p><h1><%= @user.name %>のフォロー一覧ページ</h1></p>
 
 
-<table class='table table-hover table-inverse'>
-  <thead>
-    <tr>
-      <th></th>
-      <th>User</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
+<div class='row'>
+  <div class="col-md-3">
+    <%= render "users/user_info", user: @user %>
+  </div>
+  <div class="col-md-8">
     <% @user.followings.each do |user| %>
-      <tr>
-        <td>
-          <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
-        </td>
-        <td><%= link_to user.name, user_path(user_name: user.name) %></td>
-      </tr>
+      <%= render "users/user_wide", user: user %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
+

@@ -1,17 +1,13 @@
 <p><h1><%= @user.name %>のフォロワー一覧ページ</h1></p>
 
 
-<table class='table table-hover table-inverse'>
-  <thead>
-    <tr>
-      <th></th>
-      <th>User</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
+<div class='row'>
+  <div class="col-md-3">
+    <%= render "users/user_info", user: @user %>
+  </div>
+  <div class="col-md-8">
     <% @user.followers.each do |user| %>
-      <%= render "users/indiv_user", user: user %>
+      <%= render "users/user_wide", user: user %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>

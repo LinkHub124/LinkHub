@@ -1,0 +1,28 @@
+<div style="background-color: white;">
+  <h2>User info</h2>
+  <table class='table'>
+    <tr>
+      <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
+    </tr>
+    <tr>
+  	  <th>name</th>
+  	  <th><%= user.name %></th>
+    </tr>
+    <tr>
+  	  <th>introduction</th>
+  	  <th><%= user.introduction %></th>
+    </tr>
+  </table>
+
+  <div class='row'>
+    <% if current_user == user %>
+      <%= link_to edit_user_registration_path, class: "btn btn-outline-secondary btn-block" do %>
+        <i class="fas fa-user-cog"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="card-content-main">
+    <%= render "relationships/follow", user: user %>
+  </div>
+</div>

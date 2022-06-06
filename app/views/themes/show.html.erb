@@ -28,13 +28,13 @@
   </div>
 
 
-  <div class="col-md-7">
+  <div class="col-md-6">
     <% @theme.links.each do |link| %>
-      <%= render 'links/indiv_link', link: link %>
+      <%= render 'links/link_card', link: link %>
     <% end %>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-5">
     <script type="text/javascript">
       $(function () {
         $(window).scroll(function () {
@@ -49,7 +49,7 @@
       });
     </script>
     <div class="absoluted" id="menu">
-      <%= render "users/indiv_user", user: @theme.user %>
+      <%= render "users/user_card", user: @theme.user %>
     </div>
 
   </div>

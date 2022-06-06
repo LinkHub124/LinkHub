@@ -1,5 +1,5 @@
 <% @theme_tagged_with.each do |theme| %>
   <% if theme.post_status == 2 %>
-    <%= render "themes/indiv_theme", theme: theme %>
+    <%= render "themes/theme_card", theme: theme %>
   <% end %>
 <% end %>

@@ -2,20 +2,24 @@
 <p><%= link_to "Favorite一覧ページへ" , user_favorites_path(user_name: @user.name) %></p>
 
 
-<%= render "relationships/follow", user: @user %>
-<p><%= @user.name %></p>
 
 
-<% @theme_all.each do |theme| %>
-  <% if theme.post_status == 2 or @user == current_user %>
-    <%= render "themes/indiv_theme", theme: theme %>
-  <% end %>
-<% end %>
 
+<div class='row'>
+  <div class="col-md-3">
+    <%= render "user_info", user: @user %>
+  </div>
+  <div class="col-md-8">
+    <% @theme_all.each do |theme| %>
+      <% if theme.post_status == 2 or @user == current_user %>
+        <%= render "themes/theme_card", theme: theme %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 
 <% if @user == current_user %>
   <%= link_to 'New Theme', new_theme_path(user_name: current_user.name), remote: true, class: "btn btn-success" %>
   <!--<div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>-->
 <% end %>
-

@@ -1,15 +1,21 @@
 <p><h1><%= @user.name %>のFavorite一覧ページ</h1></p>
 <p><%= link_to "投稿一覧ページへ" , user_path(user_name: @user.name) %></p>
 
-<%= render "relationships/follow", user: @user %>
 
 
 
-<% @favorite_all.each do |favorite| %>
-  <% if favorite.theme.post_status == 2 %>
-  　<%= render "themes/indiv_theme", theme: favorite.theme %>
-  <% end %>
-<% end %>
 
 
+<div class='row'>
+  <div class="col-md-3">
+    <%= render "users/user_info", user: @user %>
+  </div>
+  <div class="col-md-8">
+    <% @favorite_all.each.each do |favorite| %>
+      <% if favorite.theme.post_status == 2 or @user == current_user %>
+        <%= render "themes/indiv_theme", theme: favorite.theme %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 

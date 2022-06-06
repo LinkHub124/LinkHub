@@ -102,6 +102,11 @@ ActiveRecord::Schema.define(version: 2022_06_05_144407) do
     t.string "unconfirmed_email"
     t.string "name"
     t.string "profile_image_id"
+    t.text "introduction"
+    t.string "github_id"
+    t.string "twitter_id"
+    t.string "facebook_id"
+    t.string "homepage_url"
     t.integer "score", default: 0
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
