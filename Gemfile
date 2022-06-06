@@ -85,3 +85,5 @@ gem 'nokogiri'
 gem 'open-uri'
 
 gem 'acts-as-taggable-on'
+
+gem 'whenever', :require => false

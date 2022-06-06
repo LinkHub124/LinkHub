@@ -10,7 +10,7 @@
 <% @themes_ranks.each.with_index(1) do |theme, i| %>
   <div class="card-content">
     <div class="card-content-header">
-      <p><%=i%>位: <%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid) %>♡*<%= theme.favorites.count %></p>
+      <p><%= i %>位: <%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid), class:"link" %>♡*<%= theme.favorites.count %></p>
     </div>
   </div>
 <% end %>
@@ -20,7 +20,16 @@
 <% @user_post_favorite_ranks.each.with_index(1) do |(user, value), i| %>
   <div class="card-content">
     <div class="card-content-header">
-      <p><%=i%>位: <%= link_to user.name, user_path(user_name: user.name) %>♡*<%=value%></p>
+      <p><%= i %>位: <%= link_to user.name, user_path(user_name: user.name), class:"link" %>♡*<%= value %></p>
+    </div>
+  </div>
+<% end %>
+
+<p><h1>ユーザーランキング2</h1></p>
+<% @RANKS.each do |user| %>
+  <div class="card-content">
+    <div class="card-content-header">
+      <p><%= user.name %> <%= user.rank %>位: <%= user.score %></p>
     </div>
   </div>
 <% end %>

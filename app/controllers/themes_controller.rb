@@ -21,23 +21,69 @@ class ThemesController < ApplicationController
 
 
     #@themes_ranks = @theme_released_all.find(Favorite.group(:theme_id).order('count(theme_id) desc').limit(5).pluck(:theme_id))
+    @themes_ranks = get_themes_ranks
+    @user_post_favorite_ranks = get_users_ranks
+    @RANKS = UserRank.all
+
+    #=======================================================================
+  end
+
+  def get_themes_ranks
+    @themes_ranks = update_themes_ranks
+  end
+
+  def update_themes_ranks
     @themes_ranks = Theme.find(Favorite.group(:theme_id).order('count(theme_id) desc').limit(5).pluck(:theme_id))
-    #======================================================================
-    # ユーザーの全投稿に対するいいね数ランキング
+  end
+
+
+
+  def get_users_ranks
     post_favorite_count = {}
     User.all.each do |user|
       post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id).pluck(:id)).count)
     end
     @user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-
-    #=======================================================================
   end
+
+
+
+
+
+
+  def update_users_ranks
+
+    post_favorite_count = {}
+    User.all.each do |user|
+      post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id, post_status: 2).pluck(:id)).count)
+      puts user.name
+    end
+    @user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
+
+
+    UserRank.destroy_all
+    puts "1#############################################"
+
+    @user_post_favorite_ranks.each.with_index(1) do |(user, score), i|
+      UserRank.create(name: user.name, rank: i, score: score)
+      puts user.name
+    end
+    puts "\n"
+
+    # return @user_post_favorite_ranks
+  end
+
+
+
+
+
+
 
 
   # get '/timeline' => 'themes#timeline'
   # タイムラインを表示、フォロー中と全ユーザーで分けられる
   def timeline
-    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], status: 2)
+    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
     @theme_released_following = @theme_released_following.reverse
     @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
