@@ -6,19 +6,23 @@
         <%= render "devise/shared/error_messages", resource: resource %>
         <div class = 'form-group'>
           <%= f.label :name, "ユーザー名" %>
-          <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 10 %>
+          <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 20 %>
         </div>
         <div class = 'form-group'>
           <%= f.label :introduction, "自己紹介文" %>
-          <%= f.text_area :introduction, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 10 %>
+          <%= f.text_area :introduction, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 200 %>
         </div>
         <div class = 'form-group'>
           <%= f.label :github_id, "GitHubアカウント" %>
-          https://github.com/<%= f.text_field :github_id, autofocus: true, class: "form-control" %>
+          https://github.com/<%= f.text_field :github_id %>
         </div>
         <div class = 'form-group'>
           <%= f.label :twitter_id, "Twitterアカウント" %>
-          https://twitter.com/<%= f.text_field :twitter_id, autofocus: true, class: "form-control" %>
+          https://twitter.com/<%= f.text_field :twitter_id %>
+        </div>
+        <div class = 'form-group'>
+          <%= f.label :homepage_url, "ホームページ" %>
+          <%= f.text_field :homepage_url, class: "form-control" %>
         </div>
 
         <div class="form-group">
@@ -45,7 +49,9 @@
         <%= f.submit "変更する", class: "btn btn-primary form-submit-btn" %>
         <%= link_to  "マイページへ", user_path(user_name: current_user.name), class: "link-below-user-form" %>
       <% end %>
-      <p><%= link_to "退会はこちら", unsubscribe_path %></p>
+      <div class="unsubscribe">
+        <p><%= link_to "退会はこちら", unsubscribe_path %></p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,28 +1,40 @@
-<div style="background-color: white;">
-  <h2>User info</h2>
-  <table class='table'>
-    <tr>
-      <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
-    </tr>
-    <tr>
-  	  <th>name</th>
-  	  <th><%= user.name %></th>
-    </tr>
-    <tr>
-  	  <th>introduction</th>
-  	  <th><%= user.introduction %></th>
-    </tr>
-  </table>
+<div class="user_info">
 
-  <div class='row'>
-    <% if current_user == user %>
-      <%= link_to edit_user_registration_path, class: "btn btn-outline-secondary btn-block" do %>
-        <i class="fas fa-user-cog"></i>
-      <% end %>
-    <% end %>
+  <div class="user_image">
+    <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
+  </div>
+  <div class="user_name">
+    <p><%= user.name %></p>
   </div>
 
-  <div class="card-content-main">
+  <ul>
+    <li class="user_sns_item">
+      <% if user.github_id != "" %>
+        <%= link_to "", "https://github.com/#{user.github_id}", target: '_blank', class:'fab fa-github', rel: "noopenner noreferrer" %>
+      <% end %>
+    </li>
+    <li class="user_sns_item">
+      <% if user.twitter_id != "" %>
+        <%= link_to "", "https://twitter.com/#{user.twitter_id}", target: '_blank', class:'fab fa-twitter', rel: "noopenner noreferrer" %>
+      <% end %>
+    </li>
+    <li class="user_sns_item">
+      <% if user.homepage_url != "" %>
+        <%= link_to "", user.homepage_url, target: '_blank', class:'fas fa-home', rel: "noopenner noreferrer" %>
+      <% end %>
+    </li>
+  </ul>
+
+    <% if current_user == user %>
+      <div class="user_edit">
+        <%= link_to edit_user_registration_path, class: "btn btn-outline-secondary btn-block" do %>
+          <i class="fas fa-user-cog"></i>
+        <% end %>
+      </div>
+    <% end %>
+
+  <div class="info-content-main">
     <%= render "relationships/follow", user: user %>
   </div>
+
 </div>

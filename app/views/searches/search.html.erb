@@ -1,6 +1,6 @@
 <h2>Results index</h2>
 <% @theme_searched.each do |theme| %>
-  <% if theme.status == 2 or @user == current_user %>
+  <% if theme.post_status == 2 or @user == current_user %>
     <div class="card-content">
       <div class="card-content-header">
         <%= link_to user_path(user_name: theme.user.name) do %>

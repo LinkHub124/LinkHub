@@ -9,7 +9,7 @@
   <div class="col-md-3">
     <%= render "user_info", user: @user %>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-9">
     <% @theme_all.each do |theme| %>
       <% if theme.post_status == 2 or @user == current_user %>
         <%= render "themes/theme_card", theme: theme %>

@@ -20,14 +20,18 @@
             <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
                 <li><%= link_to 'New Theme', new_theme_path(user_name: current_user.name), remote: true, class: "btn btn-energy" %></li>
-                <li><%= link_to "マイページ", user_path(user_name: current_user.name), class: "btn btn-energy" %></li>
                 <li><%= render "searches/form_search" %></li>
-                <li>
-                  <%= link_to edit_user_registration_path, class: "nav-link" do %>
-                    <%= attachment_image_tag current_user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-                  <% end %>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                      <%= attachment_image_tag current_user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+                      <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "マイページ", user_path(user_name: current_user.name), class: "nav-link" %></li>
+                    <li><%= link_to "ユーザー情報編集", edit_user_registration_path, class: "nav-link" %></li>
+                    <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link text-energy" %></li>
+                  </ul>
                 </li>
-                <li><%= link_to " Log out", destroy_user_session_path, method: :delete, class: "nav-link text-energy" %></li>
               <% else %>
                 <li><%= render "searches/form_search" %></li>
                 <li>
@@ -51,7 +55,9 @@
         <% end %>
       </div>
       <div id="theme-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
-      <%= yield %>
+      <div class='container px-1'>
+        <%= yield %>
+      </div>
 
     </main>
     <footer>

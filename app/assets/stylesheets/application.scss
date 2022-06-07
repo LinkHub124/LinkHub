@@ -33,9 +33,9 @@ body {
 .card-content {
   background-color: #fff;
   border-left: solid 5px #f48c1c;
-  width: 50%;
-  margin-left: 50px;
-  margin-bottom: 20px;
+  width: 100%;
+  // margin-left: 50px;
+  // margin-bottom: 20px;
 }
 
 .card-content-header {
@@ -53,6 +53,7 @@ body {
 }
 
 footer {
+  margin-top: 50px;
   height: 100px;
   background-color: #2F3232;
 }
@@ -75,4 +76,62 @@ footer {
 
 .absoluted {
   position: absolute;
+}
+
+
+
+
+.user_info {
+  border: solid 1px #333;
+  width: 100%;
+  background-color: white;
+}
+
+.user_info > .user_image {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.user_info > .user_name {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.user_info > ul {
+  display: flex;
+  justify-content: center;
+}
+
+.user_info > ul > .user_sns_item {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.user_info > .user_edit {
+  padding: 0 20px;
+}
+
+
+
+.user_card {
+  border: solid 1px #333;
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+}
+
+.user_card > .user_image {
+  display: flex;
+}
+
+.user_card > ul {
+  display: flex;
+  justify-content: center;
+}
+
+.user_show > ul > .user_sns_item {
+  list-style: none;
+  display: inline-block;
+  margin: 0 5px;
 }

@@ -1,11 +1,31 @@
-<div class="card-content" style="width:100%;">
-  <div class="card-content-header">
-    <%= link_to user_path(user_name: user.name), class:"link" do %>
-      <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-      <%= user.name %>
+<div class="user_card">
+  <div class="user_image">
+    <%= link_to user_path(user_name: user.name), class: "link" do %>
+      <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"50x50", style: "border-radius: 50%;" %>
     <% end %>
+    <div class="user_show">
+      <%= link_to user.name, user_path(user_name: user.name) %>
+      <ul class="user_user">
+        <li class="user_sns_item">
+          <% if user.github_id != "" %>
+            <%= link_to "", "https://github.com/#{user.github_id}", target: '_blank', class:'fab fa-github', rel: "noopenner noreferrer" %>
+          <% end %>
+        </li>
+        <li class="user_sns_item">
+          <% if user.twitter_id != "" %>
+            <%= link_to "", "https://twitter.com/#{user.twitter_id}", target: '_blank', class:'fab fa-twitter', rel: "noopenner noreferrer" %>
+          <% end %>
+        </li>
+        <li class="user_sns_item">
+          <% if user.homepage_url != "" %>
+            <%= link_to "", user.homepage_url, target: '_blank', class:'fas fa-home', rel: "noopenner noreferrer" %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    <div class="info-content-main">
+      <%= render "relationships/follow", user: user %>
+    </div>
   </div>
-  <div class="card-content-main">
-    <%= render "relationships/follow", user: user %>
-  </div>
+
 </div>
