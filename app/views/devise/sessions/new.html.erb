@@ -35,7 +35,7 @@
           <%= link_to "プライバシー規約", "#" %>
 
           <%#==================================%>
-          <button type="button" class="text" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-whatever="@gya">利用規約</button>
+          <button type="button" class="text" data-toggle="modal" data-target="#exampleModal" data-backdrop="static">利用規約</button>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -47,13 +47,10 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="modal-body">
-                    <%= render "layouts/terms"  %>
-                  </div>
+                  <%= render "layouts/terms" %>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <!--button type="button" class="btn btn-primary">Send message</button-->
                 </div>
               </div>
             </div>

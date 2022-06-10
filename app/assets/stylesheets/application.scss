@@ -147,7 +147,7 @@ footer {
 
 
 .one-link-card {
-  background-color: #FFF;
+    background-color: #FFF;
     display: table;
     width: 100%;
     border: 1px solid #E6E6E6;
@@ -180,6 +180,16 @@ footer {
 }
 
 .one-link-description {
+    display: -webkit-box;
+    max-height: 3em;
+    overflow: hidden;
+    color: #6F7372;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.one-link-url {
     display: -webkit-box;
     max-height: 3em;
     overflow: hidden;

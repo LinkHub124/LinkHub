@@ -1,31 +1,44 @@
-<div id="links-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <%= form_with model:[theme, link], url: update_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid), remote: true do |f| %>
-        <%= link_to "Back", close_edit_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid, link_hashid: link.hashid), remote: true, class: "btn btn-danger" %>
-        <div class="form-group">
-          <%= f.label :subtitle %>
-          <%= f.text_field :subtitle, class: "form-control" %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :caption %>
-          <%= f.text_area :caption, class: "form-control" %>
-        </div>
-
-        <table class="table table-striped table-bordered table-hover">
-          <tbody>
-            <%= f.nested_fields_for :one_links, wrapper_tag: :tr do |q| %>
-              <td><%= q.text_field :url, class: 'form-control' %></td>
-              <td><%= q.remove_nested_fields_link 'Delete', class: 'btn btn-danger', role: 'button' %></td>
-            <% end %>
-          </tbody>
-        </table>
-        <%= f.add_nested_fields_link :one_links, 'Add new', class: 'btn btn-primary', role: 'button' %>
-        <div>
-          <%= f.submit "Create Links", class: "btn btn-success" %>
-        </div>
-      <% end %>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <%= form_with model:[theme, link], url: update_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid), local: true do |f| %>
+    <!--<%# if theme_new.errors.any? %>-->
+    <!--<div id="error_explanation">-->
+    <!--  <h2><%#= pluralize(theme_new.errors.count, "error") %> prohibited this user from being saved:</h2>-->
+    <!--  <ul>-->
+    <!--    <%# theme_new.errors.full_messages.each do |message| %>-->
+    <!--    <li><%#= message %></li>-->
+    <!--    <%# end %>-->
+    <!--  </ul>-->
+    <!--</div>-->
+    <!--<%# end %>-->
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Links</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <%= f.label :subtitle, class: "form-control-label" %>(最大50文字)
+        <%= f.text_field :subtitle, class: "form-control", maxlength: "50" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :caption, class: "form-control-label" %>(最大500文字)
+        <%= f.text_area :caption, class: "form-control", maxlength: "500" %>
+      </div>
+      <table class="table table-striped table-bordered table-hover">
+        <tbody>
+          <%= f.nested_fields_for :one_links, wrapper_tag: :tr do |q| %>
+            <td><%= q.text_field :url,     class: 'form-control' %></td>
+            <td><%= q.remove_nested_fields_link 'Delete', class: 'btn btn-danger', role: 'button' %></td>
+          <% end %>
+        </tbody>
+      </table>
+      <%= f.add_nested_fields_link :one_links, 'Add New Link', class: 'btn btn-primary', role: 'button' %>
+    </div>
+    <div class="modal-footer actions">
+      <%= f.submit "Update Links", class: "btn btn-primary"%>
+    </div>
+    <% end %>
   </div>
 </div>

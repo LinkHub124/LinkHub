@@ -1,2 +1,2 @@
 $("#links-modal").html("<%= escape_javascript(render 'new_form_link', theme: @theme, link_new: @link_new) %>")
-$("#links-modal").show()
+$("#links-modal").modal("show")
