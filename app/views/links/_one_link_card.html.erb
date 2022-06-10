@@ -1,0 +1,14 @@
+<div class="one-link-card">
+  <%= link_to one_link.url, rel: "nofollow noopener", target: "_blank", tabindex: "-1" do %>
+    <strong class="one-link-title">
+      <%= one_link.url_title %>
+    </strong>
+    <em class="one-link-description">
+      <%= one_link.url_description %>
+    </em>
+    <em>
+      <%= one_link.url %>
+    </em>
+  <% end %>
+  <%= link_to "", one_link.url, class: "one-link-image", style: "background-image: url(#{one_link.url_image});", rel: "nofollow noopener", target: "_blank", tabindex: "-1" %>
+</div>
