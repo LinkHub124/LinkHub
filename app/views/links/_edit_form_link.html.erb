@@ -1,6 +1,6 @@
 <div class="modal-dialog" role="document">
   <div class="modal-content">
-    <%= form_with model:[theme, link], url: update_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid), local: true do |f| %>
+    <%= form_with model:[theme, link], url: update_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid), remote: true do |f| %>
     <!--<%# if theme_new.errors.any? %>-->
     <!--<div id="error_explanation">-->
     <!--  <h2><%#= pluralize(theme_new.errors.count, "error") %> prohibited this user from being saved:</h2>-->

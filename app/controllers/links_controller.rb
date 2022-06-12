@@ -11,13 +11,15 @@ class LinksController < ApplicationController
   # post '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
   # スクレイピングをしてOGPを抜き出し、Linkを保存
   def create
-    theme = Theme.find(params[:theme_hashid])
-    link_new = Link.new(link_params)
-    link_new.user_id = current_user.id
-    link_new.theme_id = theme.id
+    @user     = User.find_by(name: params[:user_name])
+    @theme    = Theme.find(params[:theme_hashid])
+    @link_new = Link.new(link_params)
+
+    @link_new.user_id  = current_user.id
+    @link_new.theme_id = @theme.id
 
 
-    link_new.one_links.each{ |one_link|
+    @link_new.one_links.each{ |one_link|
       url = one_link.url
 
       if url == ""
@@ -59,15 +61,23 @@ class LinksController < ApplicationController
 
 
     }
-    link_new.save
-    redirect_back(fallback_location: root_path)
+    respond_to do |format|
+      if @link_new.save
+        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
+        format.js { @status = "success" }
+      else
+        # format.html { render :new }
+        format.js { @status = "fail" }
+      end
+    end
+    # redirect_back(fallback_location: root_path)
   end
 
 
   # get '/:user_name/themes/:theme_hashid/edit/:link_hashid/edit' => 'links#edit', as: 'edit_theme_link'
   # Linkを編集する
   def edit
-    @link = Link.find(params[:link_hashid])
+    @link  = Link.find(params[:link_hashid])
     @theme = Theme.find(params[:theme_hashid])
   end
 
@@ -75,8 +85,11 @@ class LinksController < ApplicationController
   # patch '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#update', as: 'update_theme_link'
   # スクレイピングをしてOGPを抜き出し、Linkを更新
   def update
-    link = Link.find(params[:link_hashid]);
-    link.one_links.each{ |one_link|
+    @user  = User.find_by(name: params[:user_name])
+    @theme = Theme.find(params[:theme_hashid])
+    @link  = Link.find(params[:link_hashid])
+
+    @link.one_links.each{ |one_link|
       url = one_link.url
       charset = nil
       begin
@@ -111,20 +124,35 @@ class LinksController < ApplicationController
 
         one_link.url_image = doc.css('//meta[property="og:image"]/@content').to_s
       end
-
-
     }
-    link.update(link_params)
-    redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
+    respond_to do |format|
+      if @link.update(link_params)
+        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
+        format.js { @status = "success" }
+      else
+        # format.html { render :new }
+        format.js { @status = "fail" }
+      end
+    end
+    # redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
   end
 
 
   # delete '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#destroy', as: 'destroy_theme_link'
   # Linkを削除する
   def destroy
-    link = Link.find(params[:link_hashid]);
-    link.destroy;
-    redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
+    @link = Link.find(params[:link_hashid])
+    @link_id = @link.id
+    respond_to do |format|
+      if @link.destroy
+        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
+        format.js { @status = "success" }
+      else
+        # format.html { render :new }
+        format.js { @status = "fail" }
+      end
+    end
+    # redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
   end
 
   private

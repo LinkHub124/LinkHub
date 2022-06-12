@@ -30,7 +30,9 @@
 
   <div class="col-md-7">
     <% @theme.links.each do |link| %>
-      <%= render 'links/link_card', link: link %>
+      <div class='border border-secondary rounded' id='link-card-<%= link.id %>'>
+        <%= render 'links/link_card', link: link %>
+      </div>
     <% end %>
   </div>
 

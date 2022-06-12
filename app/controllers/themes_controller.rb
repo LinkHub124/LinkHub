@@ -95,11 +95,18 @@ class ThemesController < ApplicationController
   # post '/:user_name' => 'themes#create', as: 'themes'
   # 新しいThemeを保存
   def create
-    theme = Theme.new(theme_params)
-    theme.post_status = 0
-    theme.user_id = current_user.id
-    theme.save
-    redirect_to edit_theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
+    theme_new = Theme.new(theme_params)
+    theme_new.post_status = 0
+    theme_new.user_id = current_user.id
+    respond_to do |format|
+      if theme_new.save
+        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました' }
+        format.js { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました' }
+      else
+        # format.html { render :new }
+        format.js { @status = "fail" }
+      end
+    end
   end
 
 

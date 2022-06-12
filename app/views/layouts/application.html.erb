@@ -4,8 +4,10 @@
     <title>LinkHub</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
@@ -59,6 +61,19 @@
       <div class='container px-1'>
         <%= yield %>
       </div>
+      <div class="bs-example">
+            <div class="bootstrap-tagsinput">
+              <span class="tag badge badge-info">Amsterdam<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">Washington<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">Sydney<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">Cairo<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">as<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">sad<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">asd<span data-role="remove"></span></span>
+              <span class="tag badge badge-info">sd<span data-role="remove"></span></span>
+              <input type="text" placeholder="" size="1">
+            </div>
+          </div>
 
     </main>
     <footer>
