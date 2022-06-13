@@ -1,5 +1,4 @@
 <p><h1><%= @theme.title %></h1></p>
-<p><h1><%= @theme.title %></h1></p>
 
 
 <div class='row'>
@@ -30,7 +29,7 @@
 
   <div class="col-md-7">
     <% @theme.links.each do |link| %>
-      <div class='border border-secondary rounded' id='link-card-<%= link.id %>'>
+      <div class='link-card' id='link-card-<%= link.id %>'>
         <%= render 'links/link_card', link: link %>
       </div>
     <% end %>

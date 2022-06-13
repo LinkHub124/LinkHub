@@ -141,10 +141,38 @@ footer {
 
 
 
+.link-card {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: inset 1px 1px 3px #e0e0e0, inset -1px -1px 3px #fff5eb, 5px 5px 10px #C6C9CC, -5px -5px 10px #fff5eb;
+}
 
+.link-card-frame {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #555;
+    margin-bottom: 10px;
+}
 
+.link-card-subtitle {
+    display: inline-block;
+    font-weight: bold;
+    color: #555;
+    font-family: Roboto, sans-serif, -apple-system, "system-ui", "Segoe UI", "Helvetica Neue", Helvetica, Arial, "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    font-size: 1.6em;
+}
 
+.link-card-edit {
+    display: inline-block;
+}
 
+.link-card-caption {
+  letter-spacing: 0.05em;
+  color: #666;
+  white-space: pre-wrap;
+}
 
 
 .one-link-card {
