@@ -1,6 +1,6 @@
 <% if @status == 'success' %>
-    $("#add-link-card").append("<div class='border border-secondary rounded' id='link-card-<%= @link_new.id %>'><%= j(render("links/link_card_edit", link: @link_new, theme: @theme)) %></div>");
-    $("#links-modal").modal("hide");
+  $("#add-link-card").append("<div class='border border-secondary rounded' id='link-card-<%= @link_new.id %>'><%= j(render("links/link_card_edit", link: @link_new, theme: @theme)) %></div>");
+  $("#links-modal").modal("hide")
 <% elsif @status == 'fail' %>
-    alert('サブタイトルを入力してください');
+  $("#error_explanation").html("<p style='color: red;'>サブタイトルを入力してください</p>")
 <% end %>

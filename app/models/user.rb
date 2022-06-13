@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   has_many :favorites, dependent: :destroy
 
+
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true, format:{ with: /\A[0-9a-zA-Z]+\z/ }
   validates :name, invalid_words: true
   # VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze

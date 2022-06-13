@@ -13,7 +13,20 @@ class LinksController < ApplicationController
   def create
     @user     = User.find_by(name: params[:user_name])
     @theme    = Theme.find(params[:theme_hashid])
-    @link_new = Link.new(link_params)
+    ret_link_params = link_params
+    if ret_link_params[:one_links_attributes].blank? == false
+    ret_link_params[:one_links_attributes].keys.each { |idx|
+      url = ret_link_params[:one_links_attributes][idx][:url]
+      if ret_link_params[:one_links_attributes][idx][:_destroy] != nil
+        next
+      end
+
+      if url == ""
+        ret_link_params[:one_links_attributes][idx][:_destroy] = 1
+      end
+    }
+    end
+    @link_new = Link.new(ret_link_params)
 
     @link_new.user_id  = current_user.id
     @link_new.theme_id = @theme.id
@@ -23,7 +36,8 @@ class LinksController < ApplicationController
       url = one_link.url
 
       if url == ""
-        one_link.destroy
+        one_link.url = "#"
+        one_link.url_title = "URLが空です"
         next
       end
       charset = nil
@@ -47,7 +61,7 @@ class LinksController < ApplicationController
         end
 
         if one_link.url_title == ""
-          one_link.url_title = "タイトルがありません"
+          one_link.url_title = "タイトル未設定"
         end
 
         # description
@@ -61,6 +75,7 @@ class LinksController < ApplicationController
 
 
     }
+
     respond_to do |format|
       if @link_new.save
         # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
@@ -88,9 +103,19 @@ class LinksController < ApplicationController
     @user  = User.find_by(name: params[:user_name])
     @theme = Theme.find(params[:theme_hashid])
     @link  = Link.find(params[:link_hashid])
+    ret_link_params = link_params
+    # binding.pry
+    if ret_link_params[:one_links_attributes].blank? == false
+    ret_link_params[:one_links_attributes].keys.each { |idx|
+      url = ret_link_params[:one_links_attributes][idx][:url]
+      if ret_link_params[:one_links_attributes][idx][:_destroy] != nil
+        next
+      end
 
-    @link.one_links.each{ |one_link|
-      url = one_link.url
+      if url == ""
+        ret_link_params[:one_links_attributes][idx][:_destroy] = 1
+        next
+      end
       charset = nil
       begin
         # ここの部分をキャッシュの有無で場合分けしたい
@@ -99,34 +124,36 @@ class LinksController < ApplicationController
           f.read # htmlを読み込んで変数htmlに渡す
         end
       rescue
-        one_link.url_title = "不正なURLです"
+        ret_link_params[:one_links_attributes][idx][:url_title] = "不正なURLです"
       else
         # ノコギリを使ってhtmlを解析
         doc = Nokogiri::HTML.parse(html, charset)
 
         # title
         if doc.css('//meta[property="og:title"]/@content').empty?
-          one_link.url_title = doc.title.to_s
+          ret_link_params[:one_links_attributes][idx][:url_title] = doc.title.to_s
         else
-          one_link.url_title = doc.css('//meta[property="og:title"]/@content').to_s
+          ret_link_params[:one_links_attributes][idx][:url_title] = doc.css('//meta[property="og:title"]/@content').to_s
         end
 
-        if one_link.url_title == ""
-          one_link.url_title = "タイトルがありません"
+        if ret_link_params[:one_links_attributes][idx][:url_title] == ""
+          ret_link_params[:one_links_attributes][idx][:url_title] = "タイトル未設定"
         end
 
         # description
         if doc.css('//meta[property="og:description"]/@content').empty?
-          one_link.url_description = doc.css('//meta[name$="escription"]/@content').to_s
+          ret_link_params[:one_links_attributes][idx][:url_description] = doc.css('//meta[name$="escription"]/@content').to_s
         else
-          one_link.url_description = doc.css('//meta[property="og:description"]/@content').to_s
+          ret_link_params[:one_links_attributes][idx][:url_description] = doc.css('//meta[property="og:description"]/@content').to_s
         end
 
-        one_link.url_image = doc.css('//meta[property="og:image"]/@content').to_s
+        ret_link_params[:one_links_attributes][idx][:url_image] = doc.css('//meta[property="og:image"]/@content').to_s
       end
     }
+    end
+
     respond_to do |format|
-      if @link.update(link_params)
+      if @link.update(ret_link_params)
         # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
         format.js { @status = "success" }
       else

@@ -1,6 +1,6 @@
 <% if @status == 'success' %>
   $("#link-card-<%= @link.id %>").html("<%= j(render("links/link_card_edit", link: @link, theme: @theme)) %>")
-  $("#links-modal").modal("hide");
-<%  elsif @status == 'fail' %>
-  alert('サブタイトルを入力してください');
+  $("#links-modal").modal("hide")
+<% elsif @status == 'fail' %>
+  $("#error_explanation").html("<p style='color: red;'>サブタイトルを入力してください</p>")
 <% end %>
