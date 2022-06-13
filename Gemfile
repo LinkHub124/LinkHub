@@ -93,4 +93,8 @@ gem 'font-awesome-sass', '~> 5.13'
 
 
 gem "haml-rails"
+
 gem "high_voltage"
+
+gem 'omniauth', '1.9.1'
+gem 'omniauth-twitter'

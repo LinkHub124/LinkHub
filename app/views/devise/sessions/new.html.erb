@@ -66,6 +66,13 @@
     <% end %>
   </div>
 
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <!--以下１行を編集-->
+      <%= link_to "#{OmniAuth::Utils.camelize(provider)}アカウントでログイン", omniauth_authorize_path(resource_name, provider),class:'fab fa-twitter', method: :post %>
+    <% end %>
+  <% end %>
+
   <div class="login_box-newusr">
     <p><span>------------</span> 初めての方はこちら <span>------------</span></p>
     <%= link_to "LinkHubアカウントを作成", new_user_registration_path %>

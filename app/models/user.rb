@@ -2,7 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+         :recoverable, :rememberable, :validatable, :confirmable,
+         # Twitter API認証用に追加
+         :omniauthable, omniauth_providers: [:twitter]
 
 
   attachment :profile_image # ここを追加（_idは含めません）
@@ -51,6 +53,28 @@ class User < ApplicationRecord
   # フォローしているか判定
   def following?(user)
     followings.include?(user)
+  end
+
+  # Twitter認証ログイン用
+  # ユーザーの情報があれば探し、無ければ作成する
+  def self.find_for_oauth(auth)
+    user = User.find_by(uid: auth.uid, provider: auth.provider)
+
+    user ||= User.create(
+      uid: auth.uid,
+      provider: auth.provider,
+      #name: auth[:info][:name],
+      name: auth["extra"]["access_token"].params[:screen_name],
+      email: User.dummy_email(auth),
+      #password: Devise.friendly_token[0, 20]
+      password: 123456
+    )
+    user
+  end
+
+  # ダミーのメールアドレスを作成
+  def self.dummy_email(auth)
+    "#{Time.now.strftime('%Y%m%d%H%M%S').to_i}-#{auth.uid}-#{auth.provider}@example.com"
   end
 
 end
