@@ -3,6 +3,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
     callback_from :twitter
   end
+
+  def google_oauth2
+    callback_from :google
+  end
   # 最後のendの直前に記載
   private
 
@@ -26,6 +30,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user
       #session["devise.#{provider}_data"] = request.env['omniauth.auth']
       #redirect_to new_user_registration_url
+    end
+  end
+
+  def provider_to_name
+    if(provider=="twiter")
+      return "twitter"
+    else
+      return "google"
     end
   end
 end

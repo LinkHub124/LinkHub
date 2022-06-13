@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
          # Twitter API認証用に追加
-         :omniauthable, omniauth_providers: [:twitter]
+         :omniauthable, omniauth_providers: %i[twitter google_oauth2]
 
 
   attachment :profile_image # ここを追加（_idは含めません）
@@ -60,16 +60,25 @@ class User < ApplicationRecord
   def self.find_for_oauth(auth)
     user = User.find_by(uid: auth.uid, provider: auth.provider)
 
-    user ||= User.create(
-      uid: auth.uid,
-      provider: auth.provider,
-      #name: auth[:info][:name],
-      name: auth["extra"]["access_token"].params[:screen_name],
-      email: User.dummy_email(auth),
-      #password: Devise.friendly_token[0, 20]
-      password: 123456
-    )
-    user
+    if(auth.provider=="google_oauth2")
+      user ||= User.create(
+        uid: auth.uid,
+        provider: auth.provider,
+        name: auth.info.email.match(/[a-z\d]+/),
+        email: auth.info.email,
+        password: 123456
+      )
+    else
+      user ||= User.create(
+        uid: auth.uid,
+        provider: auth.provider,
+        #name: auth[:info][:name],
+        name: auth["extra"]["access_token"].params[:screen_name],
+        email: User.dummy_email(auth),
+        #password: Devise.friendly_token[0, 20]
+        password: 123456
+      )
+    end
   end
 
   # ダミーのメールアドレスを作成

@@ -98,3 +98,5 @@ gem "high_voltage"
 
 gem 'omniauth', '1.9.1'
 gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'

@@ -46,7 +46,7 @@
     <%- if devise_mapping.omniauthable? %>
       <%- resource_class.omniauth_providers.each do |provider| %>
         <!--以下１行を編集-->
-        <%= link_to "#{OmniAuth::Utils.camelize(provider)}アカウントでログイン", omniauth_authorize_path(resource_name, provider),class:'fab fa-twitter', method: :post %>
+        <%= link_to "#{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider),class:"fab fa-#{provider.match(/[a-z]+/)}", method: :post %>
       <% end %>
     <% end %>
   </div>

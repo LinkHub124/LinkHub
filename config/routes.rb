@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: "users/registrations",
-    # Twitter API認証用
+    # API認証用
     :omniauth_callbacks => 'users/omniauth_callbacks',
   }
   root to: 'themes#index'
