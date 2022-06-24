@@ -1,12 +1,9 @@
-<div id="follow_buttons_<%= user.id %>">
+<div class="user_edit" id="follow_buttons_<%= user.id %>">
   <% unless current_user == nil or current_user == user %>
   　<% if current_user.following?(user) %>
-      <%= link_to "フォロー外す", user_relationships_path(user_name: user.name), method: :delete, remote: true, class: "btn btn-danger" %>
+      <%= link_to "フォロー外す", user_relationships_path(user_name: user.name), method: :delete, remote: true, class: "btn btn-outline-danger btn-block" %>
     <% else %>
-      <%= link_to "フォローする", user_relationships_path(user_name: user.name), method: :post, remote: true, class: "btn btn-primary" %>
+      <%= link_to "フォローする", user_relationships_path(user_name: user.name), method: :post, remote: true, class: "btn btn-outline-primary btn-block" %>
     <% end %>
   <% end %>
-  <p><%= link_to "フォロー数", user_followings_path(user_name: user.name) %>：<%= user.followings.count %></p>
-  <p><%= link_to "フォロワー数", user_followers_path(user_name: user.name) %>：<%= user.followers.count %></p>
 </div>
-

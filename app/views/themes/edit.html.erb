@@ -1,24 +1,25 @@
 <p><h1>テーマ編集ページ</h1></p>
 <p><h1><%= @theme.title %></h1></p>
 
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-8 offset-md-1' id="add-link-card">
-      <% @theme.links.each do |link| %>
-        <div class='link-card' id="link-card-<%= link.id %>">
-          <%= render 'links/link_card_edit', link: link, theme: @theme %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-<div id="links-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"></div>
-<%= link_to 'Add Links', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-primary" %>
 <%= form_with model: @theme, url: update_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), method: :patch do |f| %>
   <%= f.text_field :title %>
-  <%= f.text_field :tag_list, value: @theme.tag_list.join(','), class: "form-control" %>
   <%= f.radio_button :post_status, 0, checked: true %> Draft
   <%= f.radio_button :post_status, 1 %> Limited
   <%= f.radio_button :post_status, 2 %> Released
   <%= f.submit "更新" %>
 <% end %>
+
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-8 offset-md-1' id="add-link-card">
+      <% @link_all.each do |link| %>
+        <div class='link-card' id="link-card-<%= link.id %>">
+          <%= render 'links/link_card_edit', link: link, theme: @theme %>
+        </div>
+      <% end %>
+      <%= paginate @link_all, theme: 'bootstrap-5' %>
+    </div>
+  </div>
+  <%= link_to 'Add Links', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-primary" %>
+</div>
+<div id="links-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"></div>

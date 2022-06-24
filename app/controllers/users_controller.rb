@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # ユーザー詳細画面を表示させる
   def show
     @user = User.find_by(name: params[:user_name])
-    @theme_all = @user.themes.reverse
+    @theme_all = @user.themes.page(params[:page]).per(10)
   end
 
 

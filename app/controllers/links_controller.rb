@@ -35,7 +35,6 @@ class LinksController < ApplicationController
     @link_new.one_links.each{ |one_link|
       url = one_link.url
       url = encode_ja(url)
-      binding.pry
       if url.slice(0..6) == "http://" or url.slice(0..7) == "https://"
 
       else

@@ -100,3 +100,6 @@ gem 'omniauth', '1.9.1'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+
+gem 'kaminari', '~> 0.17.0'
+gem 'bootstrap5-kaminari-views', '~> 0.0.1'

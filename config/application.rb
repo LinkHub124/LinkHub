@@ -17,5 +17,6 @@ module LinkHub
     # the framework and any gems in your application.
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
+    config.i18n.default_locale = :ja
   end
 end
