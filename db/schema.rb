@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_13_152127) do
+ActiveRecord::Schema.define(version: 2022_06_27_081902) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
@@ -74,6 +74,14 @@ ActiveRecord::Schema.define(version: 2022_06_13_152127) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "theme_ranks", force: :cascade do |t|
+    t.integer "theme_id"
+    t.integer "rank"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "themes", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
@@ -83,7 +91,7 @@ ActiveRecord::Schema.define(version: 2022_06_13_152127) do
   end
 
   create_table "user_ranks", force: :cascade do |t|
-    t.string "name"
+    t.integer "user_id"
     t.integer "rank"
     t.integer "score"
     t.datetime "created_at", null: false
@@ -109,10 +117,10 @@ ActiveRecord::Schema.define(version: 2022_06_13_152127) do
     t.string "homepage_url"
     t.integer "score", default: 0
     t.boolean "is_deleted", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "uid"
     t.string "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

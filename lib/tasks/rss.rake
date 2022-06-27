@@ -1,6 +1,6 @@
 namespace :rss do
-  desc "gya!!"
   task hello: :environment do
-    ThemesController.new.update_users_ranks
+    UsersController.new.create_rank(10)
+    UsersController.new.update_rank
   end
 end

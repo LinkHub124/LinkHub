@@ -1,0 +1,2 @@
+class ThemeRank < ApplicationRecord
+end

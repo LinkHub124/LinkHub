@@ -21,6 +21,44 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_rank(number)
+    while UserRank.count < number
+      UserRank.create
+    end
+    while UserRank.count > number
+      user_rank = UserRank.all.sample(1)
+      user_rank[0].user_id = nil
+      user_rank[0].destroy
+    end
+  end
+
+  def update_rank
+
+    user_ranks = []
+    post_favorite_count = {}
+    UserRank.all.each do |user_rank|
+      user_rank.user_id = nil
+      user_ranks.append(user_rank.id)
+    end
+    # UserRank.destroy_all
+
+    User.all.each do |user|
+      post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id, post_status: 2).pluck(:id)).count)
+      user.reload
+    end
+
+    user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
+
+    user_post_favorite_ranks.each.with_index(1) do |(user, score), rank_index|
+      user_rank = UserRank.find(user_ranks[rank_index-1])
+      user_rank.update(user_id: user.id, rank: rank_index, score: score)
+      puts user.name, score
+    end
+    puts "\n"
+
+    # return @user_post_favorite_ranks
+  end
+
 
   # patch '/users/withdrawal' => 'users#withdrawal', as: 'withdrawal'
   # ユーザーを退会処理

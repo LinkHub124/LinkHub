@@ -26,10 +26,10 @@
 <% end %>
 
 <p><h1>ユーザーランキング2</h1></p>
-<% @RANKS.each do |user| %>
+<% @user_ranks.each do |user_rank| %>
   <div class="card-content">
     <div class="card-content-header">
-      <p><%= user.name %> <%= user.rank %>位: <%= user.score %></p>
+      <p><%= user_rank.user.name %> <%= user_rank.rank %>位: <%= user_rank.score %></p>
     </div>
   </div>
 <% end %>
