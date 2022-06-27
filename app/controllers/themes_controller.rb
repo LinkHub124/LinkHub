@@ -116,7 +116,7 @@ class ThemesController < ApplicationController
     unless @theme.user == @user
       render "errors/404.html", status: :not_found#, layout: "error"
     end
-    @link_all = @theme.links.page(params[:page]).per(5)
+    @link_all = @theme.links
   end
 
 
@@ -124,7 +124,7 @@ class ThemesController < ApplicationController
   # Theme名、投稿状態、Themeに結びついたLinkを編集する
   def edit
     @theme = Theme.find(params[:theme_hashid])
-    @link_all = @theme.links.page(params[:page]).per(5)
+    @link_all = @theme.links
   end
 
 

@@ -173,6 +173,7 @@ class LinksController < ApplicationController
   # delete '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#destroy', as: 'destroy_theme_link'
   # Linkを削除する
   def destroy
+    @theme =Theme.find(params[:theme_hashid])
     @link = Link.find(params[:link_hashid])
     @link_id = @link.id
     respond_to do |format|

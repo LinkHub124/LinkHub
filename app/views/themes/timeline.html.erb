@@ -15,12 +15,12 @@
 
   <div lang="following_users">
     <% @theme_released_following.each do |theme| %>
-      <%= render "themes/indiv_theme", theme: theme %>
+      <%= render "themes/theme_card", theme: theme %>
     <% end %>
   </div>
   <div lang="all_users">
     <% @theme_released_all.each do |theme| %>
-      <%= render "themes/indiv_theme", theme: theme %>
+      <%= render "themes/theme_card", theme: theme %>
     <% end %>
   </div>
 

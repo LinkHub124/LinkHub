@@ -1,5 +1,12 @@
 <% if @status == 'success' %>
-  $("#link-card-<%= @link_id %>").remove()
-<%  elsif @status == 'fail' %>
+  $("#link-card-<%= @link_id %>").remove();
+
+  <% if @theme.links.count < 10 %>
+    $("#add-links").html("<%= escape_javascript(link_to 'Add Links', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-primary") %>");
+  <% else %>
+    $("#add-links").html("");
+  <% end %>
+
+<% elsif @status == 'fail' %>
   alert('すでに削除されています');
 <% end %>
