@@ -1,6 +1,6 @@
 namespace :rss do
   task hello: :environment do
-    UsersController.new.create_rank(10)
-    UsersController.new.update_rank
+    ThemesController.new.update_rank(10)
+    UsersController.new.update_rank(10)
   end
 end
