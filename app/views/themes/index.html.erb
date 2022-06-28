@@ -6,26 +6,17 @@
 <% end %>
 
 
+
 <p><h1>記事ランキング</h1></p>
-<% @themes_ranks.each.with_index(1) do |theme, i| %>
+<% @theme_ranks.each do |theme_rank| %>
   <div class="card-content">
     <div class="card-content-header">
-      <p><%= i %>位: <%= link_to theme.title, theme_path(user_name: theme.user.name, theme_hashid: theme.hashid), class:"link" %>♡*<%= theme.favorites.count %></p>
+      <p><%= theme_rank.theme.title %> <%= theme_rank.rank %>位: <%= theme_rank.score %></p>
     </div>
   </div>
 <% end %>
-
 
 <p><h1>ユーザーランキング</h1></p>
-<% @user_post_favorite_ranks.each.with_index(1) do |(user, value), i| %>
-  <div class="card-content">
-    <div class="card-content-header">
-      <p><%= i %>位: <%= link_to user.name, user_path(user_name: user.name), class:"link" %>♡*<%= value %></p>
-    </div>
-  </div>
-<% end %>
-
-<p><h1>ユーザーランキング2</h1></p>
 <% @user_ranks.each do |user_rank| %>
   <div class="card-content">
     <div class="card-content-header">

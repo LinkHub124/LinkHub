@@ -19,31 +19,61 @@ class ThemesController < ApplicationController
     @theme_released_all = @theme_released_all.reverse
     @users = User.all
 
-
-    #@themes_ranks = @theme_released_all.find(Favorite.group(:theme_id).order('count(theme_id) desc').limit(5).pluck(:theme_id))
-    @themes_ranks = get_themes_ranks
-    @user_post_favorite_ranks = get_users_ranks
+    @theme_ranks = ThemeRank.all
     @user_ranks = UserRank.all
 
   end
 
-  def get_themes_ranks
-    @themes_ranks = update_themes_ranks
-  end
-
-  def update_themes_ranks
-    @themes_ranks = Theme.find(Favorite.group(:theme_id).order('count(theme_id) desc').limit(5).pluck(:theme_id))
-  end
-
-  def get_users_ranks
+  def update_rank(number)
     post_favorite_count = {}
-    User.all.each do |user|
-      post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id).pluck(:id)).count)
+    theme_ranks = []
+    
+    # Destroyを繰り返すとprimary_keyがオーバーフローする可能性がある
+    
+    if ThemeRank.count == number
+      ThemeRank.all.each do |theme_rank|
+        theme_rank.theme_id = nil
+        theme_ranks.append(theme_rank.id)
+      end
+      Theme.all.each do |theme|
+        if theme.post_status != 2
+          next
+        end
+        post_favorite_count.store(theme, theme.favorites.count)
+        theme.reload
+      end
+      theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
+      
+      theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
+        if rank_index > number
+          next
+        end
+        ThemeRank.find(theme_ranks[rank_index-1]).update(theme_id: theme.id, rank: rank_index, score: score)
+        # puts theme.title
+      end
+    else
+      ThemeRank.destroy_all
+      Theme.all.each do |theme|
+        if theme.post_status != 2
+          next
+        end
+        post_favorite_count.store(theme, theme.favorites.count)
+        theme.reload
+      end
+      theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
+  
+      theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
+        if rank_index > number
+          next
+        end
+        ThemeRank.create(theme_id: theme.id, rank: rank_index, score: score)
+        # puts theme.title
+      end
     end
-    @user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
+    
+    
+    # puts "\n"
   end
-
-
 
   # get '/timeline' => 'themes#timeline'
   # タイムラインを表示、フォロー中と全ユーザーで分けられる

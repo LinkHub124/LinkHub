@@ -2,6 +2,7 @@ class Theme < ApplicationRecord
   belongs_to :user
 
   has_many :links, dependent: :destroy
+  has_one  :theme_rank
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy

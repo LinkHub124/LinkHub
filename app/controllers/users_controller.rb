@@ -44,7 +44,7 @@ class UsersController < ApplicationController
           next
         end
         UserRank.find(user_ranks[rank_index-1]).update(user_id: user.id, rank: rank_index, score: score)
-        puts user.name
+        # puts user.name
       end
     else
       UserRank.destroy_all
@@ -59,12 +59,12 @@ class UsersController < ApplicationController
           next
         end
         UserRank.create(user_id: user.id, rank: rank_index, score: score)
-        puts user.name
+        # puts user.name
       end
     end
     
     
-    puts "\n"
+    # puts "\n"
 
   end
 
