@@ -1,0 +1,44 @@
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white">
+    <div class="container">
+      <a class="navbar-brand text-energy" href="/"><span>LinkHub</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <% if user_signed_in? %>
+            <li><%= render "searches/form_search" %></li>
+            <li class="dropdown">
+              <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <%= attachment_image_tag current_user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "マイページ", user_path(user_name: current_user.name), class: "nav-link" %></li>
+                <li><%= link_to "設定", edit_user_registration_path, class: "nav-link" %></li>
+                <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-energy" %></li>
+              </ul>
+            </li>
+            <li>
+              <%= link_to new_theme_path(user_name: current_user.name), remote: true, class: "btn btn-energy" do %>
+                <i class="fas fa-plus"></i>
+              <% end %>
+            </li>
+          <% else %>
+            <li><%= render "searches/form_search" %></li>
+            <li>
+              <%= link_to new_user_registration_path, class: "nav-link text-energy" do %>
+                <i class="fas fa-user-plus"></i> 新規登録
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_user_session_path, class: "nav-link text-energy" do %>
+                <i class="fas fa-sign-in-alt"></i> ログイン
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

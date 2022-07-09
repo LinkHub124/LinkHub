@@ -1,0 +1,7 @@
+<% theme_ranks.each do |theme_rank| %>
+  <div class="card-content">
+    <div class="card-content-header">
+      <p><%= theme_rank.theme.title %> <%= theme_rank.rank %>位: <%= theme_rank.score %></p>
+    </div>
+  </div>
+<% end %>

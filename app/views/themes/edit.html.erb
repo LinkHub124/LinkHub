@@ -1,12 +1,23 @@
-<p><h1>テーマ編集ページ</h1></p>
 <p><h1><%= @theme.title %></h1></p>
 
 <%= form_with model: @theme, url: update_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), method: :patch do |f| %>
-  <%= f.text_field :title %>
-  <%= f.radio_button :post_status, 0, checked: true %> Draft
-  <%= f.radio_button :post_status, 1 %> Limited
-  <%= f.radio_button :post_status, 2 %> Released
-  <%= f.submit "更新" %>
+  <%= f.text_field :title, class: "form-control" %>
+  
+  <div class="btn-group">
+    <%= f.radio_button :post_status, 0, checked: true, class: "radio-inline__input", id: "item-1" %>
+    <label class="radio-inline__label" for="item-1">
+      非公開
+    </label>
+    <%= f.radio_button :post_status, 1, class: "radio-inline__input", id: "item-2" %>
+    <label class="radio-inline__label" for="item-2">
+      限定公開
+    </label>
+    <%= f.radio_button :post_status, 2, class: "radio-inline__input", id: "item-3" %>
+    <label class="radio-inline__label" for="item-3">
+      全体公開
+    </label>
+  </div>
+  <%= f.submit "更新", class: "btn btn-primary" %>
 <% end %>
 
 <div class='container px-5 px-sm-0'>
@@ -21,7 +32,7 @@
   </div>
   <div id="add-links">
     <% if @link_all.count < 10 %>
-      <%= link_to 'Add Links', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-primary" %>
+      <%= link_to 'リンク集追加', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

@@ -7,48 +7,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
 
   </head>
 
   <body>
-    <header class="shadow-sm sticky-top border-bottom">
-      <nav class="navbar navbar-expand-lg navbar-white bg-white">
-        <div class="container">
-          <a class="navbar-brand text-energy" href="/"><span>LinkHub</span></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-              <% if user_signed_in? %>
-                <li><%= link_to 'New Theme', new_theme_path(user_name: current_user.name), remote: true, class: "btn btn-energy" %></li>
-                <li><%= render "searches/form_search" %></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                      <%= attachment_image_tag current_user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
-                      <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to "マイページ", user_path(user_name: current_user.name), class: "nav-link" %></li>
-                    <li><%= link_to "ユーザー情報編集", edit_user_registration_path, class: "nav-link" %></li>
-                    <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link text-energy" %></li>
-                  </ul>
-                </li>
-              <% else %>
-                <li><%= render "searches/form_search" %></li>
-                <li>
-                  <%= link_to new_user_registration_path, class: "nav-link text-energy" do %>
-                    Sign up <i class="fas fa-user-plus"></i>
-                  <% end %>
-                </li>
-                <li><%= link_to " Log in", new_user_session_path, class: "nav-link text-energy" %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <%= render "layouts/header" %>
+    
     <main>
       <div id="notice">
         <% flash.each do |key, value| %>
@@ -62,25 +26,8 @@
       <div class='container px-1'>
         <%= yield %>
       </div>
-      <!--<div class="bs-example">-->
-      <!--      <div class="bootstrap-tagsinput">-->
-      <!--        <span class="tag badge badge-info">Amsterdam<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">Washington<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">Sydney<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">Cairo<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">as<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">sad<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">asd<span data-role="remove"></span></span>-->
-      <!--        <span class="tag badge badge-info">sd<span data-role="remove"></span></span>-->
-      <!--        <input type="text" placeholder="" size="1">-->
-      <!--      </div>-->
-      <!--    </div>-->
-
     </main>
-    <footer>
-    </footer>
+    <%= render "layouts/footer" %>
 
   </body>
 </html>
-
-

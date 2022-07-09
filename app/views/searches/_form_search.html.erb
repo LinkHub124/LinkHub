@@ -1,4 +1,3 @@
 <%= form_with url: search_path, local: true, method: :get do |f| %>
-  <%= f.text_field :word %>
-  <%= f.submit "検索", class: "btn btn-energy" %>
+  <%= f.text_field :word, class: "form-control" %>
 <% end %>

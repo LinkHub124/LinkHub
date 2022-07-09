@@ -15,15 +15,25 @@ class ThemesController < ApplicationController
   def index
     # @theme_released_all = Theme.includes(:favorited_users).sort {|a, b| b.favorited_users.size <=> a.favorited_users.size}
     # @theme_released_all = @theme_released_all.select { |theme| theme.status == 2 }
+    
+    # @theme_released_all = Theme.where(post_status: 2)
+    # @theme_released_all = @theme_released_all.reverse
+    # @users = User.all
+
+    # @theme_ranks = ThemeRank.all
+    # @user_ranks = UserRank.all
+    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
+    @theme_released_following = @theme_released_following.reverse
     @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
+
     @users = User.all
-
-    @theme_ranks = ThemeRank.all
     @user_ranks = UserRank.all
-
+    @theme_ranks = ThemeRank.all
   end
-
+  
+  # 時間実行
+  # ユーザーランキングを更新させる
   def update_rank(number)
     post_favorite_count = {}
     theme_ranks = []
@@ -73,17 +83,6 @@ class ThemesController < ApplicationController
     
     
     # puts "\n"
-  end
-
-  # get '/timeline' => 'themes#timeline'
-  # タイムラインを表示、フォロー中と全ユーザーで分けられる
-  def timeline
-    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
-    @theme_released_following = @theme_released_following.reverse
-    @theme_released_all = Theme.where(post_status: 2)
-    @theme_released_all = @theme_released_all.reverse
-
-    @users = User.all
   end
 
 

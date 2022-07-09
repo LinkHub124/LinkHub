@@ -12,14 +12,21 @@
           <%= f.label :introduction, "自己紹介文" %>
           <%= f.text_area :introduction, autofocus: true, class: "form-control", placeholder: "最大10文字", maxlength: 200 %>
         </div>
-        <div class = 'form-group'>
-          <%= f.label :github_id, "GitHubアカウント" %>
-          https://github.com/<%= f.text_field :github_id %>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">https://github.com/</span>
+          </div>
+          <%= f.text_field :github_id, class: "form-control", placeholder: "GitHubのID" %>
         </div>
-        <div class = 'form-group'>
-          <%= f.label :twitter_id, "Twitterアカウント" %>
-          https://twitter.com/<%= f.text_field :twitter_id %>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">https://twitter.com/</span>
+          </div>
+          <%= f.text_field :twitter_id, class: "form-control", placeholder: "TwitterのID" %>
         </div>
+        
         <div class = 'form-group'>
           <%= f.label :homepage_url, "ホームページ" %>
           <%= f.text_field :homepage_url, class: "form-control" %>

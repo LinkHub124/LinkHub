@@ -22,47 +22,60 @@ body {
   background-color: #fff5eb;
 }
 
+
 .text-energy {
   color: #FFA83D;
 }
+
 
 .btn-energy {
   background-color: #FFA83D;
   color: #fff;
 }
 
-.card-content {
-  background-color: #fff;
-  border-left: solid 5px #FFA83D;
-  width: 100%;
-  // margin-left: 50px;
-  // margin-bottom: 20px;
-}
-
-.card-content-header {
-  padding: 10px 0px 0px 10px;
-}
-
-.card-content-main {
-  padding-left: 50px;
-  font-size: 24px;
-}
-
-.card-content-footer {
-  padding-left: 50px;
-  padding-bottom: 10px;
-}
-
-footer {
-  margin-top: 50px;
-  height: 100px;
-  background-color: #2F3232;
-}
 
 .link{
   text-decoration: none;
   color: #808080;
 }
+
+
+
+/* ------------------------------
+    theme-card
+------------------------------ */
+
+.theme-card-content {
+  background-color: #fff;
+  border-left: solid 5px #FFA83D;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+
+.theme-card-content-header {
+  padding: 10px 0px 0px 10px;
+}
+
+
+.theme-card-content-main {
+  padding-left: 50px;
+  font-size: 24px;
+}
+
+
+.theme-card-content-footer {
+  padding-left: 50px;
+  padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -119,6 +132,39 @@ footer {
 
 
 
+
+
+.radio-inline__input {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+}
+
+.radio-inline__label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-right: 18px;
+    border-radius: 3px;
+    transition: all .2s;
+}
+
+.radio-inline__input:checked + .radio-inline__label {
+    background: #FFA83D;
+    color: #fff;
+}
+
+
+
+.ranking-content {
+  background-color: #fff;
+  border-bottom: 1px solid #000;
+}
+
+.ranking-content:last-of-type {
+  background-color: #fff;
+}
+
+
+
 .user_card {
   border: solid 1px #333;
   width: 100%;
@@ -144,6 +190,9 @@ footer {
 
 
 
+/* ------------------------------
+    link-card
+------------------------------ */
 
 .link-card {
     background-color: #FFF;
@@ -179,6 +228,10 @@ footer {
   white-space: pre-wrap;
 }
 
+
+/* ------------------------------
+    one-link-card
+------------------------------ */
 
 .one-link-card {
     background-color: #FFF;
@@ -234,6 +287,9 @@ footer {
 }
 
 
+
+
+
 /*ページネーション自体のデザイン*/
 .pagination > li > a {
   border: none;     /*枠線をなくす*/
@@ -247,4 +303,11 @@ footer {
 /*ホバー時のデザイン*/
 .pagination > li > a:hover {
   border-radius: 45%;    /*角を丸くする*/
+}
+
+
+footer {
+  margin-top: 50px;
+  height: 100px;
+  background-color: #2F3232;
 }

@@ -1,26 +1,72 @@
-<p><h1>ホーム</h1></p>
-
-
-<% @theme_released_all.each do |theme| %>
-  <%= render "themes/theme_card", theme: theme %>
-<% end %>
+<p><h1>タイムライン</h1></p>
 
 
 
-<p><h1>記事ランキング</h1></p>
-<% @theme_ranks.each do |theme_rank| %>
-  <div class="card-content">
-    <div class="card-content-header">
-      <p><%= theme_rank.theme.title %> <%= theme_rank.rank %>位: <%= theme_rank.score %></p>
+<div class='row'>
+  <div class="col-md-3">
+    <p>ユーザーランキング</p>
+    <%= render "users/ranking_user", user_ranks: @user_ranks %>
+  </div>
+  <div class="col-md-9">
+    <div id="base_button">
+      <input type="radio" name="select_list" id="select_all_users" checked>
+      <input type="radio" name="select_list" id="select_following_users">
+    
+      <label for="select_all_users">
+        <span lang="following_users">全ユーザー</span>
+        <span lang="all_users">全ユーザー</span>
+      </label>
+      <label for="select_following_users">
+        <span lang="following_users">フォロー中</span>
+        <span lang="all_users">フォロー中</span>
+      </label>
+    
+      <div lang="following_users">
+        <% @theme_released_following.each do |theme| %>
+          <%= render "themes/theme_card", theme: theme %>
+        <% end %>
+      </div>
+      <div lang="all_users">
+        <% @theme_released_all.each do |theme| %>
+          <%= render "themes/theme_card", theme: theme %>
+        <% end %>
+      </div>
+    
+    
     </div>
   </div>
-<% end %>
+</div>
 
-<p><h1>ユーザーランキング</h1></p>
-<% @user_ranks.each do |user_rank| %>
-  <div class="card-content">
-    <div class="card-content-header">
-      <p><%= user_rank.user.name %> <%= user_rank.rank %>位: <%= user_rank.score %></p>
-    </div>
-  </div>
-<% end %>
+
+
+
+<style type="text/css">
+  /* === ラジオボタンは非表示 ================== */
+  #base_button input[type="radio"] {
+    display    : none;
+  }
+
+  /* === 各ラジオボタンのラベルをボタンに変更 == */
+  #base_button label{
+    display    : inline-block;
+    border     : 1px solid #ccc;
+    box-shadow : 2px 2px #999;
+    padding    : 2px 6px;
+  }
+
+  /* === 選択されていない言語は非表示にする ==== */
+  #select_all_users:not(:checked) ~ * *:lang(all_users) {
+    display    : none;
+  }
+  #select_following_users:not(:checked) ~ * *:lang(following_users) {
+    display    : none;
+  }
+
+  /* === 選択されている言語のラベル色を変更 ==== */
+  #select_all_users:checked ~ label[for="select_all_users"] {
+    background : #f48c1c;
+  }
+  #select_following_users:checked ~ label[for="select_following_users"] {
+    background : #f48c1c;
+  }
+</style>
