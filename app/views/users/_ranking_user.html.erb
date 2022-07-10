@@ -1,13 +1,10 @@
 <% user_ranks.each do |user_rank| %>
   <%= link_to user_path(user_name: user_rank.user.name) do %>
-    <div class="ranking-content">
+    <div class="ranking-content p-2">
       <span><%= user_rank.rank %>位</span>
       <span><%= attachment_image_tag user_rank.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %></span>
       <span><%= user_rank.user.name %></span>
-      <span><%= user_rank.score %></span>
+      <span class="pull-right"><%= user_rank.score %></span>
     </div>
   <% end %>
-  
-  
-  
 <% end %>

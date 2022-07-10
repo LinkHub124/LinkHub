@@ -76,6 +76,36 @@ body {
 
 
 /* ------------------------------
+    user-card
+------------------------------ */
+
+.user-wide-card-content {
+  background-color: #fff;
+  border-left: solid 5px #FFA83D;
+  width: 100%;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+
+.user-wide-card-content-header {
+  padding: 10px 0px 0px 10px;
+}
+
+
+.user-wide-card-content-main {
+  padding-left: 50px;
+  font-size: 24px;
+}
+
+
+.user-wide-card-content-footer {
+  padding-left: 50px;
+  padding-bottom: 10px;
+}
+
+
+/* ------------------------------
     button
 ------------------------------ */
 

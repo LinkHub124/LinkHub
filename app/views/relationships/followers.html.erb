@@ -1,13 +1,22 @@
-<p><h1><%= @user.name %>のフォロワー一覧ページ</h1></p>
-
-
 <div class='row'>
-  <div class="col-md-3">
+  <div class="col-md-3 offset-md-1">
     <%= render "users/user_info", user: @user %>
   </div>
-  <div class="col-md-8">
-    <% @user.followers.each do |user| %>
-      <%= render "users/user_wide", user: user %>
+  <div class="col-md-7">
+    <div class="button-wrap">
+      <%= link_to "フォロー一覧", user_followings_path(user_name: @user.name), class: "radio-button" %>
+      <%= link_to "フォロワー一覧", user_followers_path(user_name: @user.name), class: "radio-button btn-energy" %>
+    </div>
+    
+    <% unless @user_followers.length == 0 %>
+      <% @user_followers.each do |user| %>
+        <%= render "users/user_wide", user: user %>
+      <% end %>
+      <%= paginate @user_followers, theme: 'bootstrap-5' %>
+    <% else %>
+      <p>フォロワーはいません</p>
     <% end %>
+    
+    
   </div>
 </div>

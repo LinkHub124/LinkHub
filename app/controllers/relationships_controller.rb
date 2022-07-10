@@ -23,6 +23,8 @@ class RelationshipsController < ApplicationController
   # フォロー一覧を表示させる
   def followings
     @user = User.find_by(name: params[:user_name])
+    @user_followings = @user.followings.reverse
+    @user_followings = Kaminari.paginate_array(@user_followings).page(params[:page]).per(10)
   end
 
 
@@ -30,6 +32,8 @@ class RelationshipsController < ApplicationController
   # フォロワー一覧を表示させる
   def followers
     @user = User.find_by(name: params[:user_name])
+    @user_followers = @user.followers.reverse
+    @user_followers = Kaminari.paginate_array(@user.followers).page(params[:page]).per(10)
   end
 
 end

@@ -121,6 +121,13 @@ class LinksController < ApplicationController
           next
         end
         url = encode_ja(url)
+        
+        if url.slice(0..6) == "http://" or url.slice(0..7) == "https://"
+
+        else
+          url = "https://" + url
+        end
+        
         charset = nil
         begin
           # ここの部分をキャッシュの有無で場合分けしたい
