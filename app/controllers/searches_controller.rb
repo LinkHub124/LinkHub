@@ -22,6 +22,6 @@ class SearchesController < ApplicationController
     @theme_searched = @theme_searched.select { |theme| theme.post_status == 2 }
     
     @theme_searched_count = @theme_searched.length
-    @theme_searched_page = Kaminari.paginate_array(@theme_searched).page(params[:page]).per(5)
+    @theme_searched_page = Kaminari.paginate_array(@theme_searched).page(params[:page]).per(10)
   end
 end

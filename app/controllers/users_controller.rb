@@ -6,7 +6,15 @@ class UsersController < ApplicationController
   # ユーザー詳細画面を表示させる
   def show
     @user = User.find_by(name: params[:user_name])
-    @theme_all = @user.themes.page(params[:page]).per(10)
+    @theme_all = @user.themes
+    if user_signed_in?
+      unless @user == current_user
+        @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
+      end
+    else
+      @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
+    end
+    @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(10)
   end
 
 
@@ -20,6 +28,7 @@ class UsersController < ApplicationController
       render :edit
     end
   end
+  
   
   def update_rank(number)
 

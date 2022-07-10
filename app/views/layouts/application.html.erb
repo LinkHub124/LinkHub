@@ -13,17 +13,18 @@
   <body>
     <%= render "layouts/header" %>
     
+    <div id="notice">
+      <% flash.each do |key, value| %>
+        <p class="alert alert-<%= key %>">
+          <%= value %>
+        </p>
+      <% end %>
+    </div>
     <main>
-      <div id="notice">
-        <% flash.each do |key, value| %>
-          <p class="alert alert-<%= key %>">
-            <%= value %>
-          </p>
-        <% end %>
-      </div>
+      
 
       <div id="theme-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"></div>
-      <div class='container px-1'>
+      <div class='wrap'>
         <%= yield %>
       </div>
     </main>

@@ -1,18 +1,22 @@
-<p><h1><%= @user.name %>の投稿一覧ページ</h1></p>
-<p><%= link_to "Favorite一覧ページへ" , user_favorites_path(user_name: @user.name) %></p>
-
-
 <div class='row'>
-  <div class="col-md-3">
+  <div class="col-md-3 offset-md-1">
     <%= render "users/user_info", user: @user %>
   </div>
-  <div class="col-md-9">
-    <% @theme_all.each do |theme| %>
-      <% if theme.post_status == 2 or @user == current_user %>
+  <div class="col-md-7">
+    <div class="button-wrap">
+      <%= link_to "投稿一覧", user_path(user_name: @user.name), class: "radio-button btn-energy" %>
+      <%= link_to "いいね一覧", user_favorites_path(user_name: @user.name), class: "radio-button" %>
+    </div>
+    
+    <% unless @theme_all.length == 0 %>
+      <% @theme_all.each do |theme| %>
         <%= render "themes/theme_card", theme: theme %>
       <% end %>
+      <%= paginate @theme_all, theme: 'bootstrap-5' %>
+    <% else %>
+      <p>投稿した記事があリません</p>
     <% end %>
-    <%= paginate @theme_all, theme: 'bootstrap-5' %>
+    
     
   </div>
 </div>

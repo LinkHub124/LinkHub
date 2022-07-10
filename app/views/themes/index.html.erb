@@ -1,36 +1,55 @@
 <div class='row'>
-  <div class="col-md-3">
+  <div class="col-md-2">
+    <p>ユーザーランキング</p>
+    <%= render "users/ranking_user", user_ranks: @user_ranks %>
     <p>ユーザーランキング</p>
     <%= render "users/ranking_user", user_ranks: @user_ranks %>
   </div>
-  <div class="col-md-9">
-    <div id="base_button">
-      <input type="radio" name="select_list" id="select_all_users" checked>
-      <input type="radio" name="select_list" id="select_following_users">
+  <div class="col-md-7">
+    <% if user_signed_in? %>
     
-      <label for="select_all_users">
-        <span lang="following_users">全ユーザー</span>
-        <span lang="all_users">全ユーザー</span>
-      </label>
-      <label for="select_following_users">
-        <span lang="following_users">フォロー中</span>
-        <span lang="all_users">フォロー中</span>
-      </label>
-    
-      <div lang="following_users">
-        <% @theme_released_following.each do |theme| %>
-          <%= render "themes/theme_card", theme: theme %>
-        <% end %>
+      <div id="base_button">
+        <input type="radio" name="select_list" id="select_all_users" checked>
+        <input type="radio" name="select_list" id="select_following_users">
+      
+        <label for="select_all_users">
+          <span lang="following_users">全ユーザー</span>
+          <span lang="all_users">全ユーザー</span>
+        </label>
+        <label for="select_following_users">
+          <span lang="following_users">フォロー中</span>
+          <span lang="all_users">フォロー中</span>
+        </label>
+      
+        <div lang="following_users">
+          <% @theme_released_following.each do |theme| %>
+            <%= render "themes/theme_card", theme: theme %>
+          <% end %>
+        </div>
+        <div lang="all_users">
+          <% if current_user.followings.count == 0 %>
+            <p>誰かフォローしてみよう！</p>
+          <% elsif @theme_released_all.length == 0 %>
+            <p>投稿がありません</p>
+          <% else %>
+            <% @theme_released_all.each do |theme| %>
+              <%= render "themes/theme_card", theme: theme %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
-      <div lang="all_users">
-        <% @theme_released_all.each do |theme| %>
-          <%= render "themes/theme_card", theme: theme %>
-        <% end %>
-      </div>
-    
-    
-    </div>
+    <% else %>
+      <% @theme_released_all.each do |theme| %>
+        <%= render "themes/theme_card", theme: theme %>
+      <% end %>
+    <% end %>
   </div>
+  <div class="col-md-3">
+      <p>ユーザーランキング</p>
+      <%= render "users/ranking_user", user_ranks: @user_ranks %>
+      <p>ユーザーランキング</p>
+    <%= render "users/ranking_user", user_ranks: @user_ranks %>
+    </div>
 </div>
 
 

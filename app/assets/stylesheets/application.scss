@@ -23,6 +23,10 @@ body {
 }
 
 main {
+  // padding: 60px;
+}
+
+.wrap {
   padding: 50px;
 }
 
@@ -73,12 +77,23 @@ main {
 }
 
 
+/* ------------------------------
+    button
+------------------------------ */
+
+
+.radio-button {
+  display    : inline-block;
+  border     : 1px solid #ccc;
+  box-shadow : 2px 2px #999;
+  padding    : 2px 6px;
+}
 
 
 
-
-
-
+.button-wrap {
+  margin-bottom: 20px;
+}
 
 
 

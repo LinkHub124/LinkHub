@@ -4,6 +4,7 @@
       <span><%= user_rank.rank %>位</span>
       <span><%= attachment_image_tag user_rank.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %></span>
       <span><%= user_rank.user.name %></span>
+      <span><%= user_rank.score %></span>
     </div>
   <% end %>
   
