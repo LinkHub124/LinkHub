@@ -2,32 +2,26 @@
 
 
 <div class='row'>
-  <div class="col-md-1">
-    <!-- <script type="text/javascript">-->
-    <!--  $(function () {-->
-    <!--    $(window).scroll(function () {-->
-    <!--      if ($(this).scrollTop() > 100) {-->
-    <!--        $('#share').addClass('fixed');-->
-    <!--        $('#share').removeClass('absoluted');-->
-    <!--      } else {-->
-    <!--        $('#share').removeClass('fixed');-->
-    <!--        $('#share').addClass('absoluted');-->
-    <!--      }-->
-    <!--    });-->
-    <!--  });-->
-    <!--</script>-->
-    <div class="absoluted" id="share">
-      <div style="background-color: #fff; display:inline-block; border-radius: 25%">
-      <%= link_to "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank', class:'fab fa-twitter'  do %>
-        <i class="far fa-twitter"></i>
-      <% end %>
+  <div class="col-md-0">
+    <div class="bg-white text-center">
+      <div class="bg-primary ml-auto mr-auto" style="width:50%; height: auto;">
+        
+      </div>
+      <div>
+        <%= link_to "", "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank', class: 'fab fa-twitter' %>
+      </div>
+      <div>
+        <%= render "favorites/favorite", theme: @theme %>
+      </div>
+      
+      
     </div>
-    </div>
+    
 
   </div>
 
 
-  <div class="col-md-7">
+  <div class="col-md-7 offset-md-1">
     <% @link_all.each do |link| %>
       <div class='link-card' id='link-card-<%= link.id %>'>
         <%= render 'links/link_card', link: link %>
@@ -35,24 +29,8 @@
     <% end %>
   </div>
 
-  <div class="col-md-4">
-    <!--<script type="text/javascript">-->
-    <!--  $(function () {-->
-    <!--    $(window).scroll(function () {-->
-    <!--      if ($(this).scrollTop() > 100) {-->
-    <!--        $('#menu').addClass('fixed');-->
-    <!--        $('#menu').removeClass('absoluted');-->
-    <!--      } else {-->
-    <!--        $('#menu').removeClass('fixed');-->
-    <!--        $('#menu').addClass('absoluted');-->
-    <!--      }-->
-    <!--    });-->
-    <!--  });-->
-    <!--</script>-->
-    <div class="absoluted" id="menu">
-      <%= render "users/user_card", user: @theme.user %>
-    </div>
-
+  <div class="col-md-3">
+    <%= render "users/user_card", user: @theme.user %>
   </div>
 </div>
 

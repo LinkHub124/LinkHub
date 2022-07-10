@@ -44,12 +44,13 @@ main {
 }
 
 
-.link{
-  color: #808080;
+a {
+  color: #444;
 }
 
 a:hover {
   text-decoration: none;
+  color: #222;
 }
 
 /* ------------------------------
@@ -129,8 +130,6 @@ a:hover {
 .button-wrap {
   margin-bottom: 20px;
 }
-
-
 
 
 
@@ -293,18 +292,25 @@ a:hover {
     border-radius: 4px;
 }
 
-.gyaaaaa{
+.one-link-card:hover {
+    background-color: #FFF;
+    width: 100%;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.one-link-content{
     display: flex;
     align-items: center;
     height: 150px;
 }
 
-.gyaaaaa > .tbl1 {
+.one-link-content > .one-link-left {
     flex: 1;
     padding: 16px;
 }
 
-.gyaaaaa > .tbl2 {
+.one-link-content > .one-link-right {
     width: 225px;
     height: 150px;
     vertical-align: middle;

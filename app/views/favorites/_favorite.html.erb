@@ -3,16 +3,16 @@
     <% if user_signed_in? %>
       <% if theme.favorited_by?(current_user) %>
         <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :delete, remote: true do %>
-          ♥<%= theme.favorites.count %> いいね
+          ♥<%= theme.favorites.count %>
         <% end %>
       <% else %>
         <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :post, remote: true do %>
-          ♡<%= theme.favorites.count %> いいね
+          ♡<%= theme.favorites.count %>
         <% end %>
       <% end %>
     <% else %>
       <%= link_to new_user_session_path do %>
-        ♡<%= theme.favorites.count %> いいね
+        ♡<%= theme.favorites.count %>
       <% end %>
     <% end %>
   </h5>

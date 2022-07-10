@@ -1,7 +1,7 @@
 <div class="one-link-card">
   <%= link_to one_link.url, rel: "nofollow noopener", target: "_blank", tabindex: "-1" do %>
-    <div class="gyaaaaa">
-      <div class="tbl1">
+    <div class="one-link-content">
+      <div class="one-link-left">
         <strong class="one-link-title">
           <%= one_link.url_title %>
         </strong>
@@ -12,7 +12,7 @@
           <%= one_link.url %>
         </em>
       </div>
-      <div class="tbl2">
+      <div class="one-link-right">
         <%= image_tag( "#{one_link.url_image}", class: "one-link-image") %>
       </div>
     </div>

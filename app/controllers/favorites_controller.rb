@@ -5,7 +5,8 @@ class FavoritesController < ApplicationController
   # いいね順にソートして表示
   def index
     @user = User.find_by(name: params[:user_name])
-    @favorite_all = @user.favorites.page(params[:page]).per(10)
+    @favorite_all = @user.favorites.reverse
+    @favorite_all = Kaminari.paginate_array(@favorite_all).page(params[:page]).per(10)
   end
 
 

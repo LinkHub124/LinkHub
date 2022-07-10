@@ -1,7 +1,30 @@
 .box-signup {
-  width: 350px;
-  height: 600px;
+  width: 400px;
   margin: 60px auto 0;
-  border-radius: 4px;
   border: 1px #ddd solid;
+  border-radius: 4px;
+}
+
+.btn-login {
+  background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+  color: #111;
+  border: 1px #a2a6ac solid;
+}
+
+.btn-twitter {
+  color: #fff;
+  background-color: #55acee;
+  border: 1px #2795e9 solid;
+}
+
+.btn-google {
+  color: #fff;
+  background-color: #c6594b;
+  border: 1px #a94335 solid;
+}
+
+.btn-policy {
+  border: none;
+  background-color: rgba(1, 1, 1, 0);
+  color: #007bff;
 }

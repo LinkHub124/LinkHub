@@ -1,7 +1,6 @@
 <div class="box-signup">
   <div class="box-inner">
-
-    <h2>新規登録</h2>
+    <h3>新規登録</h3>
 
     <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
@@ -29,29 +28,65 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
       
-       <%#= f.check_box :agreement, :as => :boolean, checked: false %>利用規約とプライバシーポリシーに同意する
+      <div class="field">
+        <%= f.check_box :agreement, :as => :boolean, checked: false, class: "mr-1" %>
+        <%= f.label :remember, "利用規約とプライバシーポリシーに同意する" %>
+      </div>
       
       <div class="box-newusr">
         <%= f.submit "メールアドレスを確認する" %>
         <div class="legal-text">
           続行することで、LinkHubの
-          <%= link_to "利用規約", "#" %>
+          <button type="button" class="text btn-policy" data-toggle="modal" data-target="#modal-terms" data-backdrop="static">利用規約</button>
           および
-          <%= link_to "プライバシー規約", "#" %>
+          <button type="button" class="text btn-policy" data-toggle="modal" data-target="#modal-policy" data-backdrop="static">プライバシーポリシー</button>
           に同意するものとみなされます。
         </div>
       </div>
-     
     <% end %>
-    <div class="newusr_box-login">
-      <p><span>-----------</span> アカウントをお持ちの方はこちら <span>-----------</span></p>
-      <%= link_to "ログイン", new_session_path(resource_name) %>
+    
+
+    <div class="modal fade" id="modal-terms" tabindex="-1" aria-labelledby="modal-label-terms" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-label-terms">利用規約</h4>
+          </div>
+          <div class="modal-body">
+            <%= render "layouts/terms" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <%- if devise_mapping.omniauthable? %>
-      <%- resource_class.omniauth_providers.each do |provider| %>
-        <!--以下１行を編集-->
-        <%= link_to "#{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider),class:"fab fa-#{provider.match(/[a-z]+/)}", method: :post %>
+    
+    <div class="modal fade" id="modal-policy" tabindex="-1" aria-labelledby="modal-label-policy" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-label-policy">プライバシーポリシー</h4>
+          </div>
+          <div class="modal-body">
+            <%= render "layouts/policy" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="newusr_box-login">
+      <p><span>--------</span> アカウントをお持ちの方はこちら <span>--------</span></p>
+      <%= link_to "ログイン", new_session_path(resource_name), class: "btn-login mb-2" %>
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          <!--以下１行を編集-->
+          <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>
