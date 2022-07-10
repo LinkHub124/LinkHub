@@ -8,12 +8,18 @@
   <div class="col-md-7">
     <% if user_signed_in? %>
       <div class="button-wrap">
-        <%= link_to "全ユーザー", root_path, class: "radio-button btn-energy" %>
-        <%= link_to "フォロー中", index_follow_path, class: "radio-button" %>
+        <%= link_to "全ユーザー", root_path, class: "radio-button" %>
+        <%= link_to "フォロー中", index_follow_path, class: "radio-button btn-energy" %>
       </div>
     <% end %>
-    <% @theme_released_all.each do |theme| %>
-      <%= render "themes/theme_card", theme: theme %>
+    <% if current_user.followings.count == 0 %>
+      <p>誰かフォローしてみよう！</p>
+    <% elsif @theme_released_following.length == 0 %>
+      <p>投稿された記事がありません</p>
+    <% else %>
+      <% @theme_released_following.each do |theme| %>
+        <%= render "themes/theme_card", theme: theme %>
+      <% end %>
     <% end %>
   </div>
   <div class="col-md-2">

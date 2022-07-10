@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     :omniauth_callbacks => 'users/omniauth_callbacks',
   }
   root to: 'themes#index'
+  get    '/followings' => 'themes#index_follow', as: 'index_follow'
   # get    '/timeline' => 'themes#timeline'
   get    '/search' => 'searches#search', as: 'search'
   # get    '/settings' => 'users/registrations#edit', as: 'edit_user'

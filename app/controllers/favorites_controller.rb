@@ -1,4 +1,5 @@
 class FavoritesController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
 
   # get '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
   # いいね順にソートして表示

@@ -1,6 +1,8 @@
 class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :is_draft, only: [:show]
+  before_action :authenticate_user!, only: [:index_follow]
+
 
   # get '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   # Themeを新規投稿する
@@ -12,12 +14,18 @@ class ThemesController < ApplicationController
   # root to: 'themes#index'
   # ホーム画面を表示、注目度の高い投稿、ユーザーランキングを表示させる、現在はタイムラインとほぼ同じ
   def index
+    @theme_released_all = Theme.where(post_status: 2)
+    @theme_released_all = @theme_released_all.reverse
+
+    @user_ranks = UserRank.all
+    @theme_ranks = ThemeRank.all
+  end
+  
+  def index_follow
     if user_signed_in?
       @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
       @theme_released_following = @theme_released_following.reverse
     end
-    @theme_released_all = Theme.where(post_status: 2)
-    @theme_released_all = @theme_released_all.reverse
 
     @user_ranks = UserRank.all
     @theme_ranks = ThemeRank.all
