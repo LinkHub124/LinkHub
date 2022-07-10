@@ -16,6 +16,8 @@ class User < ApplicationRecord
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy
+  
+  # validates_acceptance_of :agreement, allow_nil: false, on: :create
 
 
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true, format:{ with: /\A[0-9a-zA-Z]+\z/ }

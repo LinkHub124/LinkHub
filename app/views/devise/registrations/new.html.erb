@@ -28,6 +28,9 @@
         <%= f.label :password_confirmation, "パスワード(確認)" %><br />
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
+      
+       <%#= f.check_box :agreement, :as => :boolean, checked: false %>利用規約とプライバシーポリシーに同意する
+      
       <div class="box-newusr">
         <%= f.submit "メールアドレスを確認する" %>
         <div class="legal-text">
@@ -38,6 +41,7 @@
           に同意するものとみなされます。
         </div>
       </div>
+     
     <% end %>
     <div class="newusr_box-login">
       <p><span>-----------</span> アカウントをお持ちの方はこちら <span>-----------</span></p>

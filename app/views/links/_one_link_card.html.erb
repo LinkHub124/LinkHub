@@ -1,14 +1,20 @@
 <div class="one-link-card">
   <%= link_to one_link.url, rel: "nofollow noopener", target: "_blank", tabindex: "-1" do %>
-    <strong class="one-link-title">
-      <%= one_link.url_title %>
-    </strong>
-    <em class="one-link-description">
-      <%= one_link.url_description %>
-    </em>
-    <em class="one-link-url">
-      <%= one_link.url %>
-    </em>
+    <div class="gyaaaaa">
+      <div class="tbl1">
+        <strong class="one-link-title">
+          <%= one_link.url_title %>
+        </strong>
+        <em class="one-link-description">
+          <%= one_link.url_description %>
+        </em>
+        <em class="one-link-url">
+          <%= one_link.url %>
+        </em>
+      </div>
+      <div class="tbl2">
+        <%= image_tag( "#{one_link.url_image}", class: "one-link-image") %>
+      </div>
+    </div>
   <% end %>
-  <%= link_to "", one_link.url, class: "one-link-image", style: "background-image: url(#{one_link.url_image});", rel: "nofollow noopener", target: "_blank", tabindex: "-1" %>
 </div>

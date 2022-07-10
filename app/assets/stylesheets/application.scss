@@ -20,8 +20,14 @@
 
 body {
   background-color: #fff5eb;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
 }
 
+main {
+  flex: 1;
+}
 
 .wrap {
   padding: 50px;
@@ -39,11 +45,12 @@ body {
 
 
 .link{
-  text-decoration: none;
   color: #808080;
 }
 
-
+a:hover {
+  text-decoration: none;
+}
 
 /* ------------------------------
     theme-card
@@ -281,22 +288,31 @@ body {
 
 .one-link-card {
     background-color: #FFF;
-    display: table;
     width: 100%;
     border: 1px solid #E6E6E6;
     border-radius: 4px;
 }
 
+.gyaaaaa{
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
 
-.one-link-card > a {
-    display: table-cell;
+.gyaaaaa > .tbl1 {
+    flex: 1;
     padding: 16px;
+}
+
+.gyaaaaa > .tbl2 {
+    width: 225px;
+    height: 150px;
     vertical-align: middle;
 }
 
 .one-link-image {
-    width: 225px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
     vertical-align: middle;
     background-repeat: no-repeat;
     background-position: 50%;
