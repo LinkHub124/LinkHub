@@ -3,19 +3,19 @@
 
 <div class='row'>
   <div class="col-md-1">
-     <script type="text/javascript">
-      $(function () {
-        $(window).scroll(function () {
-          if ($(this).scrollTop() > 100) {
-            $('#share').addClass('fixed');
-            $('#share').removeClass('absoluted');
-          } else {
-            $('#share').removeClass('fixed');
-            $('#share').addClass('absoluted');
-          }
-        });
-      });
-    </script>
+    <!-- <script type="text/javascript">-->
+    <!--  $(function () {-->
+    <!--    $(window).scroll(function () {-->
+    <!--      if ($(this).scrollTop() > 100) {-->
+    <!--        $('#share').addClass('fixed');-->
+    <!--        $('#share').removeClass('absoluted');-->
+    <!--      } else {-->
+    <!--        $('#share').removeClass('fixed');-->
+    <!--        $('#share').addClass('absoluted');-->
+    <!--      }-->
+    <!--    });-->
+    <!--  });-->
+    <!--</script>-->
     <div class="absoluted" id="share">
       <div style="background-color: #fff; display:inline-block; border-radius: 25%">
       <%= link_to "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank', class:'fab fa-twitter'  do %>
@@ -36,19 +36,19 @@
   </div>
 
   <div class="col-md-4">
-    <script type="text/javascript">
-      $(function () {
-        $(window).scroll(function () {
-          if ($(this).scrollTop() > 100) {
-            $('#menu').addClass('fixed');
-            $('#menu').removeClass('absoluted');
-          } else {
-            $('#menu').removeClass('fixed');
-            $('#menu').addClass('absoluted');
-          }
-        });
-      });
-    </script>
+    <!--<script type="text/javascript">-->
+    <!--  $(function () {-->
+    <!--    $(window).scroll(function () {-->
+    <!--      if ($(this).scrollTop() > 100) {-->
+    <!--        $('#menu').addClass('fixed');-->
+    <!--        $('#menu').removeClass('absoluted');-->
+    <!--      } else {-->
+    <!--        $('#menu').removeClass('fixed');-->
+    <!--        $('#menu').addClass('absoluted');-->
+    <!--      }-->
+    <!--    });-->
+    <!--  });-->
+    <!--</script>-->
     <div class="absoluted" id="menu">
       <%= render "users/user_card", user: @theme.user %>
     </div>
@@ -61,7 +61,7 @@
   <%= link_to '削除', destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), method: :delete, "data-confirm": "本当に消しますか？", class: "btn btn-danger" %>
 <% end %>
 
-<% if @theme.post_status == 2 and (current_user != nil and @theme.user != current_user) %>
+<% if @theme.post_status == 2 and user_signed_in? %>
   <p id="favorite_buttons_<%= @theme.id %>">
 　　<%= render "favorites/favorite", theme: @theme %>
 　</p>

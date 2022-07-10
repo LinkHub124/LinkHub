@@ -22,6 +22,9 @@ body {
   background-color: #fff5eb;
 }
 
+main {
+  padding: 50px;
+}
 
 .text-energy {
   color: #FFA83D;
@@ -99,34 +102,34 @@ body {
 
 
 
-.user_info {
+.user-info {
   border: solid 1px #333;
   width: 100%;
   background-color: white;
 }
 
-.user_info > .user_image {
+.user-info > .user-image {
   padding-top: 50px;
   text-align: center;
 }
 
-.user_info > .user_name {
+.user-info > .user-name {
   padding-top: 10px;
   text-align: center;
 }
 
-.user_info > ul {
+.user-info > ul {
   display: flex;
   justify-content: center;
 }
 
-.user_info > ul > .user_sns_item {
+.user-info > ul > .user-sns-item {
   list-style: none;
   display: inline-block;
   margin: 0 10px;
 }
 
-.user_info > .user_edit {
+.user-info > .user-edit {
   padding: 0 20px 20px 20px;
 }
 
@@ -165,23 +168,23 @@ body {
 
 
 
-.user_card {
+.user-card {
   border: solid 1px #333;
   width: 100%;
   background-color: white;
   padding: 10px;
 }
 
-.user_card > .user_image {
+.user-card > .user-image {
   display: flex;
 }
 
-.user_card > ul {
+.user-card > ul {
   display: flex;
   justify-content: center;
 }
 
-.user_show > ul > .user_sns_item {
+.user-show > ul > .user-sns-item {
   list-style: none;
   display: inline-block;
   margin: 0 5px;
