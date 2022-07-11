@@ -59,10 +59,11 @@ a:hover {
 
 .theme-card-content {
   background-color: #fff;
-  border-left: solid 5px #FFA83D;
   width: 100%;
   margin-bottom: 20px;
   padding-bottom: 10px;
+  box-shadow: inset 1px 1px 3px #e0e0e0, inset -1px -1px 3px #fff5eb, 5px 5px 10px #C6C9CC, -5px -5px 10px #fff5eb;
+  border-left: solid 10px #FFA83D;
 }
 
 
@@ -166,9 +167,9 @@ a:hover {
 .user-info {
   width: 100%;
   background-color: white;
-  border: solid 1px #777;
   border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: inset 1px 1px 3px #e0e0e0, inset -1px -1px 3px #fff5eb, 5px 5px 10px #C6C9CC, -5px -5px 10px #fff5eb;
 }
 
 .user-info > .user-image {
@@ -208,9 +209,6 @@ a:hover {
 }
 
 
-
-
-
 .radio-inline__input {
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
@@ -230,45 +228,27 @@ a:hover {
 }
 
 
-
-.ranking-content {
-  background-color: #fff;
-  border-bottom: 1px solid #000;
-}
-
-.ranking-content:last-of-type {
-  background-color: #fff;
-}
-
-
-/* ------------------------------
-    user-card
------------------------------- */
-
-
-.user-card {
-  background-color: #FFF;
-  position: relative;
-  margin-bottom: 30px;
-  padding: 30px;
+.ranking {
   box-shadow: inset 1px 1px 3px #e0e0e0, inset -1px -1px 3px #fff5eb, 5px 5px 10px #C6C9CC, -5px -5px 10px #fff5eb;
-  border-left: solid 10px #FFA83D;
   
 }
 
-.user-card > .user-image {
-  display: flex;
+.ranking > li {
+  list-style-type:none;
+  border-bottom: 1px solid #999;
 }
 
-.user-card > ul {
-  display: flex;
-  justify-content: center;
+.ranking > li:last-child {
+  border-bottom: none;
 }
 
-.user-show > ul > .user-sns-item {
-  list-style: none;
-  display: inline-block;
-  margin: 0 5px;
+.ranking-content {
+  background-color: #fff;
+}
+
+
+.favorite > h4 > a {
+  color: #FFA83D !important;
 }
 
 
@@ -393,16 +373,27 @@ a:hover {
 /*ページネーション自体のデザイン*/
 .pagination > li > a {
   border: none;     /*枠線をなくす*/
+  color: #FFA83D;
 }
 
 /* 表示しているページ番号のデザイン */
 .pagination > .active > a {
-  border-radius: 45%;     /*角を丸くする*/
+  
+  color: #FFA83D;
+  background-color: #000;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FFA83D;
+    border-color: #FFA83D;
 }
 
 /*ホバー時のデザイン*/
 .pagination > li > a:hover {
-  border-radius: 45%;    /*角を丸くする*/
+  color: #FFA83D;
+  background-color: yellow;
 }
 
 

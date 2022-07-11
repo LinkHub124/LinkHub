@@ -1,6 +1,6 @@
 <div class='row'>
-  <div class="col-md-10 offset-md-1 bg-white pt-5 pb-5">
-    <div class="pl-5 mb-3">
+  <div class="col-md-8 offset-md-2 bg-white pt-5 pb-5">
+    <div class="pl-5 pr-5 mb-3">
       <span class="h5">
         <%= link_to user_path(user_name: @theme.user.name) do %>
           <%= attachment_image_tag @theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
@@ -8,28 +8,30 @@
         <% end %>
         <%= @theme.created_at.strftime('%Y/%m/%d') %>
       </span>
+      <% if @user == current_user %>
+        <h4 class="link-card-edit">
+          <%= link_to "", edit_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), local: true, class: "fas fa-edit" %>
+          <%= link_to "", destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), local: true, method: :delete, "data-confirm":"本当に消しますか？", class: "fas fa-times-circle" %>
+        </h4>
+      <% end %>
     </div>
     <div class="theme-frame pl-5 pr-5">
       <h1 class="theme-title"><%= @theme.title %></h1>
     </div>
     <div class="col-md-10 offset-md-1">
       <% @link_all.each do |link| %>
-      <div class='link-card' id='link-card-<%= link.id %>'>
-        <%= render 'links/link_card', link: link %>
-      </div>
-    <% end %>
-    <%= render "users/user_wide", user: @theme.user %>
+        <div class='link-card' id='link-card-<%= link.id %>'>
+          <%= render 'links/link_card', link: link %>
+        </div>
+      <% end %>
+      <%= render "users/user_wide", user: @theme.user %>
+      <% if @theme.post_status == 2 and user_signed_in? %>
+        <p id="favorite_buttons_<%= @theme.id %>">
+      　　<%= render "favorites/favorite", theme: @theme %>
+      　</p>
+      <% end %>
     </div>
   </div>
 </div>
 
-<% if @user == current_user %>
-  <%= link_to '編集', edit_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), class: "btn btn-success" %>
-  <%= link_to '削除', destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), method: :delete, "data-confirm": "本当に消しますか？", class: "btn btn-danger" %>
-<% end %>
 
-<% if @theme.post_status == 2 and user_signed_in? %>
-  <p id="favorite_buttons_<%= @theme.id %>">
-　　<%= render "favorites/favorite", theme: @theme %>
-　</p>
-<% end %>
