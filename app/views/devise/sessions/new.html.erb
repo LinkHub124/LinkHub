@@ -2,7 +2,7 @@
   <div class="box-inner">
 
     <%= form_with model: @user, url: user_session_path, local: true do |f| %>
-      <h1>ログイン</h1>
+      <h3>ログイン</h3>
       <div class="box-username">
         <%= f.label :name, "ユーザー名" %><br />
         <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
@@ -68,9 +68,6 @@
             </div>
           </div>
 
-
-          <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-backdrop="true" data-whatever="@fat">プライバシー規約</button-->
-
           に同意するものとみなされます。
         </div>
       </div>
@@ -78,7 +75,6 @@
     <div class="newusr_box-login">
       <%- if devise_mapping.omniauthable? %>
         <%- resource_class.omniauth_providers.each do |provider| %>
-          <!--以下１行を編集-->
           <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
         <% end %>
       <% end %>

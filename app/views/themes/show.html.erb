@@ -1,36 +1,25 @@
-<p><h1><%= @theme.title %></h1></p>
-
-
 <div class='row'>
-  <div class="col-md-0">
-    <div class="bg-white text-center">
-      <div class="bg-primary ml-auto mr-auto" style="width:50%; height: auto;">
-        
-      </div>
-      <div>
-        <%= link_to "", "https://twitter.com/share?url=#{request.url}/&text=#{@theme.title}&hashtags=LinkHub", title: 'Twitter', target: '_blank', class: 'fab fa-twitter' %>
-      </div>
-      <div>
-        <%= render "favorites/favorite", theme: @theme %>
-      </div>
-      
-      
+  <div class="col-md-10 offset-md-1 bg-white pt-5 pb-5">
+    <div class="pl-5 mb-3">
+      <span class="h5">
+        <%= link_to user_path(user_name: @theme.user.name) do %>
+          <%= attachment_image_tag @theme.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"30x30", style: "border-radius: 50%;" %>
+          <%= @theme.user.name %>
+        <% end %>
+        <%= @theme.created_at.strftime('%Y/%m/%d') %>
+      </span>
     </div>
-    
-
-  </div>
-
-
-  <div class="col-md-7 offset-md-1">
-    <% @link_all.each do |link| %>
+    <div class="theme-frame pl-5 pr-5">
+      <h1 class="theme-title"><%= @theme.title %></h1>
+    </div>
+    <div class="col-md-10 offset-md-1">
+      <% @link_all.each do |link| %>
       <div class='link-card' id='link-card-<%= link.id %>'>
         <%= render 'links/link_card', link: link %>
       </div>
     <% end %>
-  </div>
-
-  <div class="col-md-3">
-    <%= render "users/user_card", user: @theme.user %>
+    <%= render "users/user_wide", user: @theme.user %>
+    </div>
   </div>
 </div>
 

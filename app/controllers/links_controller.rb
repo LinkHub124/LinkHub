@@ -40,6 +40,8 @@ class LinksController < ApplicationController
       else
         url = "https://" + url
       end
+      
+      one_link.url = url
 
 
       charset = nil
@@ -50,7 +52,7 @@ class LinksController < ApplicationController
           f.read # htmlを読み込んで変数htmlに渡す
         end
       rescue
-        one_link.url_title = "不正なURLです"
+        one_link.url_title = "URLが間違っています"
       else
         # ノコギリを使ってhtmlを解析
         doc = Nokogiri::HTML.parse(html, charset)
@@ -128,6 +130,8 @@ class LinksController < ApplicationController
           url = "https://" + url
         end
         
+        ret_link_params[:one_links_attributes][idx][:url] = url
+        
         charset = nil
         begin
           # ここの部分をキャッシュの有無で場合分けしたい
@@ -136,7 +140,7 @@ class LinksController < ApplicationController
             f.read # htmlを読み込んで変数htmlに渡す
           end
         rescue
-          ret_link_params[:one_links_attributes][idx][:url_title] = "不正なURLです"
+          ret_link_params[:one_links_attributes][idx][:url_title] = "URLが間違っています"
         else
           # ノコギリを使ってhtmlを解析
           doc = Nokogiri::HTML.parse(html, charset)
@@ -194,6 +198,30 @@ class LinksController < ApplicationController
     end
     # redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
   end
+  
+  def get_tld(url)
+    sz = url.length
+    if url.slice(0..6) == "http://"
+      url = url.slice(7..sz)
+    elsif url.slice(0..7) == "https://"
+      url = url.slice(8..sz)
+    end
+    sz = url.length
+    idx = -1
+    for num in 0..sz do
+      if url[num] == '/'
+        idx = num
+        break
+      end
+    end
+    unless idx == -1
+      url = url.slice(0..idx-1)
+    end
+    return url
+  end
+
+  helper_method :get_tld
+  
 
   private
 

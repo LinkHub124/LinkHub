@@ -31,6 +31,29 @@ class ThemesController < ApplicationController
     @theme_ranks = ThemeRank.all
   end
   
+  def get_tld(url)
+    sz = url.length
+    if url.slice(0..6) == "http://"
+      url = url.slice(7..sz)
+    elsif url.slice(0..7) == "https://"
+      url = url.slice(8..sz)
+    end
+    sz = url.length
+    idx = -1
+    for num in 0..sz do
+      if url[num] == '/'
+        idx = num
+        break
+      end
+    end
+    unless idx == -1
+      url = url.slice(0..idx-1)
+    end
+    return url
+  end
+
+  helper_method :get_tld
+  
   # 時間実行
   # ユーザーランキングを更新させる
   def update_rank(number)

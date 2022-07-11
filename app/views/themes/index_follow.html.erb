@@ -1,5 +1,5 @@
 <div class='row'>
-  <div class="col-md-3">
+  <div class="col-md-3 offset-md-1">
     <p>ユーザーランキング</p>
     <%= render "users/ranking_user", user_ranks: @user_ranks %>
     <p>ユーザーランキング</p>
@@ -22,10 +22,4 @@
       <% end %>
     <% end %>
   </div>
-  <div class="col-md-2">
-      <p>ユーザーランキング</p>
-      <%= render "users/ranking_user", user_ranks: @user_ranks %>
-      <p>ユーザーランキング</p>
-    <%= render "users/ranking_user", user_ranks: @user_ranks %>
-    </div>
 </div>

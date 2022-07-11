@@ -1,10 +1,15 @@
 <div class="user-info">
 
   <div class="user-image">
-    <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
+    <%= link_to user_path(user_name: user.name) do %>
+      <%= attachment_image_tag user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"100x100", style: "border-radius: 50%;" %>
+    <% end %>
   </div>
   <div class="user-name">
-    <p><%= link_to user.name, user_path(user_name: user.name) %></p>
+    <h4><%= link_to user.name, user_path(user_name: user.name) %></h4>
+  </div>
+  <div class="user-introduction">
+    <p><%= user.introduction %></p>
   </div>
 
   <ul>
