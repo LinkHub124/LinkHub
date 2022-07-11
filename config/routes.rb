@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get    '/followings' => 'themes#index_follow', as: 'index_follow'
   # get    '/timeline' => 'themes#timeline'
   get    '/search' => 'searches#search', as: 'search'
+  get    '/terms' => 'application#terms', as: 'terms'
+  get    '/policy' => 'application#policy', as: 'policy'
   # get    '/settings' => 'users/registrations#edit', as: 'edit_user'
   # patch  '/settings' => 'users#update', as: 'update_user'
   get    '/users/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'

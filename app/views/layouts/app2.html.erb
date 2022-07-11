@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LinkHub</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <header class="sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-white bg-white">
+        <div class="container">
+          <a class="navbar-brand text-energy" href="/"><span>LinkHub</span></a>
+        </div>
+      </nav>
+    </header>
+
+    <div id="notice">
+      <% flash.each do |key, value| %>
+        <p class="alert alert-<%= key %>">
+          <%= value %>
+        </p>
+      <% end %>
+    </div>
+
+    <main>
+      <div id="theme-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"></div>
+      <div class='wrap'>
+        <%= yield %>
+      </div>
+    </main>
+
+    <%= render "layouts/footer" %>
+
+  </body>
+</html> 

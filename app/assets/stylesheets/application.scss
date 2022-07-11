@@ -398,7 +398,48 @@ a:hover {
 
 
 footer {
-  margin-top: 50px;
-  height: 100px;
+  margin-top: 100px;
+  height: 500px;
   background-color: #2F3232;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.foot-wrap .menu-left, .menu-center, .menu-right {
+  display: inline-block;
+  width: 20%;
+  margin: 80px auto 10px;
+  vertical-align: top;
+}
+
+.foot-wrap ul {
+  list-style: none;
+  padding: 0;
+  line-height:40px;
+}
+
+.foot-wrap a {
+  text-decoration: none;
+  color: #fff;
+}
+.foot-wrap a:hover {
+  color: #FFA83D;
+}
+.foot-sns li{
+  display: inline-block;
+  width: 20%;
+  margin: 20px auto;
+}
+
+.foot-sns-item {
+  font-size: 32px;
+} 
+
+.foot-sns-item > a{
+  color: #00acee;
+} 
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
 }

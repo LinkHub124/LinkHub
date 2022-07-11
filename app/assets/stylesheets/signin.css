@@ -122,3 +122,10 @@ h1 {
 /*.login_box-newusr a:hover, .newusr_box-login a:hover {*/
 /*  background: #e7e9ec;*/
 /*}*/
+.box-signup {
+  width: 350px;
+  height: 600px;
+  margin: 60px auto 0;
+  border-radius: 4px;
+  border: 1px #ddd solid;
+} 
