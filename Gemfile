@@ -103,3 +103,8 @@ gem 'omniauth-facebook'
 
 gem 'kaminari', '~> 0.17.0'
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
+
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
