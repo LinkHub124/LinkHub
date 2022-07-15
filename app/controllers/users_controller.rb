@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update]
+  
+  layout 'app2', only: [:registrations_complete]
 
+  def registrations_complete
+    @password = $crypt.decrypt_and_verify(params[:encrypted_password])
+  end
+  
+  def password
+    redirect_to new_user_password_path
+  end
+  
   # get '/:user_name' => 'users#show', as: 'user'
   # ユーザー詳細画面を表示させる
   def show

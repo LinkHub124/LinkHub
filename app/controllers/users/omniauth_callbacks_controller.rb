@@ -16,22 +16,28 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_oauth(request.env['omniauth.auth'])
     # persisted?でDBに保存済みかどうか判断
     if @user.persisted?
-      @user.skip_confirmation!
-      @user.save
-      
-      # サインアップ時に行いたい処理があればここに書きます。
-      #flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: provider.capitalize)
-      sign_in_and_redirect @user#, event: :authentication
-      
-    else
-      # サインイン
-      @user.skip_confirmation!
-      @user.save
       
       sign_in_and_redirect @user
       
-      #session["devise.#{provider}_data"] = request.env['omniauth.auth']
-      #redirect_to new_user_registration_url
+    else
+
+      @user.skip_confirmation!
+      @user.save
+      # サインアップ時に行いたい処理があればここに書きます。
+      #flash[:notice] = I18n.t("devise.omniauth_callbacks.success", kind: provider.capitalize)
+      #flash[:notice] = I18n.t("#{@user.password}", kind: provider.capitalize)
+      @password = @user.password
+      UserMailer.with(user: @user, password: @password).send_password.deliver_now
+
+      # key_len = ActiveSupport::MessageEncryptor.key_len
+      # secret = Rails.application.key_generator.generate_key('salt', key_len)
+      # $crypt = ActiveSupport::MessageEncryptor.new(secret)
+      # encrypted = $crypt.encrypt_and_sign(@password)
+
+      # sign_in @user
+      # redirect_to registrations_complete_path(encrypted_password: encrypted)
+      set_flash_message :notice, :signed_up_gmail
+      sign_in_and_redirect @user
     end
   end
 

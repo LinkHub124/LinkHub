@@ -46,10 +46,6 @@ class User < ApplicationRecord
   def inactive_message
     (is_deleted == false) ? super : :account_withdrawal # active?がfalseの時はdevise.
   end
-  
-  def inactive_message
-    (is_deleted == false) ? super : :account_withdrawal # active?がfalseの時はdevise.
-  end
 
   # フォローしたときの処理
   def follow(user_name)
@@ -72,16 +68,17 @@ class User < ApplicationRecord
     user = User.find_by(uid: auth.uid, provider: auth.provider)
 
     if(auth.provider=="google_oauth2")
-      user ||= User.create(
+      user ||= User.new(
         uid: auth.uid,
         provider: auth.provider,
         name: auth.info.email.match(/[a-z\d]+/),
         email: auth.info.email,
-        password: 123456,
+        password: Devise.friendly_token[0, 20],
         agreement: true
       )
+      
     elsif(auth.provider=="twitter")
-      user ||= User.create(
+      user ||= User.new(
         uid: auth.uid,
         provider: auth.provider,
         #name: auth[:info][:name],
@@ -91,6 +88,7 @@ class User < ApplicationRecord
         password: 123456,
         agreement: true
       )
+      user.skip_confirmation!
     end
   end
 
