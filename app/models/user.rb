@@ -3,7 +3,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
-         # Twitter API認証用に追加
          :omniauthable, omniauth_providers: %i[twitter google_oauth2]
 
 
@@ -43,6 +42,14 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && (is_deleted == false)
   end
+  
+  def inactive_message
+    (is_deleted == false) ? super : :account_withdrawal # active?がfalseの時はdevise.
+  end
+  
+  def inactive_message
+    (is_deleted == false) ? super : :account_withdrawal # active?がfalseの時はdevise.
+  end
 
   # フォローしたときの処理
   def follow(user_name)
@@ -70,9 +77,10 @@ class User < ApplicationRecord
         provider: auth.provider,
         name: auth.info.email.match(/[a-z\d]+/),
         email: auth.info.email,
-        password: 123456
+        password: 123456,
+        agreement: true
       )
-    else
+    elsif(auth.provider=="twitter")
       user ||= User.create(
         uid: auth.uid,
         provider: auth.provider,
@@ -80,7 +88,8 @@ class User < ApplicationRecord
         name: auth["extra"]["access_token"].params[:screen_name],
         email: User.dummy_email(auth),
         #password: Devise.friendly_token[0, 20]
-        password: 123456
+        password: 123456,
+        agreement: true
       )
     end
   end
@@ -89,5 +98,7 @@ class User < ApplicationRecord
   def self.dummy_email(auth)
     "#{Time.now.strftime('%Y%m%d%H%M%S').to_i}-#{auth.uid}-#{auth.provider}@example.com"
   end
+  
+  
 
 end

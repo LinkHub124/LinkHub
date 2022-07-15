@@ -13,20 +13,16 @@
   </div>
 
   <ul>
-    <% if user.github_id != "" %>
-      <li class="user-sns-item">
-        <%= link_to "", "https://github.com/#{user.github_id}", target: '_blank', class:'fab fa-github', rel: "noopenner noreferrer" %>
-      </li>
+    <% unless user.github_id.blank? %>
+      <li class="user-sns-item"><%= link_to "", "https://github.com/#{user.github_id}", target: '_blank', class:'fab fa-github', rel: "noopenner noreferrer" %></li>
     <% end %>
-    <% if user.twitter_id != "" %>
-      <li class="user-sns-item">
-        <%= link_to "", "https://twitter.com/#{user.twitter_id}", target: '_blank', class:'fab fa-twitter', rel: "noopenner noreferrer" %>
-      </li>
+    
+    <% unless user.twitter_id.blank? %>
+      <li class="user-sns-item"><%= link_to "", "https://twitter.com/#{user.twitter_id}", target: '_blank', class:'fab fa-twitter', rel: "noopenner noreferrer" %></li>
     <% end %>
-    <% if user.homepage_url != "" %>
-      <li class="user-sns-item">
-        <%= link_to "", user.homepage_url, target: '_blank', class:'fas fa-home', rel: "noopenner noreferrer" %>
-      </li>
+    
+    <% unless user.homepage_url.blank? %>
+      <li class="user-sns-item"><%= link_to "", user.homepage_url, target: '_blank', class:'fas fa-home', rel: "noopenner noreferrer" %></li>
     <% end %>
   </ul>
   <p class="text-center"><%= link_to user_followings_path(user_name: user.name) do %><%= user.followings.count %>フォロー<% end %> <%= link_to user_followers_path(user_name: user.name) do %><%= user.followers.count %>フォロワー<% end %></p>

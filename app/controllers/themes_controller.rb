@@ -16,7 +16,8 @@ class ThemesController < ApplicationController
   def index
     @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
-
+    @theme_released_all = Kaminari.paginate_array(@theme_released_all).page(params[:page]).per(10)
+    
     @user_ranks = UserRank.all
     @theme_ranks = ThemeRank.all
   end
@@ -25,6 +26,7 @@ class ThemesController < ApplicationController
     if user_signed_in?
       @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
       @theme_released_following = @theme_released_following.reverse
+      @theme_released_following = Kaminari.paginate_array(@theme_released_following).page(params[:page]).per(10)
     end
 
     @user_ranks = UserRank.all

@@ -1,17 +1,22 @@
 <div class='row'>
-  <div class="col-md-3 offset-md-1">
-    <p>ユーザーランキング</p>
-    <%= render "users/ranking_user", user_ranks: @user_ranks %>
-  </div>
-  <div class="col-md-7">
+  <!--<div class="col-md-3 offset-md-1">-->
+  <!--  <p>ユーザーランキング</p>-->
+  <!--  <%#= render "users/ranking_user", user_ranks: @user_ranks %>-->
+  <!--</div>-->
+  <div class="col-md-8 offset-md-2">
     <% if user_signed_in? %>
       <div class="button-wrap">
         <%= link_to "全ユーザー", root_path, class: "radio-button btn-energy" %>
         <%= link_to "フォロー中", index_follow_path, class: "radio-button" %>
       </div>
     <% end %>
-    <% @theme_released_all.each do |theme| %>
-      <%= render "themes/theme_card", theme: theme %>
+    <% if @theme_released_all.length == 0 %>
+      <p>投稿された記事がありません</p>
+    <% else %>
+      <% @theme_released_all.each do |theme| %>
+        <%= render "themes/theme_card", theme: theme %>
+      <% end %>
+      <%= paginate @theme_released_all, theme: 'bootstrap-5' %>
     <% end %>
   </div>
   

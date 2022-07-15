@@ -83,8 +83,11 @@
       <%= link_to "ログイン", new_session_path(resource_name), class: "btn-login mb-2" %>
       <%- if devise_mapping.omniauthable? %>
         <%- resource_class.omniauth_providers.each do |provider| %>
-          <!--以下１行を編集-->
-          <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
+          
+          <% if OmniAuth::Utils.camelize(provider.match(/[a-z]+/)) == "Google" %>
+            <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
+          <% end %>
+          
         <% end %>
       <% end %>
     </div>

@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update]
 
-
   # get '/:user_name' => 'users#show', as: 'user'
   # ユーザー詳細画面を表示させる
   def show
@@ -10,6 +9,7 @@ class UsersController < ApplicationController
     else
       @user = User.find_by(name: params[:user_name])
       @theme_all = @user.themes
+      @theme_all = @theme_all.reverse
       if user_signed_in?
         unless @user == current_user
           @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
@@ -18,18 +18,6 @@ class UsersController < ApplicationController
         @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
       end
       @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(10)
-    end
-  end
-
-
-  # 内部ルート
-  # ユーザー情報を更新する
-  def update
-    binding.pry
-    if current_user.update(user_params)
-      redirect_to user_path(user_name: current_user.name)
-    else
-      render :edit
     end
   end
   

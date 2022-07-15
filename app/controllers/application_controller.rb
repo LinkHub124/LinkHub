@@ -54,6 +54,8 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     # 新規登録時にemailの取得を許可
     devise_parameter_sanitizer.permit(:sign_up, keys:[:email, :agreement])
+     # ログイン時にproviderの取得を許可
+    devise_parameter_sanitizer.permit(:sign_in, keys:[:provider, :email])
     # 情報更新時にnicknameの取得を許可
     devise_parameter_sanitizer.permit(:account_update, keys: [:email, :introduction, :profile_image, :github_id, :twitter_id, :facebook_id, :homepage_url, :agreement])
   end

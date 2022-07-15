@@ -12,8 +12,7 @@
           <%= get_tld(one_link.url) %>
         </em>
       </div>
-      <div class="one-link-right">
-        <%= image_tag( "#{one_link.url_image}", class: "one-link-image") %>
+      <div class="one-link-right one-link-image" style="background-image: url(<%= one_link.url_image %>);">
       </div>
     </div>
   <% end %>
