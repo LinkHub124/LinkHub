@@ -8,7 +8,7 @@ class Theme < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
 
-  # acts_as_taggable_on :tags
+  
   # has_many :post_tags, dependent: :destroy
   # has_many :tags, through: :post_tags, source: :tag
 
