@@ -22,7 +22,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
 
       @user.skip_confirmation!
-      @user.save
+      if @user.save
+        set_flash_message :notice, :signed_up_gmail
+      else
+        set_flash_message :notice, :signed_up_gmail_failure
+      end
       # サインアップ時に行いたい処理があればここに書きます。
       #flash[:notice] = I18n.t("devise.omniauth_callbacks.success", kind: provider.capitalize)
       #flash[:notice] = I18n.t("#{@user.password}", kind: provider.capitalize)
@@ -36,8 +40,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       # sign_in @user
       # redirect_to registrations_complete_path(encrypted_password: encrypted)
-      set_flash_message :notice, :signed_up_gmail
+      
       sign_in_and_redirect @user
+        
     end
   end
 

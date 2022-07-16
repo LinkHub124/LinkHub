@@ -11,6 +11,13 @@
   border: 1px #ddd solid;
 }
 
+@media screen and (max-width:576px) {
+    .box {
+      width: 100%;
+      margin: 0 auto;
+    }
+}
+
 .box-inner {
   padding: 20px 26px;
 }
@@ -122,9 +129,3 @@ h1 {
 /*.login_box-newusr a:hover, .newusr_box-login a:hover {*/
 /*  background: #e7e9ec;*/
 /*}*/
-.box-signup {
-  width: 350px;
-  margin: 60px auto 0;
-  border-radius: 4px;
-  border: 1px #ddd solid;
-} 
