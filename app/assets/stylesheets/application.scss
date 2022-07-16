@@ -408,20 +408,22 @@ a:hover {
   
   .one-link-content > .one-link-left {
       flex: 1;
-      padding: 8px 12px;
+      padding: 12px;
   }
   
   .one-link-content > .one-link-right {
       width: 100%;
-      height: 100px;
+      height: 150px;
   }
   
   .one-link-image {
+      border-left: none;
       border-bottom: 1px solid #e8eceb;
+      border-radius: 3px 3px 0 0;
   }
   
   .one-link-title {
-      font-size: 7px;
+      font-size: 12px;
       -webkit-line-clamp: 2;
   }
 
@@ -431,7 +433,7 @@ a:hover {
   }
 
   .one-link-url {
-      font-size: 7px;
+      font-size: 12px;
       -webkit-line-clamp: 1;
   }
   
