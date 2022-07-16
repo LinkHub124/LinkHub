@@ -3,7 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
-         :omniauthable, omniauth_providers: %i[twitter google_oauth2]
+         :omniauthable, omniauth_providers: %i[twitter google_oauth2],
+         authentication_keys: [:login]
 
 
   attachment :profile_image # ここを追加（_idは含めません）
@@ -24,6 +25,21 @@ class User < ApplicationRecord
   # VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   # validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'は半角英数を両方含む必要があります' }
   validates :introduction, length: { maximum: 200 }
+  
+  attr_writer :login
+  
+  def login
+     @login || self.name || self.email
+   end
+
+   def self.find_for_database_authentication(warden_conditions)
+     conditions = warden_conditions.dup
+     if (login = conditions.delete(:login))
+       where(conditions.to_h).where(["name = :value OR email = :value", { :value => login }]).first
+     elsif conditions.has_key?(:name) || conditions.has_key?(:email)
+       where(conditions.to_h).first
+     end
+   end
 
 
   def self.looks(word)
