@@ -107,6 +107,6 @@ gem 'bootstrap5-kaminari-views', '~> 0.0.1'
 gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
-
-gem 'listen'
