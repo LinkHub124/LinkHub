@@ -30,16 +30,16 @@ class User < ApplicationRecord
   
   def login
      @login || self.name || self.email
-   end
+  end
 
-   def self.find_for_database_authentication(warden_conditions)
+  def self.find_for_database_authentication(warden_conditions)
      conditions = warden_conditions.dup
      if (login = conditions.delete(:login))
        where(conditions.to_h).where(["name = :value OR email = :value", { :value => login }]).first
      elsif conditions.has_key?(:name) || conditions.has_key?(:email)
        where(conditions.to_h).first
      end
-   end
+  end
 
 
   def self.looks(word)
