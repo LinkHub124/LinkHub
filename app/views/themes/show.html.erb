@@ -26,9 +26,9 @@
       <% end %>
       <%= render "users/user_wide", user: @theme.user %>
       <% if @theme.post_status == 2 and user_signed_in? %>
-        <p id="favorite_buttons_<%= @theme.id %>">
+        <div class="favorite favorite-left">
       　　<%= render "favorites/favorite", theme: @theme %>
-      　</p>
+      　</div>
       <% end %>
     </div>
   </div>

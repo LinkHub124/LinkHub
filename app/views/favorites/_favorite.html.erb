@@ -1,19 +1,56 @@
-<div id="favorite-buttons-<%= theme.id %>" class="favorite" >
+<%#============================================================================--%>
+<!--<script src="jquery.min.js"></script>-->
+<!--<%#= javascript_include_tag "favorites.js" %>-->
+<!--<script>
+  $("#feed1").css("color","red")
+</script> -->
+<%#============================================================================--%>
+  
   <h4>
     <% if user_signed_in? %>
+    <!--<div class="feed" id="feed1">-->
+    <!--  <div class="heart " id="like1" rel="like"></div> -->
+    <!--</div>-->
+    <!--<div id="favs" data-favs="<%#= theme.favorited_by?(current_user).to_json %>"></div> -->
+      
       <% if theme.favorited_by?(current_user) %>
-        <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :delete, remote: true do %>
-          <i class="fas fa-heart"></i><%= theme.favorites.count %>
-        <% end %>
+        
+          <div class="b0">
+            <%#div class="b1">box1</div%>
+            
+            <div class="b1">
+              <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :delete, remote: true, id: "favorite-button-"+theme.id.to_s do %>
+                <i id="heart-<%= theme.id %>" class="heart heartFixed"></i>
+              <% end %>
+            </div>
+            <div class="b1"><span id="favorite-counts-<%= theme.id %>"><%= theme.favorites.count %></span></div>
+            <%#div class="b1">box4</div%>
+          </div>
+        
       <% else %>
-        <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :post, remote: true do %>
-          <i class="far fa-heart"></i><%= theme.favorites.count %>
-        <% end %>
+        
+          <div class="b0">
+            <%#div class="b1">box1</div%>
+            <div class="b1">
+              <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :post, remote: true, id: "favorite-button-"+theme.id.to_s do %>
+                <i id="heart-<%= theme.id %>" class="heart"></i>
+              <% end %>
+            </div>
+            <div class="b1"><span id="favorite-counts-<%= theme.id %>"><%= theme.favorites.count %></span></div>
+            <%#div class="b1">box4</div%>
+          </div>
       <% end %>
     <% else %>
-      <%= link_to new_user_session_path do %>
-        <i class="far fa-heart"></i><%= theme.favorites.count %>
-      <% end %>
+      <div class="b0">
+        <%#div class="b1">box1</div%>
+        <div class="b1">
+          <%= link_to new_user_session_path do %>
+            <i id="heart-<%= theme.id %>" class="heart"></i>
+          <% end %>
+        </div>
+        <div class="b1"><span id="favorite-counts-<%= theme.id %>"><%= theme.favorites.count %></span></div>
+        <%#div class="b1">box4</div%>
+      </div>
+
     <% end %>
   </h4>
-</div>

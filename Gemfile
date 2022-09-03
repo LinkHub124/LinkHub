@@ -70,6 +70,7 @@ gem 'nested_form_fields'
 
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 
 gem 'dotenv-rails'
 

@@ -1,1 +1,4 @@
-$('#favorite-buttons-<%= @theme.id %>').html("<%= j(render "favorites/favorite", theme: @theme) %>");
+<!--$('#favorite-buttons-<%#= @theme.id %>').html("<%#= j(render "favorites/favorite", theme: @theme) %>");-->
+$("#heart-<%= @theme.id %>").addClass("heartAnimation");
+$('#favorite-counts-<%= @theme.id %>').html("<%= @theme.favorites.count %>");
+$('#favorite-button-<%= @theme.id %>').attr('data-method', 'delete');

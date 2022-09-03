@@ -1,3 +1,112 @@
 // Place all the styles related to the favorites controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.favorite > h4 {
+  color: #FFA83D !important;
+
+}
+
+.favorite > h4 > a {
+  color: #FFA83D !important;
+}
+
+.b0{
+  display: flex;
+  //justify-content: flex-end;
+  margin-top: 0px;
+  padding: 0px;
+  margin-bottom: 0px;
+  //background-color: red;
+}
+
+.favorite-right .b0{
+  justify-content: flex-end;
+}
+
+.favorite-left .b0{
+  justify-content: flex-begin;
+}
+
+.b1 {
+  //margin: 5px;
+  padding: 15px;
+  position: relative;
+  //background-color: blue;
+}
+
+.heart {
+  background: url(web_heart_animation.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  //vertical-align: middle;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-size:1450px; //actual background size 2900px
+  transform: scale(1.2);
+  //transition: 1s;
+}
+
+.heart:hover
+{
+  transform: scale(1.25);
+  //background-position: right; //displaying last heart frame 
+}
+
+.heartFixed {
+  background: url(web_heart_animation.png);
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  //vertical-align: middle;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-size:1450px; //actual background size 2900px
+  transform: scale(1.2);
+  //transition: 1s;
+}
+
+.heartFixed:hover
+{
+  transform: scale(1.25);
+  //background-position: right; //displaying last heart frame 
+}
+
+@-webkit-keyframes heartBlast
+{
+  0% {background-position: left;}
+  100% {background-position: right;}
+}
+
+@keyframes heartBlast
+{
+  0% {background-position: left;}
+  100% {background-position: right;}
+}
+
+.heartAnimation
+{
+  -webkit-animation-name: heartBlast; //webkit broswers
+  animation-name: heartBlast;
+  -webkit-animation-duration: .8s;
+  animation-duration: .8s;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  -webkit-animation-timing-function: steps(28); //background frames count 28
+  animation-timing-function: steps(28);
+  background-position: right;
+}

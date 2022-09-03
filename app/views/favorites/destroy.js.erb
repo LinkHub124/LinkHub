@@ -1,1 +1,7 @@
-$('#favorite-buttons-<%= @theme.id %>').html("<%= j(render "favorites/favorite", theme: @theme) %>");
+<!--$('#favorite-buttons-<%#= @theme.id %>').html("<%#= j(render "favorites/favorite", theme: @theme) %>");-->
+<!--$('#favorite-buttons-<%#= @theme.id %>').removeClass("heartAnimation").attr("rel","like");-->
+<!--$('#favorite-buttons-<%#= @theme.id %>').css("background-position","left");-->
+$("#heart-<%= @theme.id %>").removeClass("heartAnimation");
+$("#heart-<%= @theme.id %>").removeClass("heartFixed");
+$('#favorite-counts-<%= @theme.id %>').html("<%= @theme.favorites.count %>");
+$('#favorite-button-<%= @theme.id %>').attr('data-method', 'post');

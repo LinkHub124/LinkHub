@@ -18,6 +18,7 @@
 
 
 //= require jquery
+//= require jquery.turbolinks
 //= require nested_form_fields
 //= require jquery_ujs
 //= require popper
