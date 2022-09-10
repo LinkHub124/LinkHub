@@ -57,6 +57,6 @@ class ApplicationController < ActionController::Base
      # ログイン時にproviderの取得を許可
     devise_parameter_sanitizer.permit(:sign_in, keys:[:provider, :email])
     # 情報更新時にnicknameの取得を許可
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :introduction, :profile_image, :github_id, :twitter_id, :facebook_id, :homepage_url, :agreement])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :introduction, :profile_image, :github_id, :twitter_id, :facebook_id, :homepage_url, :agreement])
   end
 end
