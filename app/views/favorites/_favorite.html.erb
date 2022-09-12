@@ -18,7 +18,7 @@
           <div class="b0">
             <%#div class="b1">box1</div%>
             
-            <div class="b1">
+            <div class="b1 front">
               <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :delete, remote: true, id: "favorite-button-"+theme.id.to_s do %>
                 <i id="heart-<%= theme.id %>" class="heart heartFixed"></i>
               <% end %>
@@ -31,7 +31,7 @@
         
           <div class="b0">
             <%#div class="b1">box1</div%>
-            <div class="b1">
+            <div class="b1 front">
               <%= link_to theme_favorites_path(user_name: current_user.name, theme_hashid: theme.id), method: :post, remote: true, id: "favorite-button-"+theme.id.to_s do %>
                 <i id="heart-<%= theme.id %>" class="heart"></i>
               <% end %>
@@ -43,7 +43,7 @@
     <% else %>
       <div class="b0">
         <%#div class="b1">box1</div%>
-        <div class="b1">
+        <div class="b1 front">
           <%= link_to new_user_session_path do %>
             <i id="heart-<%= theme.id %>" class="heart"></i>
           <% end %>

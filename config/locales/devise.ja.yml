@@ -7,10 +7,10 @@ ja:
     failure:
       already_authenticated: 'すでにログインしています。'
       inactive: 'アカウントが有効化されていません。メールに記載された手順にしたがって、アカウントを有効化してください。'
-      invalid: "%{authentication_keys} もしくはパスワードが不正です。"
+      invalid: "ユーザー名、メールアドレス、もしくはパスワードが不正です。"
       locked: 'あなたのアカウントは凍結されています。'
       last_attempt: 'あなたのアカウントが凍結される前に、複数回の操作がおこなわれています。'
-      not_found_in_database: "%{authentication_keys} もしくはパスワードが不正です。"
+      not_found_in_database: "ユーザー名、メールアドレス、もしくはパスワードが不正です。"
       timeout: 'セッションがタイムアウトしました。もう一度ログインしてください。'
       unauthenticated: 'アカウント登録もしくはログインしてください。'
       unconfirmed: 'メールアドレスの本人確認が必要です。'
@@ -22,6 +22,8 @@ ja:
         subject: 'パスワードの再設定について'
       unlock_instructions:
         subject: 'アカウントの凍結解除について'
+      email_changed:
+        subject: 'メールアドレスの変更について'
       password_change:
         subject: 'パスワードの変更について'
     omniauth_callbacks:
@@ -29,7 +31,7 @@ ja:
       success: "%{kind} アカウントによる認証に成功しました。"
       user:
         signed_up_gmail: 'アカウント登録が完了しました。Gmailから仮パスワードをご確認ください。'
-        signed_up_gmail_failure: 'Nameまたはメールアドレスが既に使用されています。'
+        signed_up_gmail_failure: 'ユーザー名またはメールアドレスが既に使用されています。'
     passwords:
       no_token: "このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。"
       send_instructions: 'パスワードの再設定について数分以内にメールでご連絡いたします。'
@@ -44,6 +46,7 @@ ja:
       signed_up_but_unconfirmed: '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
       update_needs_confirmation: 'アカウント情報を変更しました。変更されたメールアドレスの本人確認のため、本人確認用メールより確認処理をおこなってください。'
       updated: 'アカウント情報を変更しました。'
+      updated_but_not_signed_in: 'アカウントは正常に更新されましたが、パスワードが変更されたため、再度ログインする必要があります。'
     sessions:
       signed_in: 'ログインしました。'
       signed_out: 'ログアウトしました。'
@@ -60,11 +63,12 @@ ja:
       not_found: 'は見つかりませんでした。'
       not_locked: 'は凍結されていません。'
       not_saved:
-        one: "エラーが発生したため %{resource} は保存されませんでした:"
-        other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした:"
-      taken: "は既に使用されています。"
-      blank: "が入力されていません。"
-      too_short: "は%{count}文字以上に設定して下さい。"
-      too_long: "は%{count}文字以下に設定して下さい。"
-      invalid: "は有効でありません。"
-      confirmation: "が内容とあっていません。"
+        one: 'エラーが発生したため %{resource} は保存されませんでした:'
+        other: '%{count} 件のエラーが発生したため %{resource} は保存されませんでした:'
+      taken: 'は既に使用されています。'
+      blank: 'が入力されていません。'
+      too_short: 'は%{count}文字以上に設定して下さい。'
+      too_long: 'は%{count}文字以下に設定して下さい。'
+      invalid: 'は有効でありません。'
+      confirmation: 'が内容とあっていません。'
+      

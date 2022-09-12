@@ -1,4 +1,5 @@
 ja:
+  hello: 'ハローワールド'
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
@@ -6,3 +7,28 @@ ja:
       previous: <i class="fas fa-angle-left"></i>
       next: <i class="fas fa-angle-right"></i>
       truncate: "..."
+      
+  activerecord:
+    models:
+      user: 'ユーザー'
+    attributes:
+      user:
+        current_password: '現在のパスワード'
+        profile_image: 'プロフィール画像'
+        name: 'ユーザー名'
+        introduction: '自己紹介文'
+        password_confirmation: '確認用パスワード'
+        agreement: '利用規約'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        contain_blacklist_words: '使用できない文字列が含まれています。'
+        contain_invalid_regex: '同じ文字を5回以上連続で使用することはできません。'
+        
+    errors:
+      models:
+        user:
+          attributes:
+            agreement:
+              accepted: 'に同意して下さい。'
+      
+  

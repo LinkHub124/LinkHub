@@ -31,6 +31,8 @@
           <%= f.label :homepage_url, "ホームページ" %>
           <%= f.text_field :homepage_url, class: "form-control" %>
         </div>
+        
+        <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", id: "img_prev", size:"100x100", style: "border-radius: 50%;" %>
 
         <div class="form-group">
           <%= f.label :profile_image %>
@@ -59,6 +61,22 @@
       <div class="unsubscribe">
         <p><%= link_to "退会はこちら", unsubscribe_path %></p>
       </div>
+      <script>
+       $(document).on("turbolinks:load", function(){
+         function readURL(input) {
+           if(input.files && input.files[0]){
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#img_prev').attr('src', e.target.result);
+             }
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+         $("#user_profile_image").change(function(){
+           readURL(this);
+         });
+       });
+       </script>
     </div>
   </div>
 </div>
