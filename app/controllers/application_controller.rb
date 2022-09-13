@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :set_host
   
   layout 'app2', only: [:terms, :policy]
+  
+  protect_from_forgery with: :null_session
 
 
   #===================================================================

@@ -1,4 +1,12 @@
 class LinksController < ApplicationController
+  def sort
+     #binding.pry
+     @links = Link.find(params[:link_hashid])
+     one_link = @links.one_links[params[:from].to_i]
+     one_link.insert_at(params[:to].to_i + 1)
+     head :ok
+     #binding.pry
+   end
 
   # get '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
   # 新規Linkを作成

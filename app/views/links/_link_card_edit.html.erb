@@ -8,8 +8,58 @@
 <p class="link-card-caption"><%= link.caption %></p>
 <table class="table table-striped table-bordered table-hover">
   <tbody>
-    <% link.one_links.each do |one_link| %>
-      <%= render "links/one_link_card", one_link: one_link %>
-    <% end %>
+    <!--<div id = "ex1">NO!!</div>-->
+     <!--<ul id="sortable_list">-->
+      <ul id=<%= "sortable_#{link.id}" %>>
+       <% link.one_links.each do |one_link| %>
+       <li>
+         <%= render "links/one_link_card", one_link: one_link %>
+       </li>
+       <% end %>
+     </ul>
+     <%= hidden_field_tag :usr_name, theme.user.name %>
+     <%= hidden_field_tag :thm_hashid, theme.hashid %>
+     <%= hidden_field_tag "lnk_hashid_#{link.id}", link.hashid %>
   </tbody>
 </table>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script>
+   $( function(){
+     //alert(<%#= "sortable_#{link.id}" %>);
+     $( <%= "sortable_#{link.id}" %> ).sortable({
+       start: function(evt, ui) {
+         // creates a temporary attribute on the element with the old index
+         $(this).attr('data-previndex', ui.item.index());
+       },
+       update: function(evt, ui){
+         var newIndex = ui.item.index();
+         var oldIndex = $(this).attr('data-previndex');
+         //alert(newIndex);
+
+         user_name = $("#usr_name").val()
+         theme_hashid = $("#thm_hashid").val()
+         link_hashid = $( "#lnk_hashid_" + <%= link.id %>).val()
+
+         URL = '/' + user_name + '/themes/' + theme_hashid + '/' + link_hashid + '/sort';
+         <%#= binding.pry %>
+         //alert(URL);
+         $.ajax( {
+           url: URL,
+           type: 'patch',
+           data: { from: oldIndex, to: newIndex }
+         })
+         .done(function(data) {
+         // 通信成功時の処理を記述
+           //alert("success")
+         })
+         .fail(function() {
+         // 通信失敗時の処理を記述
+           alert("通信に失敗しました")
+         });
+       }
+     });
+
+     //$( "#sortable_"+link_id).sortable();
+   });
+ </script>

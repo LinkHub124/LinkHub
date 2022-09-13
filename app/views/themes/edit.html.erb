@@ -24,10 +24,12 @@
     </div>
     <div class="col-md-10 offset-md-1" id="add-link-card">
       <% @link_all.each do |link| %>
-        <div class='link-card' id="link-card-<%= link.id %>">
-          <%= render 'links/link_card_edit', link: link, theme: @theme %>
-        </div>
-      <% end %>
+
+           <div class='link-card' id="link-card-<%= link.id %>">
+             <%= render 'links/link_card_edit', link: link, theme: @theme %>
+           </div>
+
+         <% end %>
       
       
     </div>
