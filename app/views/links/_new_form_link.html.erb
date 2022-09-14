@@ -22,6 +22,7 @@
           <tbody>
             <%= f.nested_fields_for :one_links, wrapper_tag: :tr do |q| %>
               <td><%= q.text_field :url, class: 'form-control' %></td>
+              <td><%= q.select :rate, [["評価5", 5], ["評価4", 4], ["評価3", 3], ["評価2", 2], ["評価1", 1]], { selected: 3 }, { class: 'form-control' } %></td>
               <td><%= q.remove_nested_fields_link '', class: 'btn btn-danger', role: 'button' do %>&times;<% end %></td>
             <% end %>
           </tbody>

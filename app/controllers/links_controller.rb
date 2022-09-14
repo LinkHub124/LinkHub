@@ -149,6 +149,8 @@ class LinksController < ApplicationController
           end
         rescue
           ret_link_params[:one_links_attributes][idx][:url_title] = "URLが間違っています"
+          ret_link_params[:one_links_attributes][idx][:url_description] = nil
+          ret_link_params[:one_links_attributes][idx][:url_image] = nil
         else
           # ノコギリを使ってhtmlを解析
           doc = Nokogiri::HTML.parse(html, charset)
@@ -235,7 +237,7 @@ class LinksController < ApplicationController
 
     # 投稿時、Linkとそれに結びついたデータをコントローラに通す
     def link_params
-      params.require(:link).permit(:subtitle, :caption, :theme_id, :theme_hashid, one_links_attributes: [:id, :link_id, :url, :_destroy])
+      params.require(:link).permit(:subtitle, :caption, :theme_id, :theme_hashid, one_links_attributes: [:id, :link_id, :url, :rate, :_destroy])
     end
 
     # 日本語のみエンコード

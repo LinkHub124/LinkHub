@@ -12,8 +12,27 @@
           <%= get_tld(one_link.url) %>
         </span>
       </div>
-      <div class="one-link-right one-link-image" style="background-image: url(<%= one_link.url_image %>);">
+      <div class="one-link-right one-link-image" style="background-image: url(
+         <% if one_link.url_image.blank? %>
+           <%= asset_path "no_url_image.png" %>
+         <% else %>
+           <%= one_link.url_image %>
+         <% end %>
+         );">
       </div>
     </div>
   <% end %>
 </div>
+
+<div>
+   <p id="star-rate-<%= one_link.id %>"></p>
+   <script>
+     $('#star-rate-<%= one_link.id %>').raty({
+       size: 36,
+       starOff: '<%= asset_path('star-off.png') %>',
+       starOn: '<%= asset_path('star-on.png') %>',
+       readOnly: true,
+       score: <%= one_link.rate %>,
+     });
+   </script>
+ </div>
