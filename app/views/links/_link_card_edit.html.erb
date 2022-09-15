@@ -25,7 +25,8 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <script>
-   $( function(){
+ $(document).on('turbolinks:load', function() {
+//   $( function(){
      //alert(<%#= "sortable_#{link.id}" %>);
      $( <%= "sortable_#{link.id}" %> ).sortable({
        start: function(evt, ui) {
