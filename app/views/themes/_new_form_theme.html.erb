@@ -12,10 +12,23 @@
           タイトル (最大50文字)
           <%= f.text_field :title, class: "form-control", maxlength: "50" %>
         </div>
+        <div class="form-group">
+           関連タグ(,区切りで入力/各20文字以内/最大5つまで)
+           <%= f.text_field :tag_list, data: {role: "tagsinput"}, class: "form-control" %>
+         </div>
       </div>
+      
       <div class="modal-footer actions">
         <%= f.submit "テーマ作成", class: "btn btn-primary"%>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+   $(document).on('turbolinks:load', function() {
+     $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+     console.log(window.performance.navigation);
+   });
+   // console.log(window.performance.navigation);
+ </script>

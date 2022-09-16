@@ -23,8 +23,8 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
+//= require tagsinput
 
-//= require bootstrap-tagsinput.min
 
 //= require_tree .
 

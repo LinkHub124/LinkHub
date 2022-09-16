@@ -1,0 +1,13 @@
+<div class='row'>
+   <div class="col-md-8 offset-md-2">
+     <h2>タグ一覧</h2>
+     <div class="col-sm-12">
+       <% @tag_all.each do |tag| %>
+         <%= link_to tag_path(tag_name: tag.name), class: "badge badge-warning" do %>
+           <i class="fas fa-tag"></i>
+           <%= tag %>
+         <% end %>
+       <% end %>
+     </div>
+   </div>
+ </div>

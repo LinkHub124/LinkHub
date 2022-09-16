@@ -149,10 +149,17 @@ class ThemesController < ApplicationController
   # patch '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
   # Themeに結びついたLinkを更新する
   def update
-    theme = Theme.find(params[:theme_hashid])
-    theme.update(theme_params)
-    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
-  end
+     @theme = Theme.find(params[:theme_hashid])
+     @link_all = @theme.links
+     # binding.pry
+     if @theme.update(theme_params)
+       redirect_to theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid)
+     else
+       # binding.pry
+       @theme = Theme.find(params[:theme_hashid])
+       render :edit
+     end
+   end
 
 
   # delete '/:user_name/themes/:theme_hashid' => 'themes#destroy', as: 'destroy_theme'

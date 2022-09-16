@@ -19,6 +19,14 @@
     <div class="theme-frame pl-5 pr-5">
       <h1 class="theme-title"><%= @theme.title %></h1>
     </div>
+    <div class="pl-5 pr-5 mb-5">
+       <% @theme.tag_list.each do |tag| %>
+         <%= link_to tag_path(tag_name: tag), class: "badge badge-warning" do %>
+           <i class="fas fa-tag"></i>
+           <%= tag %>
+         <% end %>
+       <% end %>
+     </div>
     <div class="col-md-10 offset-md-1">
       <% @link_all.each do |link| %>
         <div class='link-card' id='link-card-<%= link.id %>'>
