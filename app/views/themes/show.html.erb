@@ -34,16 +34,23 @@
         </div>
       <% end %>
       <%= render "users/user_wide", user: @theme.user %>
-      <% if @theme.post_status == 2 and user_signed_in? %>
-        <div class="favorite favorite-left">
-      　　<%= render "favorites/favorite", theme: @theme %>
-      　</div>
-      <% end %>
+      <div class="theme-share" style="display:flex;">
+        <% if @theme.post_status == 2 and user_signed_in? %>
+          <div class="favorite favorite-left">
+        　　<%= render "favorites/favorite", theme: @theme %>
+        　</div>
+        <% end %>
+        <div>
+          <%= link_to "https://twitter.com/intent/tweet?hashtags=LinkHub&text=#{@theme.title}【LinkHub】&url=#{request.url}&via=#{@theme.user.twitter_id}", title: 'Twitter', target: '_blank' do %>
+            <i class="fab fa-twitter fa-lg" style="color:#1DA2F2"></i>
+          <% end %>
+        </div>
+      
+      </div>
+      
       <div class="theme-report-btn">
-         <%= form_with( url: theme_report_path, local: true ) do |f| %><%#theme_report_%>
-           <%= f.button type: "submit", style:'border-style: none;', data: {confirm: "この記事を通報しますか？"} do %> 
-             <i class="fas fa-exclamation-circle"></i> この記事を通報する
-           <% end %>
+         <%= link_to theme_report_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), local: true, method: :patch, data: {confirm: "通報しますか？"} do %>
+           <i class="fas fa-exclamation-circle"></i> この記事を通報する
          <% end %>
        </div>
     </div>

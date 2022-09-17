@@ -159,6 +159,12 @@ a:hover {
 
 
 
+.theme-share {
+  display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+}
 
 .theme-frame {
   display: flex;
