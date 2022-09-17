@@ -1,0 +1,9 @@
+<h2>通報情報</h2>
+<p> <%= Time.current %> </p>
+
+ <%= @theme %>
+ <h2>記事名: <%= @theme.title %></h2>
+ <h2>ユーザー情報</h2>
+ <p>ID: <%= @theme.user_id %></p>
+ <p>名前: <%= User.find(@theme.user_id).name %></p>
+ <p>email: <%= User.find(@theme.user_id).email %></p>

@@ -39,6 +39,13 @@
       　　<%= render "favorites/favorite", theme: @theme %>
       　</div>
       <% end %>
+      <div class="theme-report-btn">
+         <%= form_with( url: theme_report_path, local: true ) do |f| %><%#theme_report_%>
+           <%= f.button type: "submit", style:'border-style: none;', data: {confirm: "この記事を通報しますか？"} do %> 
+             <i class="fas fa-exclamation-circle"></i> この記事を通報する
+           <% end %>
+         <% end %>
+       </div>
     </div>
   </div>
 </div>

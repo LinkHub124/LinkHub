@@ -2,6 +2,14 @@ class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :is_draft, only: [:show]
   before_action :authenticate_user!, only: [:index_follow]
+  
+  def report
+     #binding.pry
+     theme = Theme.find(params[:theme_hashid])
+     flash[:notice] = "通報が完了しました。"
+     ThemeMailer.with(theme: theme).send_report.deliver_now
+     redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
+  end
 
 
   # get '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
