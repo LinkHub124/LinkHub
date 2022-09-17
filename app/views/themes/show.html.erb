@@ -47,15 +47,15 @@
          <% end %>
        </div>
     </div>
-    <div class="col-md-10 offset-md-1">
-       <h1>関連記事</h1>
-       <div class="theme-card-image">
-         <% @theme_sort_by_fav.first(3).each do |theme, fav| %>
-           <%= render "themes/theme_card", theme: theme %>
-         <% end %>
-       </div>
-    </div>
+    <% if @theme_sort_by_fav.length != 0 %>
+      <div class="col-md-10 offset-md-1">
+         <h1>関連記事</h1>
+         <div class="theme-card-image">
+           <% @theme_sort_by_fav.first(3).each do |theme, fav| %>
+             <%= render "themes/theme_card", theme: theme %>
+           <% end %>
+         </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
-
