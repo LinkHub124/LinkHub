@@ -143,6 +143,16 @@ class ThemesController < ApplicationController
       render "errors/404.html", status: :not_found#, layout: "error"
     end
     @link_all = @theme.links
+    @theme_released_all = Theme.where(post_status: 2)
+     tag_names = @theme.tags
+     @theme_related = @theme_released_all.where.not(id: @theme.id).tagged_with(tag_names, :any => true)
+     theme_addFavcount = {}
+     @theme_related.all.each do |theme|
+       theme_addFavcount.store(theme, theme.favorites.count)
+       theme.reload
+     end
+     #binding.pry
+     @theme_sort_by_fav = theme_addFavcount.sort_by { |_, v| v }.reverse.to_h
   end
 
 
