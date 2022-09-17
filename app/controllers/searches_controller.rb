@@ -63,6 +63,9 @@ class SearchesController < ApplicationController
       if theme.title =~ %r{^.*#{search_text}.*} then
         flag = true
       end
+      if theme.user.name =~ %r{^.*#{search_text}.*} then
+        flag = true
+      end
       theme.links.each { |link|
         if link.subtitle =~ %r{^.*#{search_text}.*} or link.caption =~ %r{^.*#{search_text}.*} then
           flag = true
@@ -83,6 +86,9 @@ class SearchesController < ApplicationController
     @theme_favorite_all.each { |favorite|
       flag = false
       if favorite.theme.title =~ %r{^.*#{search_text}.*} then
+        flag = true
+      end
+      if favorite.theme.user.name =~ %r{^.*#{search_text}.*} then
         flag = true
       end
       favorite.theme.links.each { |link|
