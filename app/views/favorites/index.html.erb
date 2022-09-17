@@ -7,6 +7,7 @@
     <div class="button-wrap">
       <%= link_to "投稿一覧", user_path(user_name: @user.name), class: "radio-button" %>
       <%= link_to "いいね一覧", user_favorites_path(user_name: @user.name), class: "radio-button btn-energy" %>
+      <%= render "searches/form_search_stock" %>
     </div>
     
     <% unless @favorite_all.length == 0 %>

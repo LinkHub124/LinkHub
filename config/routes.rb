@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get    '/tags' => 'tags#index', as: 'tags'
   get    '/tags/:tag_name' => 'tags#show', as: 'tag'
   get    '/:user_name' => 'users#show', as: 'user'
+  get    '/:user_name/search' => 'searches#search_stock', as: 'search_stock'
   get    '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   post   '/:user_name' => 'themes#create', as: 'themes'
   patch  '/:user_name/themes/:theme_hashid/:link_hashid/sort' => 'links#sort'

@@ -1,0 +1,8 @@
+<div class="input-group mt-3">
+  <div class="input-group-prepend">
+   <span class="input-group-text"><i class="fas fa-search"></i></span>
+  </div>
+  <%= form_with url: search_stock_path, local: true, method: :get do |f| %>
+   <%= f.text_field :word, class: "form-control" %>
+  <% end %>
+</div>
