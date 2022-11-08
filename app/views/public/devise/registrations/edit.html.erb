@@ -1,0 +1,82 @@
+<div class="container">
+  <h1 class="form-title">アカウント情報編集</h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 form-wrapper">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "public/shared/error_messages", resource: resource %>
+        <div class = 'form-group'>
+          <%= f.label :name, "ユーザー名" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "最大20文字", maxlength: 20 %>
+        </div>
+        <div class = 'form-group'>
+          <%= f.label :introduction, "自己紹介文" %>
+          <%= f.text_area :introduction, class: "form-control", placeholder: "最大200文字", maxlength: 200 %>
+        </div>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">https://github.com/</span>
+          </div>
+          <%= f.text_field :github_id, class: "form-control", placeholder: "GitHubのID" %>
+        </div>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">https://twitter.com/</span>
+          </div>
+          <%= f.text_field :twitter_id, class: "form-control", placeholder: "TwitterのID" %>
+        </div>
+        
+        <div class='form-group'>
+          <%= f.label :homepage_url, "ホームページ" %>
+          <%= f.text_field :homepage_url, class: "form-control" %>
+        </div>
+        
+        <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", id: "img_prev", size:"100x100", style: "border-radius: 50%;" %>
+
+        <div class="form-group">
+          <%= f.label :profile_image %>
+          <%= f.attachment_field :profile_image, class: "form-control-file" %>
+        </div>
+
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+        <div class="form-group">
+          <%= f.label :password, "パスワード変更(変更したい場合)" %>
+          <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "半角英数6文字以上" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation, "パスワード変更(確認)" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "再度ご入力ください" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :current_password %> (変更にはパスワードが必要です)<br />
+          <%= f.password_field :current_password, autocomplete: "current-password",class: "form-control", placeholder: "必須項目です" %>
+        </div>
+        <%= f.submit "変更する", class: "btn btn-primary form-submit-btn" %>
+        <%= link_to  "マイページへ", user_path(user_name: current_user.name), class: "link-below-user-form" %>
+      <% end %>
+      <div class="unsubscribe">
+        <p><%= link_to "退会はこちら", unsubscribe_path %></p>
+      </div>
+      <script>
+       $(document).on("turbolinks:load", function(){
+         function readURL(input) {
+           if(input.files && input.files[0]){
+             var reader = new FileReader();
+             reader.onload = function (e) {
+               $('#img_prev').attr('src', e.target.result);
+             }
+             reader.readAsDataURL(input.files[0]);
+           }
+         }
+         $("#user_profile_image").change(function(){
+           readURL(this);
+         });
+       });
+       </script>
+    </div>
+  </div>
+</div>

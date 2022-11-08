@@ -1,0 +1,92 @@
+<div class="box">
+  <div class="box-inner">
+
+    <%= form_with model: @user, url: user_session_path, local: true do |f| %>
+      <h3>ログイン</h3>
+      <div class="box-username">
+        <%= f.label :name, "ユーザー名またはメールアドレス" %><br />
+        <%= f.text_field :login, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="box-password">
+        <div class="a-row">
+          <div class="column-left">
+            <%= f.label :password, "パスワード" %>
+          </div>
+          <div class="column-right">
+            <%= link_to "パスワードを忘れた場合", new_user_password_path %>
+          </div>
+        </div>
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember, "ログインしたままにする" %>
+        </div>
+      <% end %>
+      <div class="box-login">
+        <%= f.submit "ログイン" %>
+        <div class="legal-text">
+          続行することで、LinkHubの
+          <button type="button" class="text btn-policy" data-toggle="modal" data-target="#modal-terms" data-backdrop="static">利用規約</button>
+          および
+          <button type="button" class="text btn-policy" data-toggle="modal" data-target="#modal-policy" data-backdrop="static">プライバシーポリシー</button>
+
+          
+
+          <div class="modal fade" id="modal-terms" tabindex="-1" aria-labelledby="modal-label-terms" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-label-terms">利用規約</h4>
+                </div>
+                <div class="modal-body">
+                  <%= render "layouts/terms" %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal fade" id="modal-policy" tabindex="-1" aria-labelledby="modal-label-policy" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-label-policy">プライバシーポリシー</h4>
+                </div>
+                <div class="modal-body">
+                  <%= render "layouts/policy" %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          に同意するものとみなされます。
+        </div>
+      </div>
+    <% end %>
+    <div class="newusr_box-login">
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          
+          
+          <% if OmniAuth::Utils.camelize(provider.match(/[a-z]+/)) == "Google" %>
+            <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
+          <% end %>
+          
+        <% end %>
+      <% end %>
+    </div>
+    <div class="login_box-newusr">
+      <p><span>------------</span> 初めての方はこちら <span>------------</span></p>
+      <%= link_to "LinkHubアカウントを作成", new_user_registration_path, class: "btn-login mb-2" %>
+    </div>
+  </div>
+</div>
