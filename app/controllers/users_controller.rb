@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update]
+  include ActiveRecord::Sanitization::ClassMethods
   
   layout 'app2', only: [:registrations_complete]
 
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
     redirect_to new_user_password_path
   end
   
+  
   # get '/:user_name' => 'users#show', as: 'user'
   # ユーザー詳細画面を表示させる
   def show
@@ -19,15 +21,19 @@ class UsersController < ApplicationController
     else
       @user = User.find_by(name: params[:user_name])
       @theme_all = @user.themes
-      @theme_all = @theme_all.reverse
-      if user_signed_in?
-        unless @user == current_user
-          @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
-        end
-      else
-        @theme_all = @theme_all.select { |theme| theme.post_status == 2 }
+      # ログインしてない、またはuserとcurrent_userが違かったらreleasedのみを表示
+      if not (user_signed_in? and @user == current_user)
+        @theme_all = @theme_all.where(post_status: 2)
       end
+      
+      if params[:tq]
+        query = params[:tq]
+        @theme_all = search_post(@theme_all, query)
+      end
+      
+      @theme_all = @theme_all.reverse
       @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(10)
+      # @theme_all = @theme_all.page(params[:page]).per(10)
     end
   end
   
@@ -96,6 +102,23 @@ class UsersController < ApplicationController
 
 
   private
+    # 自分のテーマの検索
+    def search_post(theme_all, search_text)
+      theme_searched = []
+      theme_all.each{ |theme|
+        flag = false
+        flag = true if theme.title =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
+        flag = true if theme.user.name =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
+        theme.links.each { |link|
+          flag = true if link.subtitle =~ %r{^.*#{sanitize_sql_like(search_text)}.*} or link.caption =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
+        }
+        theme.tags.each { |tag|
+          flag = true if tag.name =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
+        }
+        theme_searched += Array(theme) if flag == true
+      }
+      theme_searched
+    end
 
     # 新規登録時、名前とプロフィール画像をコントローラに通す
     def user_params

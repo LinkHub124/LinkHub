@@ -5,8 +5,14 @@ class FavoritesController < ApplicationController
   # いいね順にソートして表示
   def index
     @user = User.find_by(name: params[:user_name])
-    @favorite_all = @user.favorites.reverse
-    @favorite_all = @favorite_all.select { |favorite| favorite.theme.post_status == 2 }
+    @favorite_all = @user.favorites.select { |favorite| favorite.theme.post_status == 2 }
+    
+    if params[:tq]
+      query = params[:tq]
+      @favorite_all = search_favorites(@favorite_all, query)
+    end
+    
+    @favorite_all = @favorite_all.reverse
     @favorite_all = Kaminari.paginate_array(@favorite_all).page(params[:page]).per(10)
   end
 
@@ -27,5 +33,24 @@ class FavoritesController < ApplicationController
     favorite = current_user.favorites.find_by(theme_id: @theme.id)
     favorite.destroy
   end
+  
+  private
+    # 自分のいいねの検索
+    def search_favorites(favorite_all, search_text)
+      favorite_searched = []
+      favorite_all.each { |favorite|
+        flag = false
+        flag = true if favorite.theme.title =~ %r{^.*#{search_text}.*}
+        flag = true if favorite.theme.user.name =~ %r{^.*#{search_text}.*}
+        favorite.theme.links.each { |link|
+          flag = true if link.subtitle =~ %r{^.*#{search_text}.*} or link.caption =~ %r{^.*#{search_text}.*}
+        }
+        favorite.theme.tags.each { |tag|
+          flag = true if tag.name =~ %r{^.*#{search_text}.*}
+        }
+        favorite_searched += Array(favorite) if flag == true
+      }
+      favorite_searched
+    end
 
 end
