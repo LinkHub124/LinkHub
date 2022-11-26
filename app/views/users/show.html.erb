@@ -9,7 +9,14 @@
     <div class="button-wrap">
       <%= link_to "投稿一覧", user_path(user_name: @user.name), class: "radio-button btn-energy" %>
       <%= link_to "いいね一覧", user_favorites_path(user_name: @user.name), class: "radio-button" %>
-      <%= render "searches/form_search_stock" %>
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">
+         <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+        <%= form_with url: user_path(name: @user.name), local: true, method: :get do |f| %>
+          <%= f.text_field :tq, class: "form-control" %>
+        <% end %>
+      </div>
     </div>
     
     <% unless @theme_all.length == 0 %>
