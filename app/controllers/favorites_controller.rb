@@ -1,5 +1,6 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
+  include ActiveRecord::Sanitization::ClassMethods
 
   # get '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
   # いいね順にソートして表示
@@ -40,13 +41,13 @@ class FavoritesController < ApplicationController
       favorite_searched = []
       favorite_all.each { |favorite|
         flag = false
-        flag = true if favorite.theme.title =~ %r{^.*#{search_text}.*}
-        flag = true if favorite.theme.user.name =~ %r{^.*#{search_text}.*}
+        flag = true if favorite.theme.title =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
+        flag = true if favorite.theme.user.name =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
         favorite.theme.links.each { |link|
-          flag = true if link.subtitle =~ %r{^.*#{search_text}.*} or link.caption =~ %r{^.*#{search_text}.*}
+          flag = true if link.subtitle =~ %r{^.*#{sanitize_sql_like(search_text)}.*} or link.caption =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
         }
         favorite.theme.tags.each { |tag|
-          flag = true if tag.name =~ %r{^.*#{search_text}.*}
+          flag = true if tag.name =~ %r{^.*#{sanitize_sql_like(search_text)}.*}
         }
         favorite_searched += Array(favorite) if flag == true
       }
