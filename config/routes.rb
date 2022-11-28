@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   
+  devise_for :users, controllers: {
+    registrations: "public/users/registrations",
+    sessions: "public/devise/sessions",
+    passwords: "public/devise/passwords",
+    confirmations: "public/devise/confirmations",
+    # API認証用
+    :omniauth_callbacks => 'public/users/omniauth_callbacks',
+  }
   scope module: :public do
-    devise_for :users, controllers: {
-      registrations: "users/registrations",
-      # API認証用
-      :omniauth_callbacks => 'users/omniauth_callbacks',
-    }
     root to: 'themes#index'
     get    '/followings' => 'themes#index_follow', as: 'index_follow'
     # get    '/timeline' => 'themes#timeline'

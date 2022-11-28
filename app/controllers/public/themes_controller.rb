@@ -4,11 +4,11 @@ class Public::ThemesController < ApplicationController
   before_action :authenticate_user!, only: [:index_follow]
   
   def report
-     #binding.pry
-     theme = Theme.find(params[:theme_hashid])
-     flash[:notice] = "通報が完了しました。"
-     ThemeMailer.with(theme: theme).send_report.deliver_now
-     redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
+    #binding.pry
+    theme = Theme.find(params[:theme_hashid])
+    flash[:notice] = "通報が完了しました。"
+    ThemeMailer.with(theme: theme).send_report.deliver_now
+    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
 
@@ -177,7 +177,7 @@ class Public::ThemesController < ApplicationController
        @theme = Theme.find(params[:theme_hashid])
        render :edit
      end
-   end
+  end
 
 
   # delete '/:user_name/themes/:theme_hashid' => 'themes#destroy', as: 'destroy_theme'
