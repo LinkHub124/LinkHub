@@ -3,7 +3,7 @@
     <h3>新規登録</h3>
 
     <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
-      <%= render "public/shared/error_messages", resource: resource %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="box-username">
         <%= f.label :name, "ユーザー名" %><br />

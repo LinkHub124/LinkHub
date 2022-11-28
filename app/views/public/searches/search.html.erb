@@ -1,0 +1,9 @@
+<div class='row'>
+  <div class="col-md-8 offset-md-2">
+    <h2>検索結果: <%= @theme_searched_count %>件</h2>
+    <% @theme_searched_page.each do |theme| %>
+      <%= render "public/themes/theme_card", theme: theme %>
+    <% end %>
+    <%= paginate @theme_searched_page, theme: 'bootstrap-5' %>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="link-card-frame">
+  <h1 class="link-card-subtitle"><%= link.subtitle %></h1>
+  <h4 class="link-card-edit">
+    <%= link_to "", edit_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid, link_hashid: link.hashid), remote: true, class: "fas fa-edit" %>
+    <%= link_to "", destroy_theme_link_path(user_name: theme.user.name, theme_hashid: theme.hashid, link_hashid: link.hashid), remote: true, method: :delete, "data-confirm":"本当に消しますか？", class: "fas fa-times-circle" %>
+  </h4>
+</div>
+<p class="link-card-caption"><%= link.caption %></p>
+<table class="table table-striped table-bordered table-hover">
+  <tbody>
+    <!--<div id = "ex1">NO!!</div>-->
+     <!--<ul id="sortable_list">-->
+      <ul id=<%= "sortable_#{link.id}" %>>
+       <% link.one_links.each do |one_link| %>
+       <li>
+         <%= render "public/links/one_link_card", one_link: one_link %>
+       </li>
+       <% end %>
+     </ul>
+     <%= hidden_field_tag :usr_name, theme.user.name %>
+     <%= hidden_field_tag :thm_hashid, theme.hashid %>
+     <%= hidden_field_tag "lnk_hashid_#{link.id}", link.hashid %>
+  </tbody>
+</table>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script>
+ $(document).on('turbolinks:load', function() {
+//   $( function(){
+     //alert(<%#= "sortable_#{link.id}" %>);
+     $( <%= "sortable_#{link.id}" %> ).sortable({
+       start: function(evt, ui) {
+         // creates a temporary attribute on the element with the old index
+         $(this).attr('data-previndex', ui.item.index());
+       },
+       update: function(evt, ui){
+         var newIndex = ui.item.index();
+         var oldIndex = $(this).attr('data-previndex');
+         //alert(newIndex);
+
+         user_name = $("#usr_name").val()
+         theme_hashid = $("#thm_hashid").val()
+         link_hashid = $( "#lnk_hashid_" + <%= link.id %>).val()
+
+         URL = '/' + user_name + '/themes/' + theme_hashid + '/' + link_hashid + '/sort';
+         <%#= binding.pry %>
+         //alert(URL);
+         $.ajax( {
+           url: URL,
+           type: 'patch',
+           data: { from: oldIndex, to: newIndex }
+         })
+         .done(function(data) {
+         // 通信成功時の処理を記述
+           //alert("success")
+         })
+         .fail(function() {
+         // 通信失敗時の処理を記述
+           alert("通信に失敗しました")
+         });
+       }
+     });
+
+     //$( "#sortable_"+link_id).sortable();
+   });
+ </script>

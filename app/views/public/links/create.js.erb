@@ -1,0 +1,13 @@
+<% if @status == 'success' %>
+  $("#add-link-card").append("<div class='link-card' id='link-card-<%= @link_new.id %>'><%= j(render("public/links/link_card_edit", link: @link_new, theme: @theme)) %></div>");
+  $("#links-modal").modal("hide")
+
+  <% if @theme.links.count < 10 %>
+    $("#add-links").html("<%= escape_javascript(link_to 'リンク集追加', new_theme_link_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), remote: true, class: "btn btn-energy ml-5") %>");
+  <% else %>
+    $("#add-links").html("");
+  <% end %>
+
+<% elsif @status == 'fail' %>
+  $("#error_explanation").html("<p style='color: red;'>エラーが発生しました</p>")
+<% end %>
