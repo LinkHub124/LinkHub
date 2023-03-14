@@ -1,0 +1,17 @@
+<div class='row'>
+  <!--<div class="col-md-3 offset-md-1">-->
+  <!--  <p>ユーザーランキング</p>-->
+  <!--  <%#= render "public/users/ranking_user", user_ranks: @user_ranks %>-->
+  <!--</div>-->
+  <div class="col-md-8 offset-md-2">
+    <% if @theme_all.length == 0 %>
+      <p>投稿された記事がありません</p>
+    <% else %>
+      <% @theme_all.each do |theme| %>
+        <%= render "public/themes/theme_card", theme: theme %>
+      <% end %>
+      <%= paginate @theme_all, theme: 'bootstrap-5' %>
+    <% end %>
+  </div>
+
+</div>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
+  
   devise_for :users, controllers: {
     registrations: "public/users/registrations",
     sessions: "public/devise/sessions",
@@ -8,6 +12,11 @@ Rails.application.routes.draw do
     # API認証用
     :omniauth_callbacks => 'public/users/omniauth_callbacks',
   }
+  
+  namespace :admin do
+    root to: 'themes#index'
+  end
+  
   scope module: :public do
     root to: 'themes#index'
     get    '/followings' => 'themes#index_follow', as: 'index_follow'
