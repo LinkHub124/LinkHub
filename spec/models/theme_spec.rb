@@ -40,7 +40,6 @@ RSpec.describe 'Themeモデルのテスト', type: :model do
         is_expected.to eq false
       end
     end
-
   end
 
   describe 'アソシエーションのテスト' do
@@ -55,15 +54,21 @@ RSpec.describe 'Themeモデルのテスト', type: :model do
       end
     end
 
-
-
     context 'Linkモデルとの関係' do
       it '1:Nとなっている' do
         expect(Link.reflect_on_association(:theme).macro).to eq :belongs_to
       end
 
+      before { create_list(:link, 10, theme: theme, user: user) }
+
+      it '紐づくLinkの数は最大10個' do
+        is_expected.to eq true
+      end
+
+      it '紐づくLinkの数は最大10個: 11個でx' do
+        create(:link, theme: theme, user: user)
+        is_expected.to eq false
+      end
     end
-
-
   end
 end
