@@ -56,17 +56,17 @@ RSpec.describe 'Themeモデルのテスト', type: :model do
 
     context 'Linkモデルとの関係' do
       it '1:Nとなっている' do
-        expect(Link.reflect_on_association(:theme).macro).to eq :belongs_to
+        expect(Theme.reflect_on_association(:links).macro).to eq :has_many
       end
 
-      before { create_list(:link, 10, theme: theme, user: user) }
+      before { create_list(:link, 10, theme: theme) }
 
       it '紐づくLinkの数は最大10個' do
         is_expected.to eq true
       end
 
       it '紐づくLinkの数は最大10個: 11個でx' do
-        create(:link, theme: theme, user: user)
+        create(:link, theme: theme)
         is_expected.to eq false
       end
     end
