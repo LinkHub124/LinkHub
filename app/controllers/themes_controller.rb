@@ -2,13 +2,12 @@ class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :is_draft, only: [:show]
   before_action :authenticate_user!, only: [:index_follow]
-  
+
   def report
-     #binding.pry
-     theme = Theme.find(params[:theme_hashid])
-     flash[:notice] = "通報が完了しました。"
-     ThemeMailer.with(theme: theme).send_report.deliver_now
-     redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
+    theme = Theme.find(params[:theme_hashid])
+    flash[:notice] = "通報が完了しました。"
+    ThemeMailer.with(theme: theme).send_report.deliver_now
+    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
   end
 
 
@@ -25,11 +24,11 @@ class ThemesController < ApplicationController
     @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
     @theme_released_all = Kaminari.paginate_array(@theme_released_all).page(params[:page]).per(10)
-    
+
     @user_ranks = UserRank.all
     @theme_ranks = ThemeRank.all
   end
-  
+
   def index_follow
     if user_signed_in?
       @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
@@ -40,7 +39,7 @@ class ThemesController < ApplicationController
     @user_ranks = UserRank.all
     @theme_ranks = ThemeRank.all
   end
-  
+
   def get_tld(url)
     sz = url.length
     if url.slice(0..6) == "http://"
@@ -63,15 +62,15 @@ class ThemesController < ApplicationController
   end
 
   helper_method :get_tld
-  
+
   # 時間実行
   # ユーザーランキングを更新させる
   def update_rank(number)
     post_favorite_count = {}
     theme_ranks = []
-    
+
     # Destroyを繰り返すとprimary_keyがオーバーフローする可能性がある
-    
+
     if ThemeRank.count == number
       ThemeRank.all.each do |theme_rank|
         theme_rank.theme_id = nil
@@ -85,7 +84,7 @@ class ThemesController < ApplicationController
         theme.reload
       end
       theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-      
+
       theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
         if rank_index > number
           next
@@ -103,7 +102,7 @@ class ThemesController < ApplicationController
         theme.reload
       end
       theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-  
+
       theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
         if rank_index > number
           next
@@ -112,8 +111,8 @@ class ThemesController < ApplicationController
         # puts theme.title
       end
     end
-    
-    
+
+
     # puts "\n"
   end
 
