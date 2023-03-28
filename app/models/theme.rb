@@ -9,8 +9,8 @@ class Theme < ApplicationRecord
   has_many :favorited_users, through: :favorites, source: :user
 
   acts_as_taggable_on :tags
-  validates :tags, :length => { maximum: 10 } #10文字以内
-  validates :tag_list, :length => { maximum: 5 } #5個以内
+  validates :tags, length: { maximum: 10 } # 10文字以内
+  validates :tag_list, length: { maximum: 5 } # 5個以内
   # has_many :post_tags, dependent: :destroy
   # has_many :tags, through: :post_tags, source: :tag
 
@@ -23,9 +23,7 @@ class Theme < ApplicationRecord
   end
 
   def self.looks(word)
-    theme = Theme.where("title LIKE?","%#{word}%")
-    theme = theme.reverse
-    theme
+    theme = Theme.where('title LIKE?', "%#{word}%")
+    theme.reverse
   end
-
 end

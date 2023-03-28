@@ -11,10 +11,8 @@ class Link < ApplicationRecord
 
   include Hashid::Rails
   def self.looks(word)
-    link  = Link.where("caption LIKE?","%#{word}%")
-    link += Link.where("subtitle LIKE?","%#{word}%")
-    link = link.reverse
-    link
+    link  = Link.where('caption LIKE?', "%#{word}%")
+    link += Link.where('subtitle LIKE?', "%#{word}%")
+    link.reverse
   end
-
 end

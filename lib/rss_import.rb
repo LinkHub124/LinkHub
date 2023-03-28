@@ -1,5 +1,5 @@
 class RssImport
   def hello
-    puts "HelloWorld"
+    puts 'HelloWorld'
   end
 end
