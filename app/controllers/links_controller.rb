@@ -22,10 +22,9 @@ class LinksController < ApplicationController
     @theme    = Theme.find(params[:theme_hashid])
     ret_link_params = link_params
     if ret_link_params[:one_links_attributes].blank? == false
-      ret_link_params[:one_links_attributes].each_key do |idx|
+      ret_link_params[:one_links_attributes].keys.each do |idx|
         url = ret_link_params[:one_links_attributes][idx][:url]
         next unless ret_link_params[:one_links_attributes][idx][:_destroy].nil?
-
         ret_link_params[:one_links_attributes][idx][:_destroy] = 1 if url == ''
       end
     end
@@ -101,7 +100,7 @@ class LinksController < ApplicationController
     ret_link_params = link_params
     # binding.pry
     if ret_link_params[:one_links_attributes].blank? == false
-      ret_link_params[:one_links_attributes].each_key do |idx|
+      ret_link_params[:one_links_attributes].keys.each do |idx|
         url = ret_link_params[:one_links_attributes][idx][:url]
         next unless ret_link_params[:one_links_attributes][idx][:_destroy].nil?
 
