@@ -16,7 +16,7 @@ class User < ApplicationRecord
   # has_many :one_links, dependent: :destroy
 
   has_many :favorites, dependent: :destroy
-
+  
   validates_acceptance_of :agreement, allow_nil: false, on: :create
 
 
@@ -25,9 +25,9 @@ class User < ApplicationRecord
   # VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   # validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'は半角英数を両方含む必要があります' }
   validates :introduction, length: { maximum: 200 }
-
+  
   attr_writer :login
-
+  
   def login
      @login || self.name || self.email
   end
@@ -58,7 +58,7 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && (is_deleted == false)
   end
-
+  
   def inactive_message
     (is_deleted == false) ? super : :account_withdrawal # active?がfalseの時はdevise.
   end
@@ -92,7 +92,7 @@ class User < ApplicationRecord
         password: Devise.friendly_token[0, 20],
         agreement: true
       )
-
+      
     elsif(auth.provider=="twitter")
       user ||= User.new(
         uid: auth.uid,
@@ -112,7 +112,7 @@ class User < ApplicationRecord
   def self.dummy_email(auth)
     "#{Time.now.strftime('%Y%m%d%H%M%S').to_i}-#{auth.uid}-#{auth.provider}@example.com"
   end
-
-
+  
+  
 
 end
