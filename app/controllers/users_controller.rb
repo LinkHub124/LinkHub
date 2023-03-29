@@ -1,88 +1,44 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:update]
+  before_action :authenticate_user!, only: [:update, :unsubscribe, :withdrawal]
   include ActiveRecord::Sanitization::ClassMethods
+  MAX_THEMES_PER_PAGE = 10
 
-  layout 'app2', only: [:registrations_complete]
-
-  def registrations_complete
-    @password = $crypt.decrypt_and_verify(params[:encrypted_password])
-  end
-
-  def password
-    redirect_to new_user_password_path
-  end
-
-  # get '/:user_name' => 'users#show', as: 'user'
-  # ユーザー詳細画面を表示させる
+  # GET '/:user_name' => 'users#show', as: 'user'
+  # Description: ユーザー詳細画面を表示.
+  # Response:
+  # @user => 詳細ページのユーザーを取得.
+  # @theme_all => 表示させるテーマ一覧を取得.
   def show
     if params[:user_name] == 'users'
       redirect_to new_user_registration_path
     else
       @user = User.find_by(name: params[:user_name])
       @theme_all = @user.themes
-      # ログインしてない、またはuserとcurrent_userが違かったらreleasedのみを表示
+      # ログインしてない、またはuserとcurrent_userが違かったらreleasedのみを表示.
       @theme_all = @theme_all.where(post_status: 2) unless user_signed_in? && @user == current_user
 
+      # クエリパラメータにtheme_query(:tq)がある場合、検索処理をする.
       if params[:tq]
         query = params[:tq]
         @theme_all = search_post(@theme_all, query)
       end
 
-      @theme_all = @theme_all.reverse
-      @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(10)
-      # @theme_all = @theme_all.page(params[:page]).per(10)
+      @theme_all = @theme_all.reverse # 降順に表示.
+      @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(MAX_THEMES_PER_PAGE)
     end
   end
 
-  # def update_rank(number)
-  #   post_favorite_count = {}
-  #   user_ranks = []
+  # GET '/users/unsubscribe' => 'users#unsubscribe', as: 'unsubscribe'
+  # Description: 退会画面を表示.
+  def unsubscribe
+  end
 
-  #   # Destroyを繰り返すとprimary_keyがオーバーフローする可能性がある
-
-  #   if UserRank.count == number
-  #     UserRank.all.each do |user_rank|
-  #       user_rank.user_id = nil
-  #       user_ranks.append(user_rank.id)
-  #     end
-  #     User.all.each do |user|
-  #       post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id, post_status: 2).pluck(:id)).count)
-  #       user.reload
-  #     end
-  #     user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-
-  #     user_post_favorite_ranks.each.with_index(1) do |(user, score), rank_index|
-  #       next if rank_index > number
-
-  #       UserRank.find(user_ranks[rank_index - 1]).update(user_id: user.id, rank: rank_index, score: score)
-  #       # puts user.name
-  #     end
-  #   else
-  #     UserRank.destroy_all
-  #     User.all.each do |user|
-  #       post_favorite_count.store(user, Favorite.where(theme_id: Theme.where(user_id: user.id, post_status: 2).pluck(:id)).count)
-  #       user.reload
-  #     end
-  #     user_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-
-  #     user_post_favorite_ranks.each.with_index(1) do |(user, score), rank_index|
-  #       next if rank_index > number
-
-  #       UserRank.create(user_id: user.id, rank: rank_index, score: score)
-  #       # puts user.name
-  #     end
-  #   end
-
-  #   # puts "\n"
-  # end
-
-  # patch '/users/withdrawal' => 'users#withdrawal', as: 'withdrawal'
-  # ユーザーを退会処理
+  # PATCH '/users/withdrawal' => 'users#withdrawal', as: 'withdrawal'
+  # Description: ユーザーを退会処理.
   def withdrawal
     if current_user.valid_password?(params[:user][:current_password])
-      # is_deletedカラムをtrueに変更することにより削除フラグを立てる
-      current_user.update(is_deleted: true)
-      reset_session
+      current_user.update(is_deleted: true) # is_deletedカラムをtrueに変更することにより削除フラグを立てる.
+      reset_session # セッション削除してログアウトさせる.
       flash[:notice] = '退会処理を実行いたしました'
       redirect_to root_path
     else
@@ -92,7 +48,7 @@ class UsersController < ApplicationController
 
   private
 
-  # 自分のテーマの検索
+  # Description: ユーザー詳細画面でのテーマ検索.
   def search_post(theme_all, search_text)
     theme_searched = []
     theme_all.each do |theme|
@@ -110,7 +66,7 @@ class UsersController < ApplicationController
     theme_searched
   end
 
-  # 新規登録時、名前とプロフィール画像をコントローラに通す
+  # Description: 新規登録時、名前とプロフィール画像をコントローラに通す.
   def user_params
     params.fetch(:user, {}).permit(:name, :profile_image)
   end
