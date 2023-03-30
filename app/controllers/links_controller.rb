@@ -1,183 +1,102 @@
 class LinksController < ApplicationController
-  def sort
-    # binding.pry
-    @links = Link.find(params[:link_hashid])
-    one_link = @links.one_links[params[:from].to_i]
-    one_link.insert_at(params[:to].to_i + 1)
-    head :ok
-    # binding.pry
-  end
+  before_action :correct_url, only: [:new, :create, :edit, :update, :destroy]
+  before_action :correct_user, only: [:new, :create, :edit, :update, :destroy]
+  helper_method :get_tld
 
-  # get '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
-  # 新規Linkを作成
+  # GET '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
+  # Description: 新規リンク集を作成.
+  # Response:
+  # @link_new => 新規リンク集フォーム.
+  # @theme => テーマを取得.
+  # @user => 投稿ユーザーを取得.
   def new
     @link_new = Link.new
     @theme = Theme.find(params[:theme_hashid])
+    @user = User.find_by(name: params[:user_name])
   end
 
-  # post '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
-  # スクレイピングをしてOGPを抜き出し、Linkを保存
+  # POST '/:user_name/themes/:theme_hashid/edit' => 'links#create', as: 'theme_links'
+  # Description: スクレイピングをしてOGPを抜き出し、Linkを保存.
+  # Response:
+  # @link_new => 新規に作成するリンク集.
+  # @status => ステータスコード.
   def create
-    @user     = User.find_by(name: params[:user_name])
-    @theme    = Theme.find(params[:theme_hashid])
-    ret_link_params = link_params
-    if ret_link_params[:one_links_attributes].blank? == false
-      ret_link_params[:one_links_attributes].keys.each do |idx|
-        url = ret_link_params[:one_links_attributes][idx][:url]
-        next unless ret_link_params[:one_links_attributes][idx][:_destroy].nil?
-        ret_link_params[:one_links_attributes][idx][:_destroy] = 1 if url == ''
-      end
-    end
-    @link_new = Link.new(ret_link_params)
+    theme = Theme.find(params[:theme_hashid])
+    new_link_params = link_params
+    new_link_params = format_link_params(new_link_params) unless new_link_params[:one_links_attributes].blank?
 
+    @link_new = Link.new(new_link_params)
     @link_new.user_id  = current_user.id
-    @link_new.theme_id = @theme.id
-
-    @link_new.one_links.each do |one_link|
-      url = one_link.url
-      url = encode_ja(url)
-      url = "https://#{url}" unless url.slice(0..6) == 'http://' || url.slice(0..7) == 'https://'
-
-      one_link.url = url
-
-      charset = nil
-      begin
-        # ここの部分をキャッシュの有無で場合分けしたい
-        html = OpenURI.open_uri(url) do |f|
-          charset = f.charset # 文字種別を取得
-          f.read # htmlを読み込んで変数htmlに渡す
-        end
-      rescue StandardError
-        one_link.url_title = 'URLが間違っています'
-      else
-        # ノコギリを使ってhtmlを解析
-        doc = Nokogiri::HTML.parse(html, charset)
-
-        # title
-        one_link.url_title = if doc.css('//meta[property="og:title"]/@content').empty?
-                               doc.title.to_s
-                             else
-                               doc.css('//meta[property="og:title"]/@content').to_s
-                             end
-
-        one_link.url_title = 'タイトル未設定' if one_link.url_title == ''
-
-        # description
-        one_link.url_description = if doc.css('//meta[property="og:description"]/@content').empty?
-                                     doc.css('//meta[name$="escription"]/@content').to_s
-                                   else
-                                     doc.css('//meta[property="og:description"]/@content').to_s
-                                   end
-        one_link.url_image = doc.css('//meta[property="og:image"]/@content').to_s
-      end
-    end
+    @link_new.theme_id = theme.id
 
     respond_to do |format|
       if @link_new.save
-        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
         format.js { @status = 'success' }
       else
-        # format.html { render :new }
         format.js { @status = 'fail' }
       end
     end
-    # redirect_back(fallback_location: root_path)
   end
 
-  # get '/:user_name/themes/:theme_hashid/edit/:link_hashid/edit' => 'links#edit', as: 'edit_theme_link'
-  # Linkを編集する
+  # GET '/:user_name/themes/:theme_hashid/edit/:link_hashid/edit' => 'links#edit', as: 'edit_theme_link'
+  # Description: リンク集を編集する.
+  # Response:
+  # @link => 投稿したリンク集.
+  # @theme => テーマを取得.
+  # @user => 投稿ユーザーを取得.
   def edit
-    @link  = Link.find(params[:link_hashid])
-    @theme = Theme.find(params[:theme_hashid])
-  end
-
-  # patch '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#update', as: 'update_theme_link'
-  # スクレイピングをしてOGPを抜き出し、Linkを更新
-  def update
-    @user  = User.find_by(name: params[:user_name])
-    @theme = Theme.find(params[:theme_hashid])
-    @link  = Link.find(params[:link_hashid])
-    ret_link_params = link_params
-    # binding.pry
-    if ret_link_params[:one_links_attributes].blank? == false
-      ret_link_params[:one_links_attributes].keys.each do |idx|
-        url = ret_link_params[:one_links_attributes][idx][:url]
-        next unless ret_link_params[:one_links_attributes][idx][:_destroy].nil?
-
-        if url == ''
-          ret_link_params[:one_links_attributes][idx][:_destroy] = 1
-          next
-        end
-        url = encode_ja(url)
-
-        url = "https://#{url}" unless url.slice(0..6) == 'http://' || url.slice(0..7) == 'https://'
-
-        ret_link_params[:one_links_attributes][idx][:url] = url
-
-        charset = nil
-        begin
-          # ここの部分をキャッシュの有無で場合分けしたい
-          html = OpenURI.open_uri(url) do |f|
-            charset = f.charset # 文字種別を取得
-            f.read # htmlを読み込んで変数htmlに渡す
-          end
-        rescue StandardError
-          ret_link_params[:one_links_attributes][idx][:url_title] = 'URLが間違っています'
-          ret_link_params[:one_links_attributes][idx][:url_description] = nil
-          ret_link_params[:one_links_attributes][idx][:url_image] = nil
-        else
-          # ノコギリを使ってhtmlを解析
-          doc = Nokogiri::HTML.parse(html, charset)
-
-          # title
-          ret_link_params[:one_links_attributes][idx][:url_title] = if doc.css('//meta[property="og:title"]/@content').empty?
-                                                                      doc.title.to_s
-                                                                    else
-                                                                      doc.css('//meta[property="og:title"]/@content').to_s
-                                                                    end
-
-          ret_link_params[:one_links_attributes][idx][:url_title] = 'タイトル未設定' if ret_link_params[:one_links_attributes][idx][:url_title] == ''
-
-          # description
-          ret_link_params[:one_links_attributes][idx][:url_description] = if doc.css('//meta[property="og:description"]/@content').empty?
-                                                                            doc.css('//meta[name$="escription"]/@content').to_s
-                                                                          else
-                                                                            doc.css('//meta[property="og:description"]/@content').to_s
-                                                                          end
-
-          ret_link_params[:one_links_attributes][idx][:url_image] = doc.css('//meta[property="og:image"]/@content').to_s
-        end
-      end
-    end
-
-    respond_to do |format|
-      if @link.update(ret_link_params)
-        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
-        format.js { @status = 'success' }
-      else
-        # format.html { render :new }
-        format.js { @status = 'fail' }
-      end
-    end
-    # redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
-  end
-
-  # delete '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#destroy', as: 'destroy_theme_link'
-  # Linkを削除する
-  def destroy
-    @theme = Theme.find(params[:theme_hashid])
     @link = Link.find(params[:link_hashid])
-    @link_id = @link.id
+    @theme = Theme.find(params[:theme_hashid])
+    @user = User.find_by(name: params[:user_name])
+  end
+
+  # PATCH '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#update', as: 'update_theme_link'
+  # Description: スクレイピングをしてOGPを抜き出し、リンク集を更新.
+  # Response:
+  # @link => 更新したリンク集.
+  # @status => ステータスコード.
+  def update
+    new_link_params = link_params
+    new_link_params = format_link_params(new_link_params) unless new_link_params[:one_links_attributes].blank?
+
+    @link = Link.find(params[:link_hashid])
+
     respond_to do |format|
-      if @link.destroy
-        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: @theme.hashid), notice: 'リンクが保存されました' }
+      if @link.update(new_link_params)
         format.js { @status = 'success' }
       else
-        # format.html { render :new }
         format.js { @status = 'fail' }
       end
     end
-    # redirect_to edit_theme_path(user_name: params[:user_name], theme_hashid: params[:theme_hashid])
+  end
+
+  # DELETE '/:user_name/themes/:theme_hashid/edit/:link_hashid' => 'links#destroy', as: 'destroy_theme_link'
+  # Description: リンク集を削除する.
+  # Response:
+  # @link_id => 消去するリンク集のID
+  # @theme => テーマを取得.
+  # @status => ステータスコード.
+  def destroy
+    link = Link.find(params[:link_hashid])
+    @link_id = link.id
+    @theme = Theme.find(params[:theme_hashid])
+
+    respond_to do |format|
+      if link.destroy
+        format.js { @status = 'success' }
+      else
+        format.js { @status = 'fail' }
+      end
+    end
+  end
+
+  # PATCH '/:user_name/themes/:theme_hashid/:link_hashid/sort' => 'links#sort'
+  # Description: リンクを並べ替える.
+  def sort
+    link = Link.find(params[:link_hashid])
+    one_link = link.one_links[params[:from].to_i]
+    one_link.insert_at(params[:to].to_i + 1)
+    head :ok
   end
 
   def get_tld(url)
@@ -199,18 +118,30 @@ class LinksController < ApplicationController
     url
   end
 
-  helper_method :get_tld
-
   private
 
-  # 投稿時、Linkとそれに結びついたデータをコントローラに通す
+  # Description: 投稿・更新時、Linkとそれに結びついたデータをコントローラに通す.
   def link_params
     params.require(:link).permit(:subtitle, :caption, :theme_id, :theme_hashid,
                                  one_links_attributes: [:id, :link_id, :url, :rate, :_destroy])
   end
 
-  # 日本語のみエンコード
-  # 参考：https://www.mk-mode.com/blog/2013/08/15/ruby-url-encode-only-japanese/
+  # Description: 直打ちで編集画面に遷移させない.
+  def correct_user
+    user = User.find_by(name: params[:user_name])
+    # ログインユーザーと作成者が異なる時、Not Found
+    render 'errors/404.html', status: :not_found unless user.id == current_user.id
+  end
+
+  # Description: 正しいURLかどうかを確かめる.
+  def correct_url
+    theme = Theme.find(params[:theme_hashid])
+    user = User.find_by(name: params[:user_name])
+    render 'errors/404.html', status: :not_found unless theme.user == user
+  end
+
+  # Description: URLの日本語をエンコード.
+  # 参考: https://www.mk-mode.com/blog/2013/08/15/ruby-url-encode-only-japanese/
   def encode_ja(url)
     ret = ''
     url.split(//).each do |c|
@@ -221,5 +152,54 @@ class LinksController < ApplicationController
       end
     end
     ret
+  end
+
+  # Description: Linkに紐づいているOneLinkごとにスクレイピングして情報を追加する
+  def format_link_params(link_params)
+    link_params[:one_links_attributes].values.each do |one_link|
+      # URLが空、もしくは削除済みの場合next
+      one_link[:_destroy] = 1 if one_link[:url] == ''
+      next unless one_link[:_destroy].nil?
+
+      url = encode_ja(one_link[:url])
+
+      # one_linkの各初期値を設定.
+      one_link[:url] = "https://#{url}" unless url.slice(0..6) == 'http://' || url.slice(0..7) == 'https://'
+      one_link[:url_title] = 'URLが間違っています'
+      one_link[:url_description] = nil
+      one_link[:url_image] = nil
+
+      # スクレイピング.
+      charset = nil
+      begin
+        html = OpenURI.open_uri(one_link[:url]) do |f|
+          charset = f.charset # 文字種別を取得.
+          f.read # htmlを読み込んで変数htmlに渡す.
+        end
+      rescue StandardError
+        next
+      else
+        doc = Nokogiri::HTML.parse(html, charset) # Nokogiriを使ってhtmlを解析.
+
+        # url_title
+        one_link[:url_title] = if doc.css('//meta[property="og:title"]/@content').empty?
+                                 doc.title.to_s
+                               else
+                                 doc.css('//meta[property="og:title"]/@content').to_s
+                               end
+        one_link[:url_title] = 'タイトル未設定' if one_link[:url_title] == ''
+
+        # url_description
+        one_link[:url_description] = if doc.css('//meta[property="og:description"]/@content').empty?
+                                       doc.css('//meta[name$="escription"]/@content').to_s
+                                     else
+                                       doc.css('//meta[property="og:description"]/@content').to_s
+                                     end
+
+        # url_image
+        one_link[:url_image] = doc.css('//meta[property="og:image"]/@content').to_s
+      end
+    end
+    link_params
   end
 end
