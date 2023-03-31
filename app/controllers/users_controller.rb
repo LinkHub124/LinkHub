@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update, :unsubscribe, :withdrawal]
   include ActiveRecord::Sanitization::ClassMethods
-  MAX_THEMES_PER_PAGE = 10
 
   # GET '/:user_name' => 'users#show', as: 'user'
   # Description: ユーザー詳細画面を表示.

@@ -37,6 +37,6 @@ Rails.application.routes.draw do
   delete '/:user_name/relationships' => 'relationships#destroy'
   get    '/:user_name/followings' => 'relationships#followings', as: 'user_followings'
   get    '/:user_name/followers' => 'relationships#followers', as: 'user_followers'
-  # get    '*not_found' => 'application#routing_error'
-  post   '*not_found' => 'application#routing_error'
+  get    '/*not_found' => 'application#routing_error'
+  post   '/*not_found' => 'application#routing_error'
 end

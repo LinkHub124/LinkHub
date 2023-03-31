@@ -1,7 +1,6 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   include ActiveRecord::Sanitization::ClassMethods
-  MAX_FAVORITES_PER_PAGE = 10
 
   # GET '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
   # Description: いいね順にソートして表示.
@@ -19,7 +18,7 @@ class FavoritesController < ApplicationController
     end
 
     @favorite_all = @favorite_all.reverse # 降順に表示.
-    @favorite_all = Kaminari.paginate_array(@favorite_all).page(params[:page]).per(MAX_FAVORITES_PER_PAGE)
+    @favorite_all = Kaminari.paginate_array(@favorite_all).page(params[:page]).per(MAX_THEMES_PER_PAGE)
   end
 
   # POST '/:user_name/themes/:theme_hashid/favorites' => 'favorites#create', as: 'theme_favorites'

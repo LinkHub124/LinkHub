@@ -3,7 +3,6 @@ class ThemesController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :draft?, only: [:show]
   before_action :authenticate_user!, only: [:index_follow]
-  helper_method :get_tld
 
   # GET '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   # Description: Themeを新規投稿する.
@@ -99,26 +98,6 @@ class ThemesController < ApplicationController
     theme = Theme.find(params[:theme_hashid])
     theme.destroy
     redirect_to user_path(user_name: theme.user.name)
-  end
-
-  # Description: ドメイン名とホスト名を抜き出す.
-  def get_tld(url)
-    sz = url.length
-    if url.slice(0..6) == 'http://'
-      url = url.slice(7..sz)
-    elsif url.slice(0..7) == 'https://'
-      url = url.slice(8..sz)
-    end
-    sz = url.length
-    idx = -1
-    (0..sz).each do |num|
-      if url[num] == '/'
-        idx = num
-        break
-      end
-    end
-    url = url.slice(0..idx - 1) unless idx == -1
-    url
   end
 
   # Description: Themeを報告する.

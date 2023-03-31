@@ -1,7 +1,6 @@
 class LinksController < ApplicationController
   before_action :correct_url, only: [:new, :create, :edit, :update, :destroy]
   before_action :correct_user, only: [:new, :create, :edit, :update, :destroy]
-  helper_method :get_tld
 
   # GET '/:user_name/themes/:theme_hashid/edit/new' => 'links#new', as: 'new_theme_link'
   # Description: 新規リンク集を作成.
@@ -97,25 +96,6 @@ class LinksController < ApplicationController
     one_link = link.one_links[params[:from].to_i]
     one_link.insert_at(params[:to].to_i + 1)
     head :ok
-  end
-
-  def get_tld(url)
-    sz = url.length
-    if url.slice(0..6) == 'http://'
-      url = url.slice(7..sz)
-    elsif url.slice(0..7) == 'https://'
-      url = url.slice(8..sz)
-    end
-    sz = url.length
-    idx = -1
-    (0..sz).each do |num|
-      if url[num] == '/'
-        idx = num
-        break
-      end
-    end
-    url = url.slice(0..idx - 1) unless idx == -1
-    url
   end
 
   private
