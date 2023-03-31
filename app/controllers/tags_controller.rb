@@ -1,6 +1,4 @@
 class TagsController < ApplicationController
-  MAX_THEMES_PER_PAGE = 10
-
   # GET '/tags' => 'tags#index', as: 'tags'
   # Description: タグ一覧を表示.
   # Response:

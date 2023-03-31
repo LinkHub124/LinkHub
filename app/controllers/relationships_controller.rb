@@ -1,6 +1,4 @@
 class RelationshipsController < ApplicationController
-  MAX_RELATIONSHIPS_PER_PAGE = 10
-
   # POST '/:user_name/relationships' => 'relationships#create', as: 'user_relationships'
   # Description: 自分以外のユーザーをフォロー.
   # Response
@@ -29,7 +27,7 @@ class RelationshipsController < ApplicationController
   def followings
     @user = User.find_by(name: params[:user_name])
     @user_followings = @user.followings.reverse
-    @user_followings = Kaminari.paginate_array(@user_followings).page(params[:page]).per(MAX_RELATIONSHIPS_PER_PAGE)
+    @user_followings = Kaminari.paginate_array(@user_followings).page(params[:page]).per(MAX_THEMES_PER_PAGE)
   end
 
   # GET '/:user_name/followers' => 'relationships#followers', as: 'user_followers'
@@ -40,6 +38,6 @@ class RelationshipsController < ApplicationController
   def followers
     @user = User.find_by(name: params[:user_name])
     @user_followers = @user.followers.reverse
-    @user_followers = Kaminari.paginate_array(@user.followers).page(params[:page]).per(MAX_RELATIONSHIPS_PER_PAGE)
+    @user_followers = Kaminari.paginate_array(@user.followers).page(params[:page]).per(MAX_THEMES_PER_PAGE)
   end
 end
