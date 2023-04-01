@@ -28,6 +28,13 @@
                 <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
               </ul>
             </li>
+            <% if current_user.is_admin == true && admin_signed_in? == false %>
+              <li class="ml-2">
+                <%= link_to new_admin_session_path, class: "btn btn-danger" do %>
+                  <i class="fas fa-sign-in-alt"></i> ログイン
+                <% end %>
+              </li>
+            <% end %>
             
           <% else %>
             <li class="mr-2"><%= render "public/searches/form_search" %></li>
@@ -36,11 +43,19 @@
                 <i class="fas fa-user-plus"></i> 新規登録
               <% end %>
             </li>
-            <li>
+            <li class="mr-2">
               <%= link_to new_user_session_path, class: "btn btn-energy" do %>
                 <i class="fas fa-sign-in-alt"></i> ログイン
               <% end %>
             </li>
+          <% end %>
+
+          <% if admin_signed_in? %>
+          <li>
+            <%= link_to destroy_admin_session_path, method: :delete, class: "btn btn-danger" do %>
+              <i class="fas fa-sign-in-alt"></i> ログアウト
+            <% end %>
+          </li>
           <% end %>
         </ul>
       </div>

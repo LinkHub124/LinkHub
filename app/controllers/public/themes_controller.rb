@@ -140,7 +140,7 @@ class Public::ThemesController < ApplicationController
   # Themeに結びついたLinkを表示させる
   def show
     unless @theme.user == @user
-      render "errors/404.html", status: :not_found#, layout: "error"
+      render "public/errors/404.html", status: :not_found#, layout: "error"
     end
     @link_all = @theme.links
     @theme_released_all = Theme.where(post_status: 2)
@@ -201,7 +201,7 @@ class Public::ThemesController < ApplicationController
     def correct_user
       user = User.find_by(name: params[:user_name])
       unless user.id == current_user.id
-        render "errors/404.html", status: :not_found#, layout: "error"
+        render "public/errors/404.html", status: :not_found#, layout: "error"
       end
     end
 
@@ -214,7 +214,7 @@ class Public::ThemesController < ApplicationController
       # binding.pry
       # 本当は404NotFoundにしたい
       if (current_user == nil or @user.id != current_user.id) and @theme.post_status == 0
-        render "errors/404.html", status: :not_found#, layout: "error"
+        render "public/errors/404.html", status: :not_found#, layout: "error"
       end
     end
 
