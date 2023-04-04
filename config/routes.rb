@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   
   namespace :admin do
     root to: 'themes#index'
+    get '/users' => 'users#index'
+    get '/:user_name' => 'users#show', as: 'user'
+    get '/:user_name/themes/:theme_hashid' => 'themes#show', as: 'theme'
   end
   
   scope module: :public do
