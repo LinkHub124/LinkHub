@@ -260,6 +260,8 @@ GEM
     puma (3.12.6)
     racc (1.6.0)
     rack (2.2.3)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-protection (2.0.8.1)
       rack
     rack-test (1.1.0)
@@ -424,6 +426,7 @@ DEPENDENCIES
   open-uri
   pry-rails
   puma (~> 3.11)
+  rack-cors
   rails (~> 5.2.6)
   refile!
   refile-mini_magick
