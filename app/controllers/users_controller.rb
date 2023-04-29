@@ -17,10 +17,7 @@ class UsersController < ApplicationController
       @theme_all = @theme_all.where(post_status: 2) unless user_signed_in? && @user == current_user
 
       # クエリパラメータにtheme_query(:tq)がある場合、検索処理をする.
-      if params[:tq]
-        query = params[:tq]
-        @theme_all = search_post(@theme_all, query)
-      end
+      @theme_all = search_post(@theme_all, params[:tq]) if params[:tq]
 
       @theme_all = @theme_all.reverse # 降順に表示.
       @theme_all = Kaminari.paginate_array(@theme_all).page(params[:page]).per(MAX_THEMES_PER_PAGE)
@@ -51,16 +48,15 @@ class UsersController < ApplicationController
   def search_post(theme_all, search_text)
     theme_searched = []
     theme_all.each do |theme|
-      flag = false
-      flag = true if theme.title =~ /^.*#{sanitize_sql_like(search_text)}.*/
-      flag = true if theme.user.name =~ /^.*#{sanitize_sql_like(search_text)}.*/
+      match_list = [theme.title, theme.user.name]
       theme.links.each do |link|
-        flag = true if link.subtitle =~ /^.*#{sanitize_sql_like(search_text)}.*/ || link.caption =~ /^.*#{sanitize_sql_like(search_text)}.*/
+        match_list.push(link.subtitle)
+        match_list.push(link.caption)
       end
       theme.tags.each do |tag|
-        flag = true if tag.name =~ /^.*#{sanitize_sql_like(search_text)}.*/
+        match_list.push(tag.name)
       end
-      theme_searched += Array(theme) if flag == true
+      theme_searched.push(theme) if match_keyword?(search_text, match_list)
     end
     theme_searched
   end

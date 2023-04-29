@@ -12,10 +12,7 @@ class FavoritesController < ApplicationController
     @favorite_all = @user.favorites.select { |favorite| favorite.theme.post_status == 2 }
 
     # クエリパラメータにtheme_query(:tq)がある場合、検索処理をする.
-    if params[:tq]
-      query = params[:tq]
-      @favorite_all = search_favorites(@favorite_all, query)
-    end
+    @favorite_all = search_favorites(@favorite_all, params[:tq]) if params[:tq]
 
     @favorite_all = @favorite_all.reverse # 降順に表示.
     @favorite_all = Kaminari.paginate_array(@favorite_all).page(params[:page]).per(MAX_THEMES_PER_PAGE)
@@ -47,16 +44,15 @@ class FavoritesController < ApplicationController
   def search_favorites(favorite_all, search_text)
     favorite_searched = []
     favorite_all.each do |favorite|
-      flag = false
-      flag = true if favorite.theme.title =~ /^.*#{sanitize_sql_like(search_text)}.*/
-      flag = true if favorite.theme.user.name =~ /^.*#{sanitize_sql_like(search_text)}.*/
+      match_list = [favorite.theme.title, favorite.theme.user.name]
       favorite.theme.links.each do |link|
-        flag = true if link.subtitle =~ /^.*#{sanitize_sql_like(search_text)}.*/ || link.caption =~ /^.*#{sanitize_sql_like(search_text)}.*/
+        match_list.push(link.subtitle)
+        match_list.push(link.caption)
       end
       favorite.theme.tags.each do |tag|
-        flag = true if tag.name =~ /^.*#{sanitize_sql_like(search_text)}.*/
+        match_list.push(tag.name)
       end
-      favorite_searched += Array(favorite) if flag == true
+      favorite_searched.push(favorite) if match_keyword?(search_text, match_list)
     end
     favorite_searched
   end

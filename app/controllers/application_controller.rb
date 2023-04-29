@@ -48,6 +48,14 @@ class ApplicationController < ActionController::Base
     Rails.application.routes.default_url_options[:host] = request.host_with_port
   end
 
+  # Description: match_listのどれかに検索ワードが引っかかるか.
+  def match_keyword?(search_text, match_list)
+    match_list.each do |match|
+      return true if match =~ /^.*#{sanitize_sql_like(search_text)}.*/
+    end
+    return false
+  end
+
   protected
 
   MAX_THEMES_PER_PAGE = 10 # 1ページに表示されるテーマ数を制限
