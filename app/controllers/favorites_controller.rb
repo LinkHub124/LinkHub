@@ -1,6 +1,5 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
-  include ActiveRecord::Sanitization::ClassMethods
 
   # GET '/:user_name/favorites' => 'favorites#index', as: 'user_favorites'
   # Description: いいね順にソートして表示.

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update, :unsubscribe, :withdrawal]
-  include ActiveRecord::Sanitization::ClassMethods
 
   # GET '/:user_name' => 'users#show', as: 'user'
   # Description: ユーザー詳細画面を表示.
