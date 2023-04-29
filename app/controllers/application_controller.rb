@@ -50,10 +50,7 @@ class ApplicationController < ActionController::Base
 
   # Description: match_listのどれかに検索ワードが引っかかるか.
   def match_keyword?(search_text, match_list)
-    match_list.each do |match|
-      return true if match =~ /^.*#{sanitize_sql_like(search_text)}.*/
-    end
-    false
+    return match_list.any?{ |match| match =~ /^.*#{sanitize_sql_like(search_text)}.*/ }
   end
 
   protected
