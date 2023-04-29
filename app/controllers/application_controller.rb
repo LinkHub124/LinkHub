@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     match_list.each do |match|
       return true if match =~ /^.*#{sanitize_sql_like(search_text)}.*/
     end
-    return false
+    false
   end
 
   protected
