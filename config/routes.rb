@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :test, only: %i[index]
       resources :themes, only: %i[index show]
+      # resources :users, only: %i[show]
+      get '/users/:user_name' => 'users#show'
     end
   end
 
-  
   devise_for :users, controllers: {
     registrations: "users/registrations",
     # API認証用
