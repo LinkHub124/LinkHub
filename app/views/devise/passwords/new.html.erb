@@ -1,0 +1,31 @@
+<div class="box">
+  <div class="box-inner">
+    <h3>パスワードをお忘れですか？</h3>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="box-email">
+        <%= f.label :email, "メールアドレス" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="box-newusr">
+        <%= f.submit "パスワード再設定メールを送る" %>
+      </div>
+    <% end %>
+    <div class="newusr_box-login">
+      <p><span>--------</span> アカウントをお持ちの方はこちら <span>--------</span></p>
+      <%= link_to "ログイン", new_session_path(resource_name), class: "btn-login mb-2" %>
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          
+          <% if OmniAuth::Utils.camelize(provider.match(/[a-z]+/)) == "Google" %>
+            <%= link_to " #{OmniAuth::Utils.camelize(provider.match(/[a-z]+/))}アカウントでログイン", omniauth_authorize_path(resource_name, provider), class:"fab fa-#{provider.match(/[a-z]+/)} btn-#{provider.match(/[a-z]+/)} mb-2", method: :post %>
+          <% end %>
+          
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

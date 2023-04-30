@@ -1,228 +1,139 @@
 class Public::ThemesController < ApplicationController
+  before_action :correct_url, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
-  before_action :is_draft, only: [:show]
+  before_action :draft?, only: [:show]
   before_action :authenticate_user!, only: [:index_follow]
-  
-  def report
-    #binding.pry
-    theme = Theme.find(params[:theme_hashid])
-    flash[:notice] = "通報が完了しました。"
-    ThemeMailer.with(theme: theme).send_report.deliver_now
-    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
-  end
 
-
-  # get '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
-  # Themeを新規投稿する
+  # GET '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
+  # Description: Themeを新規投稿する.
+  # Response:
+  # @theme_new => 新規投稿のフォームを取得.
   def new
     @theme_new = Theme.new
   end
 
-
-  # root to: 'themes#index'
-  # ホーム画面を表示、注目度の高い投稿、ユーザーランキングを表示させる、現在はタイムラインとほぼ同じ
+  # GET '/' => root to: 'themes#index'
+  # Description: ホーム画面を表示、注目度の高い投稿、ユーザーランキングを表示させる、現在はタイムラインとほぼ同じ.
+  # Response:
+  # @theme_released_all => 全体公開になっている投稿を取得.
   def index
     @theme_released_all = Theme.where(post_status: 2)
     @theme_released_all = @theme_released_all.reverse
     @theme_released_all = Kaminari.paginate_array(@theme_released_all).page(params[:page]).per(10)
-    
-    @user_ranks = UserRank.all
-    @theme_ranks = ThemeRank.all
   end
-  
+
+  # GET '/followings' => 'themes#index_follow', as: 'index_follow'
+  # Descirption: followしているユーザーの投稿一覧を返す.
+  # Response:
+  # @theme_released_following => followしているユーザーの投稿一覧を取得.
   def index_follow
-    if user_signed_in?
-      @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
-      @theme_released_following = @theme_released_following.reverse
-      @theme_released_following = Kaminari.paginate_array(@theme_released_following).page(params[:page]).per(10)
-    end
+    return unless user_signed_in?
 
-    @user_ranks = UserRank.all
-    @theme_ranks = ThemeRank.all
-  end
-  
-  def get_tld(url)
-    sz = url.length
-    if url.slice(0..6) == "http://"
-      url = url.slice(7..sz)
-    elsif url.slice(0..7) == "https://"
-      url = url.slice(8..sz)
-    end
-    sz = url.length
-    idx = -1
-    for num in 0..sz do
-      if url[num] == '/'
-        idx = num
-        break
-      end
-    end
-    unless idx == -1
-      url = url.slice(0..idx-1)
-    end
-    return url
+    @theme_released_following = Theme.where(user_id: [*current_user.following_ids], post_status: 2)
+    @theme_released_following = @theme_released_following.reverse
+    @theme_released_following = Kaminari.paginate_array(@theme_released_following).page(params[:page]).per(10)
   end
 
-  helper_method :get_tld
-  
-  # 時間実行
-  # ユーザーランキングを更新させる
-  def update_rank(number)
-    post_favorite_count = {}
-    theme_ranks = []
-    
-    # Destroyを繰り返すとprimary_keyがオーバーフローする可能性がある
-    
-    if ThemeRank.count == number
-      ThemeRank.all.each do |theme_rank|
-        theme_rank.theme_id = nil
-        theme_ranks.append(theme_rank.id)
-      end
-      Theme.all.each do |theme|
-        if theme.post_status != 2
-          next
-        end
-        post_favorite_count.store(theme, theme.favorites.count)
-        theme.reload
-      end
-      theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-      
-      theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
-        if rank_index > number
-          next
-        end
-        ThemeRank.find(theme_ranks[rank_index-1]).update(theme_id: theme.id, rank: rank_index, score: score)
-        # puts theme.title
-      end
-    else
-      ThemeRank.destroy_all
-      Theme.all.each do |theme|
-        if theme.post_status != 2
-          next
-        end
-        post_favorite_count.store(theme, theme.favorites.count)
-        theme.reload
-      end
-      theme_post_favorite_ranks = post_favorite_count.sort_by { |_, v| v }.reverse.to_h
-  
-      theme_post_favorite_ranks.each.with_index(1) do |(theme, score), rank_index|
-        if rank_index > number
-          next
-        end
-        ThemeRank.create(theme_id: theme.id, rank: rank_index, score: score)
-        # puts theme.title
-      end
-    end
-    
-    
-    # puts "\n"
-  end
-
-
-  # post '/:user_name' => 'themes#create', as: 'themes'
-  # 新しいThemeを保存
+  # POST '/:user_name' => 'themes#create', as: 'themes'
+  # Description: 新しいThemeを保存.
+  # Response:
+  # @status => ステータスコード.
   def create
     theme_new = Theme.new(theme_params)
     theme_new.post_status = 0
     theme_new.user_id = current_user.id
     respond_to do |format|
       if theme_new.save
-        # format.html { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました' }
-        format.js { redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました' }
+        format.js do
+          redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました'
+        end
       else
-        # format.html { render :new }
-        format.js { @status = "fail" }
+        format.js { @status = 'fail' }
       end
     end
   end
 
-
-  # get '/:user_name/themes/:theme_hashid' => 'themes#show', as: 'theme'
-  # Themeに結びついたLinkを表示させる
+  # GET '/:user_name/themes/:theme_hashid' => 'themes#show', as: 'theme'
+  # Description: Themeに結びついたLinkを表示させる.
+  # Response:
+  # @theme => Themeを取得.
+  # @theme_related_sort_by_fav => 関連投稿を取得.
   def show
-    unless @theme.user == @user
-      render "public/errors/404.html", status: :not_found#, layout: "error"
+    @theme = Theme.find(params[:theme_hashid])
+    theme_released_all = Theme.where(post_status: 2)
+    theme_related = theme_released_all.where.not(id: @theme.id).tagged_with(@theme.tags, any: true)
+    theme_add_favcount = {}
+    theme_related.all.each do |theme|
+      theme_add_favcount.store(theme, theme.favorites.count)
+      theme.reload
     end
-    @link_all = @theme.links
-    @theme_released_all = Theme.where(post_status: 2)
-     tag_names = @theme.tags
-     @theme_related = @theme_released_all.where.not(id: @theme.id).tagged_with(tag_names, :any => true)
-     theme_addFavcount = {}
-     @theme_related.all.each do |theme|
-       theme_addFavcount.store(theme, theme.favorites.count)
-       theme.reload
-     end
-     #binding.pry
-     @theme_sort_by_fav = theme_addFavcount.sort_by { |_, v| v }.reverse.to_h
+    @theme_related_sort_by_fav = theme_add_favcount.sort_by { |_, v| v }.reverse.to_h
   end
 
-
-  # get '/:user_name/themes/:theme_hashid/edit' => 'themes#edit', as: 'edit_theme'
-  # Theme名、投稿状態、Themeに結びついたLinkを編集する
+  # GET '/:user_name/themes/:theme_hashid/edit' => 'themes#edit', as: 'edit_theme'
+  # Description: Theme名、投稿状態、Themeに結びついたLinkを編集する.
+  # Response:
+  # @theme => Themeを取得.
   def edit
     @theme = Theme.find(params[:theme_hashid])
-    @link_all = @theme.links
   end
 
-
-  # patch '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
-  # Themeに結びついたLinkを更新する
+  # PATCH '/:user_name/themes/:theme_hashid' => 'themes#update', as: 'update_theme'
+  # Description: Themeに結びついたLinkを更新する.
+  # Response:
+  # @theme => Themeを取得.
   def update
-     @theme = Theme.find(params[:theme_hashid])
-     @link_all = @theme.links
-     # binding.pry
-     if @theme.update(theme_params)
-       redirect_to theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid)
-     else
-       # binding.pry
-       @theme = Theme.find(params[:theme_hashid])
-       render :edit
-     end
+    @theme = Theme.find(params[:theme_hashid])
+    if @theme.update(theme_params)
+      redirect_to theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid)
+    else
+      @theme = Theme.find(params[:theme_hashid])
+      render :edit
+    end
   end
 
-
-  # delete '/:user_name/themes/:theme_hashid' => 'themes#destroy', as: 'destroy_theme'
-  # Themeを削除する
+  # DELETE '/:user_name/themes/:theme_hashid' => 'themes#destroy', as: 'destroy_theme'
+  # Description: Themeを削除する.
   def destroy
     theme = Theme.find(params[:theme_hashid])
     theme.destroy
     redirect_to user_path(user_name: theme.user.name)
   end
 
+  # Description: Themeを報告する.
+  def report
+    theme = Theme.find(params[:theme_hashid])
+    flash[:notice] = '通報が完了しました。'
+    ThemeMailer.with(theme: theme).send_report.deliver_now
+    redirect_to theme_path(user_name: theme.user.name, theme_hashid: theme.hashid)
+  end
 
   private
 
-    # 投稿時、タイトルと投稿状態をコントローラに通す
-    def theme_params
-      params.require(:theme).permit(:title, :post_status, :tag_list)
-    end
+  # Descirption: 投稿・更新時、タイトルと投稿状態をコントローラに通す.
+  def theme_params
+    params.require(:theme).permit(:title, :post_status, :tag_list)
+  end
 
+  # Description: 直打ちで編集画面に遷移させない.
+  def correct_user
+    user = User.find_by(name: params[:user_name])
+    # ログインユーザーと作成者が異なる時、Not Found
+    render 'public/errors/404.html', status: :not_found unless user.id == current_user.id
+  end
 
-    # 直打ちで編集画面に遷移させない
-    def correct_user
-      user = User.find_by(name: params[:user_name])
-      unless user.id == current_user.id
-        render "public/errors/404.html", status: :not_found#, layout: "error"
-      end
-    end
+  # Description: 正しいURLかどうかを確かめる.
+  def correct_url
+    theme = Theme.find(params[:theme_hashid])
+    user = User.find_by(name: params[:user_name])
+    render 'public/errors/404.html', status: :not_found unless theme.user == user
+  end
 
-
-    # 直打ちで下書き状態の画面に遷移させない
-    def is_draft
-      @theme = Theme.find(params[:theme_hashid])
-      @user = User.find_by(name: params[:user_name])
-      # @theme = Theme.find_by_hashid(params[:theme_hashid], user_id: @user.id)
-      # binding.pry
-      # 本当は404NotFoundにしたい
-      if (current_user == nil or @user.id != current_user.id) and @theme.post_status == 0
-        render "public/errors/404.html", status: :not_found#, layout: "error"
-      end
-    end
-
-    # def calculate_user_score
-    #   @user_all = User.all
-    #   @user_all.each{ |user|
-    #     user.score  = 0
-    #     user.score += user
-    #   }
-    # end
+  # Description: 直打ちで下書き状態の画面に遷移させない.
+  def draft?
+    theme = Theme.find(params[:theme_hashid])
+    user = User.find_by(name: params[:user_name])
+    # (非公開かつ、ログインしていない) または、(非公開かつ、ログインユーザーと作成者が異なる) 時、Not Found
+    render 'public/errors/404.html', status: :not_found if theme.post_status.zero? && (current_user.nil? || user.id != current_user.id)
+  end
 end
