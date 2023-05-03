@@ -1,5 +1,4 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
   # def create
   #   #スーパークラス(devise)のcreateアクションを呼ぶ
   #   super
@@ -12,5 +11,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # 自分で設定した「マイページ」へのパス
     user_path(user_name: resource.name)
   end
-
 end

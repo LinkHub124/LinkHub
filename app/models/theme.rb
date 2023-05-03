@@ -2,6 +2,8 @@ class Theme < ApplicationRecord
   MAX_LINKS_COUNT = 10
   belongs_to :user
 
+  # Association
+  belongs_to :user
   has_many :links, dependent: :destroy
   validates_associated :links, message: "cannot have more than #{MAX_LINKS_COUNT} links"
   validate :validate_links_count
@@ -42,10 +44,9 @@ class Theme < ApplicationRecord
     favorites.exists?(user_id: user.id)
   end
 
+  # Description: titleにwordを含むテーマを返す
   def self.looks(word)
-    theme = Theme.where("title LIKE?","%#{word}%")
-    theme = theme.reverse
-    theme
+    theme = Theme.where('title LIKE?', "%#{word}%")
+    theme.reverse
   end
-
 end
