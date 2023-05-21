@@ -23,5 +23,23 @@ services:
     tty: true
     stdin_open: true
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 8011:8080
+    volumes:
+      - ./openapi.yaml:/usr/share/nginx/html/openapi.yaml
+    environment:
+      API_URL: openapi.yaml
+
+  redoc:
+    image: redocly/redoc
+    ports:
+      - 8012:80
+    volumes:
+      - ./openapi.yaml:/usr/share/nginx/html/openapi.yaml
+    environment:
+      SPEC_URL: openapi.yaml
+
 volumes:
   mysql_data:
