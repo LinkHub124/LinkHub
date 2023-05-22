@@ -117,4 +117,6 @@ end
 
 gem 'acts_as_list'
 
+# API
 gem 'rack-cors'
+gem 'devise_token_auth'

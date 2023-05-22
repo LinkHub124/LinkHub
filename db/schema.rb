@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_14_001411) do
+ActiveRecord::Schema.define(version: 2023_05_21_103253) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_001411) do
     t.string "provider"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "tokens"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

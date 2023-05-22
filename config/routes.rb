@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
-
-  namespace :api do
-    namespace :v1 do
-      resources :test, only: %i[index]
-      resources :themes, only: %i[index show]
-      # resources :users, only: %i[show]
-      get '/users/:user_name' => 'users#show'
-    end
-  end
-
   devise_for :users, controllers: {
     registrations: "users/registrations",
     # API認証用
     :omniauth_callbacks => 'users/omniauth_callbacks',
   }
+
+  namespace :api do
+    namespace :v1 do
+      mount_devise_token_auth_for 'User', at: 'auth'
+      resources :test, only: %i[index]
+      resources :themes, only: %i[index show]
+      get '/users/:user_name' => 'users#show'
+    end
+  end
+
   root to: 'themes#index'
   get    '/followings' => 'themes#index_follow', as: 'index_follow'
   # get    '/timeline' => 'themes#timeline'

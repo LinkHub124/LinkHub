@@ -17,6 +17,7 @@ alice = User.create(
     twitter_id: 'alice_twitter',
     facebook_id: 'alice_facebook',
     homepage_url: 'https://colink.jp',
+    uid: "email",
     confirmed_at: Time.now.utc,
     confirmation_token: nil
 )
@@ -32,6 +33,7 @@ bob = User.create(
     twitter_id: 'bob_twitter',
     facebook_id: 'bob_facebook',
     homepage_url: 'https://google.com',
+    uid: "email",
     confirmed_at: Time.now.utc,
     confirmation_token: nil
 )
@@ -47,6 +49,7 @@ carol = User.create(
     twitter_id: 'carol_twitter',
     facebook_id: 'carol_facebook',
     homepage_url: 'https://google.com',
+    uid: "email",
     confirmed_at: Time.now.utc,
     confirmation_token: nil
 )
