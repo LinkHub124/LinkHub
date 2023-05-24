@@ -17,7 +17,7 @@ alice = User.create(
     twitter_id: 'alice_twitter',
     facebook_id: 'alice_facebook',
     homepage_url: 'https://colink.jp',
-    uid: "email",
+    uid: 'nope124mailer+alice@gmail.com',
     confirmed_at: Time.now.utc,
     confirmation_token: nil
 )

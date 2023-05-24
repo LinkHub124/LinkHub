@@ -119,8 +119,8 @@ ActiveRecord::Schema.define(version: 2023_05_21_103253) do
     t.string "homepage_url"
     t.integer "score", default: 0
     t.boolean "is_deleted", default: false, null: false
-    t.string "uid"
-    t.string "provider"
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "tokens"

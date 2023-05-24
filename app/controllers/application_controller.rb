@@ -2,10 +2,18 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_host
   include ActiveRecord::Sanitization::ClassMethods
+  # include DeviseTokenAuth::Concerns::User
+  # include DeviseTokenAuth::Concerns::ActiveRecordSupport
+  # include DeviseTokenAuth::Concerns::User
+  # include DeviseTokenAuth::Concerns::SetUserByToken
 
   layout 'application_no_header', only: [:terms, :policy]
 
   protect_from_forgery with: :null_session
+
+  
+  skip_before_action :verify_authenticity_token
+  helper_method :current_user, :user_signed_in?
 
   unless Rails.env.development? # 本番環境のみでの実行.
     rescue_from Exception, with: :render500

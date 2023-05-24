@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:twitter, :google_oauth2],
-                        authentication_keys: [:login]
+                        authentication_keys: [:email]
 
   # Association
   has_many :themes, dependent: :destroy
