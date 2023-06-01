@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
   before_action :correct_url, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :draft?, only: [:show]
-  before_action :authenticate_user!, only: [:index_follow]
+  before_action :authenticate_user!, only: [:index_follow, :create]
 
   # GET '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   # Description: Themeを新規投稿する.
@@ -47,6 +47,9 @@ class ThemesController < ApplicationController
         format.js do
           redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました'
         end
+        format.html do
+          redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました'
+        end
       else
         format.js { @status = 'fail' }
       end
@@ -88,7 +91,7 @@ class ThemesController < ApplicationController
       redirect_to theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid)
     else
       @theme = Theme.find(params[:theme_hashid])
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -119,7 +122,7 @@ class ThemesController < ApplicationController
   def correct_user
     user = User.find_by(name: params[:user_name])
     # ログインユーザーと作成者が異なる時、Not Found
-    render 'errors/404.html', status: :not_found unless user.id == current_user.id
+    render 'errors/404.html', status: :not_found unless (user_signed_in? and user.id == current_user.id)
   end
 
   # Description: 正しいURLかどうかを確かめる.
