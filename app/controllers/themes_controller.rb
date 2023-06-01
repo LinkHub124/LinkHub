@@ -91,7 +91,7 @@ class ThemesController < ApplicationController
       redirect_to theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid)
     else
       @theme = Theme.find(params[:theme_hashid])
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -135,6 +135,59 @@ RSpec.describe 'Themesコントローラーのテスト', type: :request do
         end
       end
     end
+
+    describe 'PATCH #update' do
+      context 'posting user matches current_user' do
+        it 'returns HTTP status as 302 Redirect' do
+          patch update_theme_path(user_name: user1.name, theme_hashid: released_theme1.hashid), params: { theme: { title: 'test1', post_status: 0 } }
+          expect(response).to have_http_status(:redirect)
+        end
+      end
+
+      context 'posting user does not match current_user' do
+        it 'returns HTTP status as 404 Not Found' do
+          patch update_theme_path(user_name: user2.name, theme_hashid: released_theme2.hashid), params: { theme: { title: 'test2', post_status: 0 } }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'access non-existent theme' do
+        it 'returns HTTP status as 404 Not Found' do
+          patch update_theme_path(user_name: user1.name, theme_hashid: released_theme2.hashid), params: { theme: { title: 'test3', post_status: 0 } }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'posting user matches current_user and validation errors occur' do
+        it 'returns HTTP status as 422 Unprocessable Entity' do
+          patch update_theme_path(user_name: user1.name, theme_hashid: released_theme1.hashid), params: { theme: { title: '', post_status: 0 } }
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      context 'posting user matches current_user' do
+        it 'returns HTTP status as 302 Redirect' do
+          delete destroy_theme_path(user_name: user1.name, theme_hashid: released_theme1.hashid)
+          expect(response).to have_http_status(:redirect)
+        end
+      end
+
+      context 'posting user does not match current_user' do
+        it 'returns HTTP status as 404 Not Found' do
+          delete destroy_theme_path(user_name: user2.name, theme_hashid: released_theme2.hashid)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'access non-existent theme' do
+        it 'returns HTTP status as 404 Not Found' do
+          delete destroy_theme_path(user_name: user1.name, theme_hashid: released_theme2.hashid)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
   end
 
   describe 'not login' do
@@ -240,6 +293,52 @@ RSpec.describe 'Themesコントローラーのテスト', type: :request do
       context 'access non-existent theme' do
         it 'returns HTTP status as 404 Not Found' do
           get edit_theme_path(user_name: user1.name, theme_hashid: released_theme2.hashid)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    describe 'PATCH #update' do
+      context 'posting user matches current_user' do
+        it 'returns HTTP status as 404 Redirect' do
+          patch update_theme_path(user_name: user1.name, theme_hashid: released_theme1.hashid), params: { theme: { title: 'test1', post_status: 0 } }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'posting user does not match current_user' do
+        it 'returns HTTP status as 404 Not Found' do
+          patch update_theme_path(user_name: user2.name, theme_hashid: released_theme2.hashid), params: { theme: { title: 'test2', post_status: 0 } }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'access non-existent theme' do
+        it 'returns HTTP status as 404 Not Found' do
+          patch update_theme_path(user_name: user1.name, theme_hashid: released_theme2.hashid), params: { theme: { title: 'test3', post_status: 0 } }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      context 'posting user matches current_user' do
+        it 'returns HTTP status as 404 Not Found' do
+          delete destroy_theme_path(user_name: user1.name, theme_hashid: released_theme1.hashid)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'posting user does not match current_user' do
+        it 'returns HTTP status as 404 Not Found' do
+          delete destroy_theme_path(user_name: user2.name, theme_hashid: released_theme2.hashid)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'access non-existent theme' do
+        it 'returns HTTP status as 404 Not Found' do
+          delete destroy_theme_path(user_name: user1.name, theme_hashid: released_theme2.hashid)
           expect(response).to have_http_status(:not_found)
         end
       end
