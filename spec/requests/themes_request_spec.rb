@@ -10,7 +10,6 @@ RSpec.describe 'Themesコントローラーのテスト', type: :request do
   let!(:limited_theme2)  { create(:theme, title: 'Limited theme by user2', user: user2, post_status: 1) }
   let!(:released_theme2) { create(:theme, title: 'Released theme by user2', user: user2, post_status: 2) }
 
-
   describe 'user1 login' do
     before do
       user1.confirm
@@ -41,6 +40,18 @@ RSpec.describe 'Themesコントローラーのテスト', type: :request do
         expect(response.body).not_to include('Private theme by user2')
         expect(response.body).not_to include('Limited theme by user2')
         expect(response.body).to include('Released theme by user2')
+      end
+    end
+
+    describe 'POST #create' do
+      it 'returns HTTP status as 302 Redirect' do
+        post themes_path(user_name: user1.name), params: { theme: { title: 'test1' } }
+        expect(response).to have_http_status(:redirect)
+      end
+
+      it 'returns HTTP status as 302 Redirect' do
+        post themes_path(user_name: user2.name), params: { theme: { title: 'test2' } }
+        expect(response).to have_http_status(:redirect)
       end
     end
 
@@ -144,6 +155,13 @@ RSpec.describe 'Themesコントローラーのテスト', type: :request do
         expect(response.body).not_to include('Private theme by user2')
         expect(response.body).not_to include('Limited theme by user2')
         expect(response.body).to include('Released theme by user2')
+      end
+    end
+
+    describe 'POST #create' do
+      it 'returns HTTP status as 302 Redirect' do
+        post themes_path(user_name: user1.name), params: { theme: { title: 'test1' } }
+        expect(response).to have_http_status(:redirect)
       end
     end
 

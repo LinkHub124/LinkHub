@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
   before_action :correct_url, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :draft?, only: [:show]
-  before_action :authenticate_user!, only: [:index_follow]
+  before_action :authenticate_user!, only: [:index_follow, :create]
 
   # GET '/:user_name/themes/new' => 'themes#new', as: 'new_theme'
   # Description: Themeを新規投稿する.
@@ -45,6 +45,9 @@ class ThemesController < ApplicationController
     respond_to do |format|
       if theme_new.save
         format.js do
+          redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました'
+        end
+        format.html do
           redirect_to edit_theme_path(user_name: current_user.name, theme_hashid: theme_new.hashid), notice: 'リンクが保存されました'
         end
       else
