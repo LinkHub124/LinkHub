@@ -120,5 +120,3 @@ group :production do
 end
 
 gem 'acts_as_list'
-
-gem 'net-http'

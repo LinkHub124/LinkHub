@@ -212,8 +212,6 @@ GEM
       coffee-rails (>= 3.2.1)
       jquery-rails
       rails (>= 3.2.0)
-    net-http (0.3.2)
-      uri
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
@@ -491,7 +489,6 @@ DEPENDENCIES
   meta-tags
   mysql2
   nested_form_fields
-  net-http
   nokogiri
   omniauth (= 1.9.1)
   omniauth-facebook
