@@ -260,10 +260,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    open-uri (0.3.0)
-      stringio
-      time
-      uri
     orm_adapter (0.5.0)
     parallel (1.23.0)
     parser (3.2.2.1)
@@ -417,13 +413,10 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.6.3)
       mini_portile2 (~> 2.8.0)
-    stringio (3.0.7)
     temple (0.10.2)
     thor (1.2.2)
     thread_safe (0.3.6)
     tilt (2.1.0)
-    time (0.2.2)
-      date
     timeout (0.3.2)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
@@ -436,7 +429,6 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
-    uri (0.12.1)
     version_gem (1.1.2)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -494,7 +486,6 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
-  open-uri
   pry-rails
   puma (~> 3.11)
   rails (~> 5.2.6)

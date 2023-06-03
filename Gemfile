@@ -91,7 +91,7 @@ gem 'cloudinary'
 gem 'meta-tags'
 
 gem 'nokogiri'
-gem 'open-uri'
+# gem 'open-uri'
 
 gem 'acts-as-taggable-on'
 
