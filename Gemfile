@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.6'
+gem 'rails', '~> 6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -91,7 +91,7 @@ gem 'cloudinary'
 gem 'meta-tags'
 
 gem 'nokogiri'
-gem 'open-uri'
+# gem 'open-uri'
 
 gem 'acts-as-taggable-on'
 
@@ -120,3 +120,5 @@ group :production do
 end
 
 gem 'acts_as_list'
+
+gem "webpacker"
