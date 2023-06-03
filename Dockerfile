@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.7.8
 # ベースにするイメージを指定
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs default-mysql-client vim
