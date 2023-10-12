@@ -1,0 +1,8 @@
+<div class="col-md-8 offset-md-2">
+  
+    <% @user_all.each do |user| %>
+      <%= render "admin/users/user_wide", user: user %>
+    <% end %>
+    <%= paginate @user_all, theme: 'bootstrap-5' %>
+  
+</div>

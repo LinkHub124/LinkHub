@@ -1,0 +1,29 @@
+<%= content_for(:title, @user.name+"のマイページ") %>
+<div class='row'>
+  <div class="col-md-3 offset-md-1">
+    <%= render "admin/users/user_info", user: @user %>
+  </div>
+  <div class="col-md-7">
+    <div class="button-wrap">
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">
+         <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+        <%= form_with url: user_path(name: @user.name), local: true, method: :get do |f| %>
+          <%= f.text_field :tq, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    
+    <% unless @theme_all.length == 0 %>
+      <% @theme_all.each do |theme| %>
+        <%= render "public/themes/theme_card", theme: theme %>
+      <% end %>
+      <%= paginate @theme_all, theme: 'bootstrap-5' %>
+    <% else %>
+      <p>投稿した記事があリません</p>
+    <% end %>
+    
+    
+  </div>
+</div>

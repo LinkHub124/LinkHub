@@ -9,10 +9,10 @@
         <% end %>
         <%= @theme.created_at.strftime('%Y/%m/%d') %>
       </span>
-      <% if @user == current_user %>
+      <% if @theme.user == current_user %>
         <h4 class="link-card-edit">
-          <%= link_to "", edit_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), local: true, class: "fas fa-edit" %>
-          <%= link_to "", destroy_theme_path(user_name: @user.name, theme_hashid: @theme.hashid), local: true, method: :delete, "data-confirm":"本当に消しますか？", class: "fas fa-times-circle" %>
+          <%= link_to "", edit_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), local: true, class: "fas fa-edit" %>
+          <%= link_to "", destroy_theme_path(user_name: @theme.user.name, theme_hashid: @theme.hashid), local: true, method: :delete, "data-confirm":"本当に消しますか？", class: "fas fa-times-circle" %>
         </h4>
       <% end %>
     </div>
@@ -28,7 +28,7 @@
        <% end %>
      </div>
     <div class="col-md-10 offset-md-1">
-      <% @link_all.each do |link| %>
+      <% @theme.links.each do |link| %>
         <div class='link-card' id='link-card-<%= link.id %>'>
           <%= render 'public/links/link_card', link: link %>
         </div>
@@ -37,8 +37,8 @@
       <div class="theme-share" style="display:flex;">
         <% if @theme.post_status == 2 and user_signed_in? %>
           <div class="favorite favorite-left">
-        　　<%= render "public/favorites/favorite", theme: @theme %>
-        　</div>
+            <%= render "public/favorites/favorite", theme: @theme %>
+          </div>
         <% end %>
         <div>
           <%= link_to "https://twitter.com/intent/tweet?hashtags=LinkHub&text=#{@theme.title}【LinkHub】&url=#{request.url}&via=#{@theme.user.twitter_id}", title: 'Twitter', target: '_blank' do %>
@@ -54,11 +54,11 @@
          <% end %>
        </div>
     </div>
-    <% if @theme_sort_by_fav.length != 0 %>
+    <% if @theme_related_sort_by_fav.length != 0 %>
       <div class="col-md-10 offset-md-1">
          <h1>関連記事</h1>
          <div class="theme-card-image">
-           <% @theme_sort_by_fav.first(5).each do |theme, fav| %>
+           <% @theme_related_sort_by_fav.first(5).each do |theme, fav| %>
              <%= render "public/themes/theme_card", theme: theme %>
            <% end %>
          </div>
