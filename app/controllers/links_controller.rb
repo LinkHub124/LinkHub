@@ -30,9 +30,11 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link_new.save
-        format.js { @status = 'success' }
+        @status = 'success'
+        format.js { render action: :create, status: :created }
       else
-        format.js { @status = 'fail' }
+        @status = 'fail'
+        format.js { render action: :create, status: :unprocessable_entity }
       end
     end
   end
@@ -62,9 +64,11 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.update(new_link_params)
-        format.js { @status = 'success' }
+        @status = 'success'
+        format.js { render action: :update, status: :ok }
       else
-        format.js { @status = 'fail' }
+        @status = 'fail'
+        format.js { render action: :update, status: :unprocessable_entity }
       end
     end
   end
@@ -82,9 +86,11 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if link.destroy
-        format.js { @status = 'success' }
+        @status = 'success'
+        format.js { render action: :destroy, status: :ok }
       else
-        format.js { @status = 'fail' }
+        @status = 'fail'
+        format.js { render action: :destroy, status: :not_found }
       end
     end
   end
@@ -110,7 +116,7 @@ class LinksController < ApplicationController
   def correct_user
     user = User.find_by(name: params[:user_name])
     # ログインユーザーと作成者が異なる時、Not Found
-    render 'errors/404.html', status: :not_found unless user.id == current_user.id
+    render 'errors/404.html', status: :not_found unless (user_signed_in? and user.id == current_user.id)
   end
 
   # Description: 正しいURLかどうかを確かめる.
@@ -118,6 +124,10 @@ class LinksController < ApplicationController
     theme = Theme.find(params[:theme_hashid])
     user = User.find_by(name: params[:user_name])
     render 'errors/404.html', status: :not_found unless theme.user == user
+    if params[:link_hashid]
+      link = Link.find(params[:link_hashid])
+      render 'errors/404.html', status: :not_found unless link.theme.user == user
+    end
   end
 
   # Description: URLの日本語をエンコード.
