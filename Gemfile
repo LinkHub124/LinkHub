@@ -120,5 +120,9 @@ group :production do
 end
 
 gem 'acts_as_list'
-
 gem "webpacker"
+
+# API
+gem 'rack-cors'
+gem 'devise_token_auth'
+

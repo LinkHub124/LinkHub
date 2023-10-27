@@ -42,8 +42,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.integer :score, default: 0
       t.boolean :is_deleted, default: false, null: false
 
-      t.string :uid
-      t.string :provider
+      t.string :provider, null: false, default: "email"
+      t.string :uid,      null: false, default: ""
 
       t.timestamps null: false
     end

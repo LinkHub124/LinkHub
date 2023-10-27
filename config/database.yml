@@ -8,6 +8,8 @@ default: &default
   adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  password: 1234
+  host: db-1
 
 development:
   <<: *default

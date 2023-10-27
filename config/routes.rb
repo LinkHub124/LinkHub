@@ -4,6 +4,21 @@ Rails.application.routes.draw do
     # API認証用
     :omniauth_callbacks => 'users/omniauth_callbacks',
   }
+
+  namespace :api do
+    namespace :v1 do
+      mount_devise_token_auth_for 'User', at: 'auth', skip: [:omniauth_callbacks], controllers: {
+        registrations: 'api/v1/auth/registrations'
+      }
+      namespace :auth do
+        resources :sessions, only: %i[index]
+      end
+      # resources :test, only: %i[index]
+      resources :themes, only: %i[index show]
+      get '/users/:user_name' => 'users#show'
+    end
+  end
+
   root to: 'themes#index'
   get    '/followings' => 'themes#index_follow', as: 'index_follow'
   # get    '/timeline' => 'themes#timeline'
